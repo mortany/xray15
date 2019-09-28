@@ -1,0 +1,46 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright 2015 Autodesk, Inc.  All rights reserved.
+//
+//  Use of this software is subject to the terms of the Autodesk license 
+//  agreement provided at the time of installation or download, or which 
+//  otherwise accompanies this software in either electronic or hard copy form.   
+//
+//////////////////////////////////////////////////////////////////////////////
+
+// 3ds Max Photometric Spot Light
+shader PhotometricLightSpot : material
+{
+    // Light emission
+	uniform float3 m_flux = float3(1.0);
+    uniform float m_cosine_exponent = 1.0;
+    uniform float m_cos_falloff = 1.0;
+    uniform float m_fade_factor = 1.0;
+	uniform float m_cos_edge = 1.0;
+
+    void emission()
+	{ 
+        // Spot distributions area only valid on flat area lights (discs, reactangles, but not spheres), so we use the cosine between
+        // the surface normal and ray direction to attenuate according to spot angles.
+        float cos_angle = -dot(rt_RayDirection, rt_GeometryNormal);     // Use geo normal as shading normal not inverted in emission functions
+
+        // Restrict lighting to inside edge cone
+        if(cos_angle > m_cos_edge)
+        {
+            float3 resulting_emission = m_flux / rt_SurfaceArea;
+
+            // Decay for inner cone
+            resulting_emission *= pow(cos_angle, m_cosine_exponent);
+
+            // Smooth falloff between falloff cone and edge cone
+            if(cos_angle < m_cos_falloff)
+            {
+                float fade = 1.0f - ((m_cos_falloff - cos_angle) * m_fade_factor);
+                // Hermite spline falloff to avoid 2nd order dicontinuities!
+                resulting_emission *= (fade * fade * (3.0 - (2.0 * fade)));
+            }
+
+            rt_Emission = resulting_emission;
+        }
+	}
+}

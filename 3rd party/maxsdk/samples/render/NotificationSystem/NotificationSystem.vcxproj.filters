@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{51c7c11e-a6b1-4e9b-b35b-74777729e1dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{3b62012d-afe8-45a5-a724-40035a03e6d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{949bef91-d011-4547-b65e-830fddc7c8d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\NotificationAPI">
+      <UniqueIdentifier>{38dd2379-d8ca-49c9-afb2-74e0cb91737d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\NotificationAPI\Events">
+      <UniqueIdentifier>{ce3e9f99-21aa-44fe-8f88-0f4fc6a39cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\NotificationAPI\Clients">
+      <UniqueIdentifier>{95f54241-519f-4bfb-b150-ead2c1ccd688}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\NotificationAPI\Notifiers">
+      <UniqueIdentifier>{9b470c3c-69a7-466a-9ad0-2ccd706dd021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\InteractiveRenderingAPI">
+      <UniqueIdentifier>{939f0f8d-dae7-4598-8f0f-fc213fd286b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\InteractiveRenderingAPI\Clients">
+      <UniqueIdentifier>{4f7b0710-d632-4dd7-a518-250468997980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\InteractiveRenderingAPI">
+      <UniqueIdentifier>{644d3191-3902-4720-8de5-86919c567802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\InteractiveRenderingAPI\Clients">
+      <UniqueIdentifier>{9bea7287-49c7-4cf3-9f30-1a127068914c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NotificationAPI">
+      <UniqueIdentifier>{f94874cb-76be-4c08-8151-59c42d68bf29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NotificationAPI\Events">
+      <UniqueIdentifier>{7bbffd64-2efc-4411-a906-b6db667e9dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NotificationAPI\Clients">
+      <UniqueIdentifier>{efc1cc3d-289b-4fd8-9ee9-a59dc97da918}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NotificationAPI\Notifiers">
+      <UniqueIdentifier>{f0cae5e3-b5fa-46b2-8ef7-97d17262163a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SDK">
+      <UniqueIdentifier>{fd68f37d-99b8-4d03-90ff-24f5e759b5d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Internal">
+      <UniqueIdentifier>{c079eca4-d0e6-4052-8b3c-bda9d3a24f25}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="veroverrides.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Clients\ImmediateNotificationClient.h">
+      <Filter>Header Files\NotificationAPI\Clients</Filter>
+    </ClInclude>
+    <ClInclude Include="Clients\OnDemandNotificationClient.h">
+      <Filter>Header Files\NotificationAPI\Clients</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\GenericEvent.h">
+      <Filter>Header Files\NotificationAPI\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\MaterialEvent.h">
+      <Filter>Header Files\NotificationAPI\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\NodeEvent.h">
+      <Filter>Header Files\NotificationAPI\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\TexmapEvent.h">
+      <Filter>Header Files\NotificationAPI\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Notifiers\MaxMaterialNotifier.h">
+      <Filter>Header Files\NotificationAPI\Notifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="Notifiers\MaxNodeNotifier.h">
+      <Filter>Header Files\NotificationAPI\Notifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="Notifiers\MaxNotifier.h">
+      <Filter>Header Files\NotificationAPI\Notifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="Notifiers\MaxRenderEnvironmentNotifier.h">
+      <Filter>Header Files\NotificationAPI\Notifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="Notifiers\MaxRenderSettingsNotifier.h">
+      <Filter>Header Files\NotificationAPI\Notifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="Notifiers\MaxSceneNotifier.h">
+      <Filter>Header Files\NotificationAPI\Notifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="Notifiers\MaxTexmapNotifier.h">
+      <Filter>Header Files\NotificationAPI\Notifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="Notifiers\MaxViewNotifier.h">
+      <Filter>Header Files\NotificationAPI\Notifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="NotificationManager.h">
+      <Filter>Header Files\NotificationAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractiveRendering\Clients\ImmediateInteractiveRenderingClient.h">
+      <Filter>Header Files\InteractiveRenderingAPI\Clients</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractiveRendering\Clients\OnDemandInteractiveRenderingClient.h">
+      <Filter>Header Files\InteractiveRenderingAPI\Clients</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractiveRendering\InteractiveRenderingManager.h">
+      <Filter>Header Files\InteractiveRenderingAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractiveRendering\InteractiveRenderingUtils.h">
+      <Filter>Header Files\InteractiveRenderingAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractiveRendering\InteractiveRenderingViewData.h">
+      <Filter>Header Files\InteractiveRenderingAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\IMergeableEvent.h">
+      <Filter>Header Files\NotificationAPI\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\ViewEvent.h">
+      <Filter>Header Files\NotificationAPI\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractiveRendering\Clients\BaseInteractiveRenderingClient.h">
+      <Filter>Header Files\InteractiveRenderingAPI\Clients</Filter>
+    </ClInclude>
+    <ClInclude Include="Notifiers\MaxRefTargNotifier.h">
+      <Filter>Header Files\NotificationAPI\Notifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\ReferenceTargetEvent.h">
+      <Filter>Header Files\NotificationAPI\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\SceneNodeEvent.h">
+      <Filter>Header Files\NotificationAPI\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="NotificationAPIUtils.h">
+      <Filter>Header Files\NotificationAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\NotificationAPI\InteractiveRenderingAPI_Subscription.h" />
+    <ClInclude Include="..\..\..\include\NotificationAPI\NotificationAPI_Events.h" />
+    <ClInclude Include="..\..\..\include\NotificationAPI\NotificationAPI_Subscription.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NotificationSystem.def" />
+    <None Include="README_TechnicalDesign.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Notifiers\MaxMaterialNotifier.cpp">
+      <Filter>Source Files\NotificationAPI\Notifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="Notifiers\MaxNodeNotifier.cpp">
+      <Filter>Source Files\NotificationAPI\Notifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="Notifiers\MaxNotifier.cpp">
+      <Filter>Source Files\NotificationAPI\Notifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="Notifiers\MaxRenderEnvironmentNotifier.cpp">
+      <Filter>Source Files\NotificationAPI\Notifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="Notifiers\MaxSceneNotifier.cpp">
+      <Filter>Source Files\NotificationAPI\Notifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="Notifiers\MaxTexmapNotifier.cpp">
+      <Filter>Source Files\NotificationAPI\Notifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="Notifiers\MaxViewNotifier.cpp">
+      <Filter>Source Files\NotificationAPI\Notifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\GenericEvent.cpp">
+      <Filter>Source Files\NotificationAPI\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\MaterialEvent.cpp">
+      <Filter>Source Files\NotificationAPI\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\NodeEvent.cpp">
+      <Filter>Source Files\NotificationAPI\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\TexmapEvent.cpp">
+      <Filter>Source Files\NotificationAPI\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Clients\ImmediateNotificationClient.cpp">
+      <Filter>Source Files\NotificationAPI\Clients</Filter>
+    </ClCompile>
+    <ClCompile Include="Clients\OnDemandNotificationClient.cpp">
+      <Filter>Source Files\NotificationAPI\Clients</Filter>
+    </ClCompile>
+    <ClCompile Include="Notifiers\MaxRenderSettingsNotifier.cpp">
+      <Filter>Source Files\NotificationAPI\Notifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="DllEntry.cpp">
+      <Filter>Source Files\NotificationAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="NotificationManager.cpp">
+      <Filter>Source Files\NotificationAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="NotificationAPIUtils.cpp">
+      <Filter>Source Files\NotificationAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractiveRendering\Clients\ImmediateInteractiveRenderingClient.cpp">
+      <Filter>Source Files\InteractiveRenderingAPI\Clients</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractiveRendering\Clients\OnDemandInteractiveRenderingClient.cpp">
+      <Filter>Source Files\InteractiveRenderingAPI\Clients</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractiveRendering\InteractiveRenderingManager.cpp">
+      <Filter>Source Files\InteractiveRenderingAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractiveRendering\InteractiveRenderingUtils.cpp">
+      <Filter>Source Files\InteractiveRenderingAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractiveRendering\InteractiveRenderingViewData.cpp">
+      <Filter>Source Files\InteractiveRenderingAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\ViewEvent.cpp">
+      <Filter>Source Files\NotificationAPI\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractiveRendering\Clients\BaseInteractiveRenderingClient.cpp">
+      <Filter>Source Files\InteractiveRenderingAPI\Clients</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\ReferenceTargetEvent.cpp">
+      <Filter>Source Files\NotificationAPI\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Notifiers\MaxRefTargNotifier.cpp">
+      <Filter>Source Files\NotificationAPI\Notifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\SceneNodeEvent.cpp">
+      <Filter>Source Files\NotificationAPI\Events</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NotificationSystem.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

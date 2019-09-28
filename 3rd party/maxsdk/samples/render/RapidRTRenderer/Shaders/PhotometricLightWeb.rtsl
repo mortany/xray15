@@ -1,0 +1,45 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright 2015 Autodesk, Inc.  All rights reserved.
+//
+//  Use of this software is subject to the terms of the Autodesk license 
+//  agreement provided at the time of installation or download, or which 
+//  otherwise accompanies this software in either electronic or hard copy form.   
+//
+//////////////////////////////////////////////////////////////////////////////
+
+#define PI 3.14159265358979323846
+#define HalfPI 1.57079632679489661923
+#define TwoPI 6.28318530717958647692
+#define FourPI 12.56637061435917295384
+#define InvPI 0.31830988618379067154
+#define InvTwoPI 0.1591549430918953357
+#define PI2 9.86960440108935861882
+#define InvPI2 0.101321183642337771444
+#define PI049 1.5393804002589986868454
+
+// 3ds Max Photometric Web Distribution Light
+shader PhotometricLightWeb : material
+{
+	uniform float3 m_flux = float3(1.0);
+
+    // Web distribution stored as a spherical texture
+    uniform texture2D m_web_map;
+    
+    void emission()
+	{ 
+        // Bring the light direction vector into local space, as that's where the web distribution is defined.
+        float3 light_dir_local_space = normalize(-rt_RayDirection * float3x3(rt_WorldToLocalMatrix));
+
+        float vertical_angle = acos(light_dir_local_space.z);   // [0, PI]
+        float horizontal_angle = 
+            (light_dir_local_space.x != 0.0)        // atan2 not defined for origin
+            ? atan2(light_dir_local_space.y, light_dir_local_space.x)           // [-PI, PI]
+            : 0.0;
+
+        float web_lookup_y = vertical_angle * InvPI;        // [0, 1]
+        float web_lookup_x = horizontal_angle * InvTwoPI + 0.5;     // [0, 1]
+        float web_lookup_value = m_web_map.lookup(float2(web_lookup_x, web_lookup_y)).x;
+        rt_Emission = m_flux * web_lookup_value / rt_SurfaceArea;
+	}
+}

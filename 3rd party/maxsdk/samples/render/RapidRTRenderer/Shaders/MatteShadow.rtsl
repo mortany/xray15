@@ -1,0 +1,52 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright 2015 Autodesk, Inc.  All rights reserved.
+//
+//  Use of this software is subject to the terms of the Autodesk license 
+//  agreement provided at the time of installation or download, or which 
+//  otherwise accompanies this software in either electronic or hard copy form.   
+//
+//////////////////////////////////////////////////////////////////////////////
+
+const int DIFFUSE   = 0;
+const int GLOSSY    = 1;
+const int SPECULAR  = 2;
+
+const int RAY_PRIMARY                 = 1;
+const int RAY_REFLECTION              = 2;
+const int RAY_TRANSMISSION            = 4;
+const int RAY_DIFFUSE                 = 8;
+const int RAY_GLOSSY                  = 16;
+const int RAY_SPECULAR                = 32;
+const int RAY_SHADOW                  = 64;
+
+
+const float PI      = 3.14159265358979323846;
+const float TWO_PI  = 2.0 * PI;
+const float HALF_PI = 0.5 * PI;
+const float INV_PI  = 1.0 / PI;
+const float EPSILON = 0.00001;
+ 
+float calcLuminance(float3 color) {
+  return dot(color,float3(0.2126f,0.7152f,0.0722f));
+}
+
+shader MatteShadow : material
+{
+  uniform float3  diffuse = float3(0.9);
+	uniform float3  reflectionColor = float3(0.0);
+	uniform float	  roughness = 0.0;
+
+	void scattering()
+	{
+    float diffLum = calcLuminance(diffuse);
+    float reflLum = calcLuminance(reflectionColor);
+    
+    float diffSpecWeight = reflLum / (diffLum + reflLum + EPSILON);
+    
+		rt_Scattering = mix(diffSpecWeight,   lambert(diffuse, rt_ShadingNormal),
+                                          ward(reflectionColor,rt_ShadingNormal,roughness));
+    
+	}
+
+}

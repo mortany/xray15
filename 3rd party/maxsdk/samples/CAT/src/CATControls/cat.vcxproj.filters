@@ -1,0 +1,706 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="General CAT stuff">
+      <UniqueIdentifier>{e6848fe3-f091-40a8-acc9-09dcec98b8fe}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{c711461e-ef29-47bd-84d4-aaf8da93607f}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="Layers">
+      <UniqueIdentifier>{f339eb2f-f9c0-4ef2-8f3c-813f87c2edc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rig Structure">
+      <UniqueIdentifier>{c23fcc5b-6c1c-4d14-be03-f1d17f531178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{738293e1-450d-4ea3-bb93-a82fa7d4ab0a}</UniqueIdentifier>
+      <Extensions>h; cpp</Extensions>
+    </Filter>
+    <Filter Include="CATMotion">
+      <UniqueIdentifier>{c33dbad6-5970-44d1-b36f-96dfee25ee96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CATMuscle">
+      <UniqueIdentifier>{b74c036d-feab-4859-ab50-7d9059b03e3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FunctionPublishing">
+      <UniqueIdentifier>{e2a2ebfc-2d47-44c2-971c-fa863c56e7b7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AllClasses.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="BezierInterp.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Callback.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="cat.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CATDialog.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATObjects\CatDotIni.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CATFilePaths.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CATMessages.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CatPlugins.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CATToken.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATObjects\IniFile.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Locale.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="math.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressWindow.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="TrackViewFunctions.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="version.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CATClipHierarchy.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="CATClipRoot.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="CATClipValue.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="CATClipValues.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="CATClipWeights.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="CATTransformOffset.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="HDPivotTrans.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="HIPivotTrans.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="ICATClipHierarchy.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="ILayerInfo.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerTransform.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="NLAInfo.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="RootNodeController.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="ArbBoneTrans.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneData.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneSegTrans.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATAPI.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CATControl.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CATGroup.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATObjects\CATParent.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CATParentTrans.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CATRigPresets.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CATUnitsPosition.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CATWeight.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CollarBoneTrans.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="DigitData.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="DigitSegTrans.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATObjects\ECATParent.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtraRigNodes.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="FootTrans2.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="Hub.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="ICATParent.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="IKTargController.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="LimbData2.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="PalmTrans2.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="ProxyTransform.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="SpineData2.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="SpineTrans2.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="TailData2.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="TailTrans.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATObjects\Bone.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATObjects\CATObject Superclass.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATObjects\ICATObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATObjects\IKTargetObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CATGraph.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATHierarchy.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATHierarchyBranch2.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATHierarchyFunctions.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATHierarchyLeaf.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATHierarchyRoot.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATMotionDigitRot.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATMotionHub2.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATMotionLayer.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATMotionLimb.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATMotionPlatform.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATMotionPresets.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATMotionRot.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATMotionTail.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATMotionTailRot.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATp3.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="CATWindow.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="ease.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="FootBend.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="FootLift.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="KneeAngle.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="LegWeight.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="LiftOffset.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="LiftPlantMod.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="MonoGraph.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="PivotPosData.H">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="PivotRot.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="StepShape.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATMuscle\AllClasses.h">
+      <Filter>CATMuscle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATMuscle\CATMuscle.h">
+      <Filter>CATMuscle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATMuscle\HdlObj.h">
+      <Filter>CATMuscle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATMuscle\HdlTrans.h">
+      <Filter>CATMuscle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATMuscle\IMuscle.h">
+      <Filter>CATMuscle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATMuscle\Muscle.h">
+      <Filter>CATMuscle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATMuscle\MuscleBones.h">
+      <Filter>CATMuscle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATMuscle\MusclePatch.h">
+      <Filter>CATMuscle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATMuscle\MuscleStrand.h">
+      <Filter>CATMuscle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATMuscle\SegTrans.h">
+      <Filter>CATMuscle</Filter>
+    </ClInclude>
+    <ClInclude Include="CATNodeControl.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CATNodeControlDistributed.h">
+      <Filter>Rig Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CATCharacterRemap.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CATMotionController.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="WeightShift.h">
+      <Filter>CATMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DataRestoreObj.h">
+      <Filter>General CAT stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CATObjects\HubObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FnPub\ILayerRootFP.h">
+      <Filter>FunctionPublishing</Filter>
+    </ClInclude>
+    <ClInclude Include="FnPub\INodeControlFP.h">
+      <Filter>FunctionPublishing</Filter>
+    </ClInclude>
+    <ClInclude Include="FnPub\ISpineFP.h">
+      <Filter>FunctionPublishing</Filter>
+    </ClInclude>
+    <ClInclude Include="FnPub\IHubFP.h">
+      <Filter>FunctionPublishing</Filter>
+    </ClInclude>
+    <ClInclude Include="FnPub\ITailFP.h">
+      <Filter>FunctionPublishing</Filter>
+    </ClInclude>
+    <ClInclude Include="FnPub\ICATControlFP.h">
+      <Filter>FunctionPublishing</Filter>
+    </ClInclude>
+    <ClInclude Include="FnPub\ILimbFP.h">
+      <Filter>FunctionPublishing</Filter>
+    </ClInclude>
+    <ClInclude Include="FnPub\IExtraRigNodesFP.h">
+      <Filter>FunctionPublishing</Filter>
+    </ClInclude>
+    <ClInclude Include="FnPub\ICATParentFP.h">
+      <Filter>FunctionPublishing</Filter>
+    </ClInclude>
+    <ClInclude Include="FnPub\IBoneGroupManagerFP.h">
+      <Filter>FunctionPublishing</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Callback.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="cat.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CATDialog.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATObjects\CatDotIni.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CATFilePaths.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CATMessages.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CATToken.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="DllEntry.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATObjects\IniFile.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="Locale.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressWindow.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="TrackViewFunctions.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CATClipRoot.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="CATClipValue.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="CATClipValues.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="CATClipWeights.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="CATTransformOffset.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="HDPivotTrans.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="HIPivotTrans.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="LayerTransform.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="NLAInfo.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="RootNodeController.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="ArbBoneTrans.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneData.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneSegTrans.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CATControl.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CATGroup.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATObjects\CATParent.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CATParentTrans.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CATRigPresets.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CATUnitsPosition.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CATWeight.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CollarBoneTrans.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="DigitData.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="DigitSegTrans.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtraRigNodes.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="FootTrans2.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="Hub.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="IKTargController.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="LimbData2.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="PalmTrans2.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="ProxyTransform.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="SpineData2.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="SpineTrans2.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="TailData2.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="TailTrans.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATObjects\Bone.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATObjects\CATObject Superclass.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATObjects\IKTargetObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="BezierInterp.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATGraph.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATHierarchy.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATHierarchyBranch2.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATHierarchyFunctions.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATHierarchyLeaf.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATHierarchyRoot.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATMotionDigitRot.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATMotionHub2.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATMotionLayer.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATMotionLimb.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATMotionPlatform.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATMotionPresets.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATMotionRot.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATMotionTail.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATMotionTailRot.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATp3.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="CATWindow.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="Ease.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="FootBend.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="FootLift.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="KneeAngle.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="LegWeight.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="LiftOffset.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="LiftPlantMod.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="MonoGraph.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="PivotPosData.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="PivotRot.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="StepShape.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="WeightShift.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATMuscle\CATMuscle.cpp">
+      <Filter>CATMuscle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATMuscle\HdlObj.cpp">
+      <Filter>CATMuscle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATMuscle\HdlTrans.cpp">
+      <Filter>CATMuscle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATMuscle\Muscle.cpp">
+      <Filter>CATMuscle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATMuscle\MuscleBones.cpp">
+      <Filter>CATMuscle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATMuscle\MusclePatch.cpp">
+      <Filter>CATMuscle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATMuscle\MuscleStrand.cpp">
+      <Filter>CATMuscle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATMuscle\SegTrans.cpp">
+      <Filter>CATMuscle</Filter>
+    </ClCompile>
+    <ClCompile Include="CATNodeControl.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CATNodeControlDistributed.cpp">
+      <Filter>Rig Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CATCharacterRemap.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CATMotionController.cpp">
+      <Filter>CATMotion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CATObjects\HubObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="FnPub\INodeControlFP.cpp">
+      <Filter>FunctionPublishing</Filter>
+    </ClCompile>
+    <ClCompile Include="FnPub\ISpineFP.cpp">
+      <Filter>FunctionPublishing</Filter>
+    </ClCompile>
+    <ClCompile Include="FnPub\IHubFP.cpp">
+      <Filter>FunctionPublishing</Filter>
+    </ClCompile>
+    <ClCompile Include="FnPub\ITailFP.cpp">
+      <Filter>FunctionPublishing</Filter>
+    </ClCompile>
+    <ClCompile Include="FnPub\ILimbFP.cpp">
+      <Filter>FunctionPublishing</Filter>
+    </ClCompile>
+    <ClCompile Include="FnPub\ICATControlFP.cpp">
+      <Filter>FunctionPublishing</Filter>
+    </ClCompile>
+    <ClCompile Include="FnPub\IExtraRigNodesFP.cpp">
+      <Filter>FunctionPublishing</Filter>
+    </ClCompile>
+    <ClCompile Include="FnPub\ICATParentFP.cpp">
+      <Filter>FunctionPublishing</Filter>
+    </ClCompile>
+    <ClCompile Include="FnPub\IBoneGroupManagerFP.cpp">
+      <Filter>FunctionPublishing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DataRestoreObj.cpp">
+      <Filter>General CAT stuff</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Images\cat2.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Images\CATPaw_Logo_Big.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CATControls.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,155 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_GRIDPARAM DIALOG 0, 0, 108, 188
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "",IDC_LENGTHEDIT,"CustEdit",WS_GROUP | WS_TABSTOP,45,14,36,10
+    CONTROL         "",IDC_WIDTHEDIT,"CustEdit",WS_TABSTOP,45,26,36,10
+    CONTROL         "",IDC_GRID,"CustEdit",WS_TABSTOP,45,55,36,10
+    RTEXT           "Length:",IDC_STATIC,18,14,25,8
+    RTEXT           "Width:",IDC_STATIC,20,26,23,8
+    CONTROL         "",IDC_WIDTHSPINNER,"SpinnerControl",WS_GROUP,82,26,7,10
+    CONTROL         "",IDC_LENSPINNER,"SpinnerControl",WS_GROUP,82,14,7,10
+    GROUPBOX        "Spacing",IDC_STATIC,2,42,104,27
+    CONTROL         "",IDC_GRIDSPINNER,"SpinnerControl",WS_GROUP,82,55,7,10
+    LTEXT           "Grid:",IDC_STATIC,28,55,17,8
+    GROUPBOX        "Grid Size",IDC_STATIC,2,2,104,38
+    GROUPBOX        "Active Color",IDC_STATIC,2,73,104,55,WS_GROUP
+    CONTROL         "Gray",IDC_GRID_GRAY_COLOR,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,26,84,31,10
+    CONTROL         "Object Color",IDC_GRID_OBJECT_COLOR,"Button",BS_AUTORADIOBUTTON,26,94,55,10
+    CONTROL         "Home Color",IDC_GRID_HOME_COLOR,"Button",BS_AUTORADIOBUTTON,26,104,53,10
+    CONTROL         "Home Intensity",IDC_GRID_HOME_INTENSITY,"Button",BS_AUTORADIOBUTTON,26,114,63,10
+    GROUPBOX        "Display",IDC_STATIC,2,132,104,51,WS_GROUP
+    CONTROL         "XY Plane",IDC_GRID_XY_PLANE,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,26,145,45,10
+    CONTROL         "YZ Plane",IDC_GRID_YZ_PLANE,"Button",BS_AUTORADIOBUTTON,26,156,45,10
+    CONTROL         "ZX Plane",IDC_GRID_ZX_PLANE,"Button",BS_AUTORADIOBUTTON,26,167,45,10
+END
+
+IDD_NEW_POINTPARAM DIALOG 0, 0, 108, 110
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "Axis Tripod",IDC_POINT_AXIS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,24,53,10
+    CONTROL         "",IDC_POINT_SIZE,"CustEdit",WS_TABSTOP,49,63,28,10
+    RTEXT           "Size:",IDC_STATIC,19,63,27,8
+    CONTROL         "",IDC_POINT_SIZESPIN,"SpinnerControl",0x0,78,63,7,10
+    CONTROL         "Center Marker",IDC_POINT_MARKER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,12,63,10
+    CONTROL         "Cross",IDC_POINT_CROSS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,36,33,10
+    CONTROL         "Box",IDC_POINT_BOX,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,48,33,10
+    GROUPBOX        "Display:",IDC_STATIC,5,1,98,105
+    CONTROL         "Constant Screen Size",IDC_POINT_SCREENSIZE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,78,84,10
+    CONTROL         "Draw On Top",IDC_POINT_DRAWONTOP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,91,59,10
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "#include ""veroverrides.h""\r\n"
+    "#include ""maxversion.r""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_DB_GRID             "Grid"
+    IDS_DB_PARAMETERS       "Parameters"
+    IDS_DB_POINT            "Point"
+    IDS_DB_POINTHELPER      "PointHelper"
+    IDS_DB_GRID_CLASS       "Grid"
+    IDS_DB_POINTHELPER_CLASS "PointHelper"
+    IDS_DB_POINT_CLASS      "Point"
+    IDS_TH_LENGTH           "Length"
+    IDS_TH_WIDTH            "Width"
+    IDS_DB_GRID_NODENAME    "Grid"
+    IDS_DB_GRIDHELPER       "GridHelper"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_LIBDESCRIPTION      "Standard Helper Objects (Autodesk)"
+    IDS_POINT_PARAMS        "Parameters"
+    IDS_POINT_SIZE          "Size"
+    IDS_POINT_CENTERMARKER  "Center Marker"
+    IDS_POINT_AXISTRIPOD    "Axis Tripod"
+    IDS_POINT_CROSS         "Cross"
+    IDS_POINT_BOX           "Box"
+    IDS_POINT_SCREENSIZE    "Constant Screen Size"
+    IDS_POINT_HELPER_NAME   "Point Helper"
+    IDS_POINT_DRAWONTOP     "Draw On Top"
+    IDS_DB_GRID_OBJECT      "Grid"
+    IDS_ACTIVE_COLOR        "Active Color"
+    IDS_DISPLAY_PLANE       "Display Plane"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+#include "veroverrides.h"
+#include "maxversion.r"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|x64">
+      <Configuration>Hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4827C701-A0DC-43B5-9155-8A166690B189}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>UnwrapRuntime</ProjectName>
+    <RootNamespace>UnwrapRuntime</RootNamespace>
+    <MaxSDK>../../../../</MaxSDK>
+  </PropertyGroup>
+  <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.cpp.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir>$(MaxBuild)</OutDir>
+    <TargetName>UnwrapRuntime</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <ForcedIncludeFiles>UnwrapRuntime_banned.h</ForcedIncludeFiles>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>.;$(AirMaxInclude)External;$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(AirMaxVizLib);$(MaxSdkLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>UnwrapBase.lib;UnwrapInternal.lib;MouseCursors.lib;comctl32.lib;delayimp.lib;mnmath.lib;maxscrpt.lib;menuman.lib;paramblk2.lib;poly.lib;bmm.lib;core.lib;geom.lib;gfx.lib;maxutil.lib;menus.lib;mesh.lib;shlwapi.lib;GraphicsUtility.lib;GraphicsDriver.lib;DataBridge.lib;TipSystem.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="UnwrapRuntime_banned.h" />
+    <ClInclude Include="..\uvwunwrap\MapIOModifier\MapIO.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\uvwunwrap\ActionLookup.cpp" />
+    <ClCompile Include="..\uvwunwrap\Actions.cpp" />
+    <ClCompile Include="..\uvwunwrap\Actions_Checked.cpp" />
+    <ClCompile Include="..\uvwunwrap\Actions_Enabled.cpp" />
+    <ClCompile Include="..\uvwunwrap\Actions_Execute.cpp" />
+    <ClCompile Include="..\uvwunwrap\Defaults.cpp" />
+    <ClCompile Include="..\uvwunwrap\IniFileIO.cpp" />
+    <ClCompile Include="..\uvwunwrap\MapIOModifier\MapIO.cpp" />
+    <ClCompile Include="..\uvwunwrap\MeshTopoData.cpp" />
+    <ClCompile Include="..\uvwunwrap\MeshTopoData_MappingMethods.cpp" />
+    <ClCompile Include="..\uvwunwrap\MeshTopoData_MeshMethods.cpp" />
+    <ClCompile Include="..\uvwunwrap\MeshTopoData_MNMeshMethods.cpp" />
+    <ClCompile Include="..\uvwunwrap\MeshTopoData_PatchMethods.cpp" />
+    <ClCompile Include="..\uvwunwrap\MeshTopoData_RelaxMethods.cpp" />
+    <ClCompile Include="..\uvwunwrap\PeelModeDialog.cpp" />
+    <ClCompile Include="..\uvwunwrap\publishedfunctions.cpp" />
+    <ClCompile Include="..\uvwunwrap\sctex.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolCopyPaste.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolFlatten.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolGrouping.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolGroupingActions.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolGroupingData.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolGroupingUndo.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolLSCM.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolMapping.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolNormalMap.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolPelt.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolPeltEdgeSelectMode.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolRegularMap.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolRegularMapScriptCommands.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolRegularMapUndo.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolRelax.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolRelaxBySprings.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolRenderUVs.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolSelect.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolSketch.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolSolver.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolSplineMapping.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolSplineMapping_CommandModes.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolSplineMapping_SplineData.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolSplineMapping_Undo.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolSplineMapping_UnwrapFunctions.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolStitch.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolUnfold.cpp" />
+    <ClCompile Include="..\uvwunwrap\ToolUVWTweak.cpp" />
+    <ClCompile Include="..\uvwunwrap\TvConnectionInfo.cpp" />
+    <ClCompile Include="..\uvwunwrap\tvdata.cpp" />
+    <ClCompile Include="..\uvwunwrap\undo.cpp" />
+    <ClCompile Include="..\uvwunwrap\unwrap.cpp" />
+    <ClCompile Include="..\uvwunwrap\UnwrapCustomToolBar.cpp" />
+    <ClCompile Include="..\uvwunwrap\UnwrapCustomToolBarSetup.cpp" />
+    <ClCompile Include="..\uvwunwrap\UnwrapCustomUI.cpp" />
+    <ClCompile Include="..\uvwunwrap\UnwrapImages.cpp" />
+    <ClCompile Include="..\uvwunwrap\UnwrapModifierPanel.cpp" />
+    <ClCompile Include="..\uvwunwrap\unwrapMouseProc.cpp" />
+    <ClCompile Include="..\uvwunwrap\UnwrapRenderItem.cpp" />
+    <ClCompile Include="..\uvwunwrap\UnwrapRenderItemDistortion.cpp" />
+    <ClCompile Include="..\uvwunwrap\UnwrapSideBarUI.cpp" />
+    <ClCompile Include="..\uvwunwrap\Unwrap_PaintDialogMethods.cpp" />
+    <ClCompile Include="..\uvwunwrap\Unwrap_PaintDialogMethodsLegacy.cpp" />
+    <ClCompile Include="..\uvwunwrap\Unwrap_SnapSetting.cpp" />
+    <ClCompile Include="..\uvwunwrap\UtilCluster.cpp" />
+    <ClCompile Include="..\uvwunwrap\UtilityMethods.cpp" />
+    <ClInclude Include="resource.h" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="strings.cpp" />
+    <ClCompile Include="UnwrapRuntime.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="UnwrapRuntime.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

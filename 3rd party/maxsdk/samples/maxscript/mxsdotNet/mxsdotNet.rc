@@ -1,0 +1,115 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "#include ""veroverrides.h""\r\n"
+    "#include ""maxversion.r""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "MXSDotNet"
+    IDS_LIBDESCRIPTION      "MaxScript DotNet Container Host (Autodesk)"
+    IDS_ARRAY_INDEX_MUST_BE_VE_NUMBER_GOT 
+                            "array index must be +ve number, got: "
+    IDS_CREATE_FAILED       "Cannot create the .NET control: "
+    IDS_UNLICENSED_CONTROL  "Unlicensed Control, cannot create: "
+    IDS_SHOWPROPERTIES_NEED_STREAM 
+                            "showProperties to: argument must be a stream, got: "
+    IDS_SHOWMETHODS_NEED_STREAM 
+                            "showMethods to: argument must be a stream, got: "
+    IDS_SHOWEVENTS_NEED_STREAM 
+                            "showEvents to: argument must be a stream, got: "
+    IDS_READ_ONLY_PROPERTY  "Attempt to set read-only property: "
+    IDS_DOTNET_RUNTIME_EXCEPTION ".NET runtime exception: "
+    IDS_NO_EVENT_FOR_OBJECT "Specified event does not exist for .NET object: "
+    IDS_DOTNET_ACCESS_DELETED_OBJECT ".NET runtime exception: Attempt to access deleted .NET object"
+    IDS_BAD_PARAMTYPES_ARRAY_SIZE "Incorrect paramTypes array size"
+    IDS_NO_MATCHING_METHOD "No '%s' method found which matched argument list"
+    IDS_NO_MATCHING_CTOR "No constructor found which matched argument list"
+    IDS_OBJECT_CTOR_FAILED "Construction of object failed: "
+    IDS_CANNOT_RESOLVE_TYPE "Cannot resolve type: "
+    IDS_INSTANCE_TYPE_UNAVAIL "Instances of object type not available: "
+    IDS_BAD_EVENT_HANDLER_TYPE ".NET event handler must be a functions, got: "
+    IDS_BAD_LIFETIME_ARG "Expected #mxs or #dotnet, got:"
+    IDS_CHAR_ZERO_LEN_STRING "Can't convert 0 length string to character"
+    IDS_EMPTY_OBJECT "Attempt to use dotNetObject or dotNetControl with no wrapped object"
+    IDS_DOTNET_OBJ_NOT_ENUM "dotNetObject is not an enum type: "
+    IDS_ENUM_NOT_BIT_FIELD "enum type can not be treated as a bit field (as a set of flags): "
+    IDS_ENUMS_NOT_SAME_TYPE "not all enums are of the same type: "
+    IDS_ONE_ARG_MUST_BE_ENUM "at least one argument needs to be a dotNetObject wrapping a System::Enum derived class"
+	IDS_VALUE_IS_NOT_AN_ARRAY "dotNetObject is not an array type: "
+	IDS_EXPECTED_ARRAY_SIZE_GOT_ARRAY_SIZE "Array size mismatch. Expected array size of %d, got array size of %d."
+    IDS_EXPECTED_ARRAY44 "Expected float[4,4] or double[4,4], got: "
+    IDS_EXPECTED_ARRAY_CONV_TYPE "Expected mxs value class of <Matrix3 | Point2 | Point3 | Point4 | Quat | EulerAngles>, got: "
+	IDS_EXPECTED_ARRAY  "Expected float[] or double[], got: "
+	IDS_EXPECTED_ARRAY2 "Expected float[2] or double[2], got: "
+	IDS_EXPECTED_ARRAY3 "Expected float[3] or double[3], got: "
+	IDS_EXPECTED_ARRAY4 "Expected float[4] or double[4], got: "
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+#include "veroverrides.h"
+#include "maxversion.r"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

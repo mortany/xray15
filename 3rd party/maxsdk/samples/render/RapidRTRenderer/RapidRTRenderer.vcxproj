@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|x64">
+      <Configuration>Hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DA52C3E3-2FDB-4847-AD16-F35A5AF44F4F}</ProjectGuid>
+    <RootNamespace>RapidRTRenderer</RootNamespace>
+    <Keyword>Qt4VS</Keyword>
+    <MaxSDK>../../..</MaxSDK>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.cpp.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir>$(MaxBuildStdplugs)</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <TargetExt>.dlr</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);.\RapidRT\include\;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DisableSpecificWarnings>4458;4250;4589</DisableSpecificWarnings>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <ModuleDefinitionFile>RapidRTRenderer.def</ModuleDefinitionFile>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USE_MATH_DEFINES;NOTIFICATION_API_MODULE;_USRDLL;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(MaxSdkLib);.\RapidRT\binary\lib\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>AmgTranslator.lib;rtid.lib;bmm.lib;core.lib;geom.lib;mesh.lib;maxutil.lib;paramblk2.lib;CommonRendererUI.lib;RenderingAPI.lib;MaxQtBridge.lib;RapidRTCore.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USE_MATH_DEFINES;NOTIFICATION_API_MODULE;_SECURE_SCL=0;_USRDLL;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(MaxSdkLib);.\RapidRT\binary\lib\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>AmgTranslator.lib;rti.lib;bmm.lib;core.lib;geom.lib;mesh.lib;maxutil.lib;paramblk2.lib;CommonRendererUI.lib;RenderingAPI.lib;MaxQtBridge.lib;RapidRTCore.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USE_MATH_DEFINES;NOTIFICATION_API_MODULE;_SECURE_SCL=0;_USRDLL;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;$(MaxSdkLib);.\RapidRT\binary\lib\$(Platform)\$(ConfigRelease)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>AmgTranslator.lib;rti.lib;bmm.lib;core.lib;geom.lib;mesh.lib;maxutil.lib;paramblk2.lib;CommonRendererUI.lib;RenderingAPI.lib;MaxQtBridge.lib;RapidRTCore.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles\Debug\moc_RRTRendParamDlg.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Hybrid\moc_RRTRendParamDlg.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_RRTRendParamDlg.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Plugins\NoiseFilter_RenderElement.cpp" />
+    <ClCompile Include="RapidRenderSession.cpp" />
+    <ClCompile Include="RapidRenderSettingsWrapper.cpp" />
+    <ClCompile Include="RapidRTRendererPlugin.cpp" />
+    <ClCompile Include="DllEntry.cpp" />
+    <ClCompile Include="RRTRendParamDlg.cpp" />
+    <ClCompile Include="Translators\BaseTranslator_AMG_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\BaseTranslator_Camera_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\BaseTranslator_Environment_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\BaseTranslator_INode_to_RTIObject.cpp" />
+    <ClCompile Include="Translators\BaseTranslator_Mtl_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\BaseTranslator_to_RTI.cpp" />
+    <ClCompile Include="Translators\BaseTranslator_to_RTIGeometry.cpp" />
+    <ClCompile Include="Translators\BaseTranslator_to_RTIObject.cpp" />
+    <ClCompile Include="Translators\BaseTranslator_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\BaseTranslator_to_RTITexture.cpp" />
+    <ClCompile Include="Translators\PBUtil.cpp" />
+    <ClCompile Include="Translators\Translator_AMGMtl_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\Translator_BakedTexmap_to_RTITexture.cpp" />
+    <ClCompile Include="Translators\Translator_BitmapFile_to_RTITexture.cpp" />
+    <ClCompile Include="Translators\Translator_Camera_to_RTICamera.cpp" />
+    <ClCompile Include="Translators\Translator_GeomObjectINode_to_RTIObject.cpp" />
+    <ClCompile Include="Translators\Translator_GeomObject_to_RTIGeometry.cpp" />
+    <ClCompile Include="Translators\Translator_LegacyMatteMtl_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\Translator_LightINode_to_RTIObject.cpp" />
+    <ClCompile Include="Translators\Translator_LightscaleLightINode_to_RTIObject.cpp" />
+    <ClCompile Include="Translators\Translator_LightscaleLightWeb_to_RTITexture.cpp" />
+    <ClCompile Include="Translators\Translator_LightscapeLight_to_RTIGeometry.cpp" />
+    <ClCompile Include="Translators\Translator_LightscapeLight_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\Translator_NodeWireColor_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\Translator_PhysicalCameraAperture_to_RTITexture.cpp" />
+    <ClCompile Include="Translators\Translator_PhysicalCamera_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\Translator_PhysSunSkyEnv_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\Translator_RTIRenderAttributes.cpp" />
+    <ClCompile Include="Translators\Translator_RTIRenderOptions.cpp" />
+    <ClCompile Include="Translators\Translator_RTIScene.cpp" />
+    <ClCompile Include="Translators\Translator_SceneRoot_to_RTIGroup.cpp" />
+    <ClCompile Include="Translators\Translator_StandardCamera_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\Translator_StandardEnv_to_RTIShader.cpp" />
+    <ClCompile Include="Translators\Translator_TextureOutput_to_RTITexture.cpp" />
+    <ClCompile Include="Translators\Translator_to_RTIFrameBuffer.cpp" />
+    <ClCompile Include="Translators\Translator_UnsupportedMtl_to_RTIShader.cpp" />
+    <ClCompile Include="Util.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\ArchDesign.rtsl" />
+    <None Include="Shaders\Background.rtsl" />
+    <None Include="Shaders\Background2D.rtsl" />
+    <None Include="Shaders\envSphere.rtsl" />
+    <None Include="Shaders\GenericDielectric.rtsl" />
+    <None Include="Shaders\MatteShadow.rtsl" />
+    <None Include="Shaders\PhotometricLightSpot.rtsl" />
+    <None Include="Shaders\PhotometricLightUniform.rtsl" />
+    <None Include="Shaders\PhotometricLightWeb.rtsl" />
+    <None Include="Shaders\PhysicalCamera.rtsl" />
+    <None Include="Shaders\StandardCamera.rtsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DllEntry.h" />
+    <ClInclude Include="Plugins\NoiseFilter_RenderElement.h" />
+    <ClInclude Include="IRapidAPIManager.h" />
+    <ClInclude Include="RapidRenderSession.h" />
+    <ClInclude Include="RapidRenderSettingsWrapper.h" />
+    <ClInclude Include="RapidRTRendererPlugin.h" />
+    <ClInclude Include="resource.h" />
+    <CustomBuild Include="RRTRendParamDlg.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">Moc%27ing RRTRendParamDlg.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_USE_MATH_DEFINES -DNOTIFICATION_API_MODULE -D_SECURE_SCL=0 -D_USRDLL -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_ADESK_3DSMAX_WINDOWS_ "-D WINVER=0x0601" -D_WIN32_WINNT=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_IE=0x0800 -D_WINDOWS -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SCL_SECURE_NO_DEPRECATE -D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES=1 -D_CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES=1 -DISOLATION_AWARE_ENABLED=1 -DMODULE_NAME=RapidRTRenderer.dlr -DQT_NO_UNICODE_LITERAL -D_HYBRID -DIS_HYBRID -DSECURE_SCL=0 -DWIN32 -DWIN64 -D_WINDLL -D_UNICODE -DUNICODE  "-I$(QTDIR)\include\\." "-I$(MaxSdkInc)\." "-I.\RapidRT\include\RapidRT\internal" "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing RRTRendParamDlg.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_USE_MATH_DEFINES -DNOTIFICATION_API_MODULE -D_USRDLL -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_ADESK_3DSMAX_WINDOWS_ "-D WINVER=0x0601" -D_WIN32_WINNT=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_IE=0x0800 -D_WINDOWS -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SCL_SECURE_NO_DEPRECATE -D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES=1 -D_CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES=1 -DISOLATION_AWARE_ENABLED=1 -DMODULE_NAME=RapidRTRenderer.dlr -DQT_NO_UNICODE_LITERAL -D_DEBUG -DWIN32 -DWIN64 -D_WINDLL -D_UNICODE -DUNICODE  "-I$(QTDIR)\include\\." "-I$(MaxSdkInc)\." "-I.\RapidRT\include\RapidRT\internal" "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing RRTRendParamDlg.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_USE_MATH_DEFINES -DNOTIFICATION_API_MODULE -D_SECURE_SCL=0 -D_USRDLL -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_ADESK_3DSMAX_WINDOWS_ "-D WINVER=0x0601" -D_WIN32_WINNT=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_IE=0x0800 -D_WINDOWS -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SCL_SECURE_NO_DEPRECATE -D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES=1 -D_CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES=1 -DISOLATION_AWARE_ENABLED=1 -DMODULE_NAME=RapidRTRenderer.dlr -DQT_NO_UNICODE_LITERAL -DNDEBUG -DSECURE_SCL=0 -DWIN32 -DWIN64 -D_WINDLL -D_UNICODE -DUNICODE  "-I$(QTDIR)\include\\." "-I$(MaxSdkInc)\." "-I.\RapidRT\include\RapidRT\internal" "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+    </CustomBuild>
+    <ClInclude Include="Translators\BaseTranslator_AMG_to_RTIShader.h" />
+    <ClInclude Include="Translators\BaseTranslator_Camera_to_RTIShader.h" />
+    <ClInclude Include="Translators\BaseTranslator_Environment_to_RTIShader.h" />
+    <ClInclude Include="Translators\BaseTranslator_INode_to_RTIObject.h" />
+    <ClInclude Include="Translators\BaseTranslator_Mtl_to_RTIShader.h" />
+    <ClInclude Include="Translators\BaseTranslator_to_RTI.h" />
+    <ClInclude Include="Translators\BaseTranslator_to_RTI.inline.h" />
+    <ClInclude Include="Translators\BaseTranslator_to_RTIGeometry.h" />
+    <ClInclude Include="Translators\BaseTranslator_to_RTIObject.h" />
+    <ClInclude Include="Translators\BaseTranslator_to_RTIShader.h" />
+    <ClInclude Include="Translators\BaseTranslator_to_RTIShader.inline.h" />
+    <ClInclude Include="Translators\BaseTranslator_to_RTITexture.h" />
+    <ClInclude Include="Translators\PBUtil.h" />
+    <ClInclude Include="Translators\TranslatorOutputs.h" />
+    <ClInclude Include="Translators\TranslatorOutputs.inline.h" />
+    <ClInclude Include="Translators\Translator_AMGMtl_to_RTIShader.h" />
+    <ClInclude Include="Translators\Translator_BakedTexmap_to_RTITexture.h" />
+    <ClInclude Include="Translators\Translator_BitmapFile_to_RTITexture.h" />
+    <ClInclude Include="Translators\Translator_Camera_to_RTICamera.h" />
+    <ClInclude Include="Translators\Translator_GeomObjectINode_to_RTIObject.h" />
+    <ClInclude Include="Translators\Translator_GeomObject_to_RTIGeometry.h" />
+    <ClInclude Include="Translators\Translator_LegacyMatteMtl_to_RTIShader.h" />
+    <ClInclude Include="Translators\Translator_LightINode_to_RTIObject.h" />
+    <ClInclude Include="Translators\Translator_LightscaleLightINode_to_RTIObject.h" />
+    <ClInclude Include="Translators\Translator_LightscaleLightWeb_to_RTITexture.h" />
+    <ClInclude Include="Translators\Translator_LightscapeLight_to_RTIGeometry.h" />
+    <ClInclude Include="Translators\Translator_LightscapeLight_to_RTIShader.h" />
+    <ClInclude Include="Translators\Translator_NodeWireColor_to_RTIShader.h" />
+    <ClInclude Include="Translators\Translator_PhysicalCameraAperture_to_RTITexture.h" />
+    <ClInclude Include="Translators\Translator_PhysicalCamera_to_RTIShader.h" />
+    <ClInclude Include="Translators\Translator_PhysSunSkyEnv_to_RTIShader.h" />
+    <ClInclude Include="Translators\Translator_RTIRenderAttributes.h" />
+    <ClInclude Include="Translators\Translator_RTIRenderAttributes.inline.h" />
+    <ClInclude Include="Translators\Translator_RTIRenderOptions.h" />
+    <ClInclude Include="Translators\Translator_RTIScene.h" />
+    <ClInclude Include="Translators\Translator_SceneRoot_to_RTIGroup.h" />
+    <ClInclude Include="Translators\Translator_StandardCamera_to_RTIShader.h" />
+    <ClInclude Include="Translators\Translator_StandardEnv_to_RTIShader.h" />
+    <ClInclude Include="Translators\Translator_TextureOutput_to_RTITexture.h" />
+    <ClInclude Include="Translators\Translator_to_RTIFrameBuffer.h" />
+    <ClInclude Include="Translators\Translator_UnsupportedMtl_to_RTIShader.h" />
+    <ClInclude Include="Translators\TypeUtil.h" />
+    <ClInclude Include="Translators\TypeUtil.inline.h" />
+    <ClInclude Include="Util.h" />
+    <ClInclude Include="Util.inline.h" />
+    <ClInclude Include="veroverrides.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RapidRTRenderer.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Qt5Version_x0020_x64="5.11.2"  />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

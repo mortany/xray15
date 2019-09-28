@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|x64">
+      <Configuration>Hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\NotificationAPI\InteractiveRenderingAPI_Subscription.h" />
+    <ClInclude Include="..\..\..\include\NotificationAPI\NotificationAPI_Events.h" />
+    <ClInclude Include="..\..\..\include\NotificationAPI\NotificationAPI_Subscription.h" />
+    <ClInclude Include="Clients\ImmediateNotificationClient.h" />
+    <ClInclude Include="Clients\OnDemandNotificationClient.h" />
+    <ClInclude Include="Events\GenericEvent.h" />
+    <ClInclude Include="Events\IMergeableEvent.h" />
+    <ClInclude Include="Events\MaterialEvent.h" />
+    <ClInclude Include="Events\NodeEvent.h" />
+    <ClInclude Include="Events\ReferenceTargetEvent.h" />
+    <ClInclude Include="Events\SceneNodeEvent.h" />
+    <ClInclude Include="Events\TexmapEvent.h" />
+    <ClInclude Include="Events\ViewEvent.h" />
+    <ClInclude Include="InteractiveRendering\Clients\BaseInteractiveRenderingClient.h" />
+    <ClInclude Include="InteractiveRendering\Clients\ImmediateInteractiveRenderingClient.h" />
+    <ClInclude Include="InteractiveRendering\Clients\OnDemandInteractiveRenderingClient.h" />
+    <ClInclude Include="InteractiveRendering\InteractiveRenderingManager.h" />
+    <ClInclude Include="InteractiveRendering\InteractiveRenderingUtils.h" />
+    <ClInclude Include="InteractiveRendering\InteractiveRenderingViewData.h" />
+    <ClInclude Include="NotificationAPIUtils.h" />
+    <ClInclude Include="NotificationManager.h" />
+    <ClInclude Include="Notifiers\MaxMaterialNotifier.h" />
+    <ClInclude Include="Notifiers\MaxNodeNotifier.h" />
+    <ClInclude Include="Notifiers\MaxNotifier.h" />
+    <ClInclude Include="Notifiers\MaxRefTargNotifier.h" />
+    <ClInclude Include="Notifiers\MaxRenderEnvironmentNotifier.h" />
+    <ClInclude Include="Notifiers\MaxRenderSettingsNotifier.h" />
+    <ClInclude Include="Notifiers\MaxSceneNotifier.h" />
+    <ClInclude Include="Notifiers\MaxTexmapNotifier.h" />
+    <ClInclude Include="Notifiers\MaxViewNotifier.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="veroverrides.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NotificationSystem.def" />
+    <None Include="README_TechnicalDesign.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Clients\ImmediateNotificationClient.cpp" />
+    <ClCompile Include="Clients\OnDemandNotificationClient.cpp" />
+    <ClCompile Include="DllEntry.cpp" />
+    <ClCompile Include="Events\GenericEvent.cpp" />
+    <ClCompile Include="Events\MaterialEvent.cpp" />
+    <ClCompile Include="Events\NodeEvent.cpp" />
+    <ClCompile Include="Events\ReferenceTargetEvent.cpp" />
+    <ClCompile Include="Events\SceneNodeEvent.cpp" />
+    <ClCompile Include="Events\TexmapEvent.cpp" />
+    <ClCompile Include="Events\ViewEvent.cpp" />
+    <ClCompile Include="InteractiveRendering\Clients\BaseInteractiveRenderingClient.cpp" />
+    <ClCompile Include="InteractiveRendering\Clients\ImmediateInteractiveRenderingClient.cpp" />
+    <ClCompile Include="InteractiveRendering\Clients\OnDemandInteractiveRenderingClient.cpp" />
+    <ClCompile Include="InteractiveRendering\InteractiveRenderingManager.cpp" />
+    <ClCompile Include="InteractiveRendering\InteractiveRenderingUtils.cpp" />
+    <ClCompile Include="InteractiveRendering\InteractiveRenderingViewData.cpp" />
+    <ClCompile Include="NotificationAPIUtils.cpp" />
+    <ClCompile Include="NotificationManager.cpp" />
+    <ClCompile Include="Notifiers\MaxMaterialNotifier.cpp" />
+    <ClCompile Include="Notifiers\MaxNodeNotifier.cpp" />
+    <ClCompile Include="Notifiers\MaxNotifier.cpp" />
+    <ClCompile Include="Notifiers\MaxRefTargNotifier.cpp" />
+    <ClCompile Include="Notifiers\MaxRenderEnvironmentNotifier.cpp" />
+    <ClCompile Include="Notifiers\MaxRenderSettingsNotifier.cpp" />
+    <ClCompile Include="Notifiers\MaxSceneNotifier.cpp" />
+    <ClCompile Include="Notifiers\MaxTexmapNotifier.cpp" />
+    <ClCompile Include="Notifiers\MaxViewNotifier.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NotificationSystem.rc" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E8CD794F-4AB1-41EA-8903-3D1B5C0B7825}</ProjectGuid>
+    <RootNamespace>NotificationSystem</RootNamespace>
+    <MaxSDK>../../..</MaxSDK>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.cpp.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir>$(MaxBuild)</OutDir>
+    <TargetName>NotificationSystem</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <DisableSpecificWarnings>4250</DisableSpecificWarnings>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>geom.lib;core.lib;maxutil.lib;NotificationAPIUtils.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>$(MaxSdkLib)\$(TargetName).lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_USRDLL;NOTIFICATION_SYSTEM_MODULE;%(PreprocessorDefinitions);NOTIFICATION_SYSTEM_MODULE</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_USRDLL;NOTIFICATION_SYSTEM_MODULE;%(PreprocessorDefinitions);NOTIFICATION_SYSTEM_MODULE</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USRDLL;NOTIFICATION_SYSTEM_MODULE;%(PreprocessorDefinitions);NOTIFICATION_SYSTEM_MODULE</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

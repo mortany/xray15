@@ -1,0 +1,20 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright 2015 Autodesk, Inc.  All rights reserved.
+//
+//  Use of this software is subject to the terms of the Autodesk license 
+//  agreement provided at the time of installation or download, or which 
+//  otherwise accompanies this software in either electronic or hard copy form.   
+//
+//////////////////////////////////////////////////////////////////////////////
+
+// 3ds Max Photometric Uniform (diffuse/isotropic) Light
+shader PhotometricLightUniform : material
+{
+	uniform float3 m_flux = float3(1.0);
+	
+	void emission()
+	{ 
+        rt_Emission = m_flux / rt_SurfaceArea;
+	}
+}

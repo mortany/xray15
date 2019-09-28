@@ -1,0 +1,301 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "#include ""veroverrides.h""\r\n"
+    "#include ""maxversion.r""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_ERROR_INIT_RAPID    "Internal error: failed to initialize renderer."
+    IDS_RAPID_CLASS_NAME    "ART Renderer"
+    IDS_ERROR_FAR_CLIP_NOT_SUPPORTED 
+                            "The camera uses a far clipping plane that is within the scene boundaries, however the far clip plane is not supported."
+    IDS_PARAM_MOTION_BLUR_ALL_OBJECTS "Motion Blur All Objects"
+    IDS_PARAM_ITERATIONS    "Iterations"
+    IDS_SHADER_PARAM_ERROR_FORMAT 
+                            "Failed to set parameter value '%s' for shader '%s'"
+    IDS_PROGRESS_TRANSLATING_ENVIRONMENT "Translating environment"
+    IDS_NODE_MATERIAL_NAME_FORMAT "Node Color (%s)"
+    IDS_NODE_LIGHTSHADER_NAME_FORMAT "Light Shader (%s)"
+    IDS_RENDER_DONE         "Rendering done"
+    IDS_ROLLOUT_TITLE_MAIN  "Rendering Parameters"
+    IDS_QUALITY_MINIMUM     "Min."
+    IDS_OTHER_STOPPING_CRITERIA 
+                            "Stop rendering even if quality is not attained:"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_QUALITY_SPINBOX_LABEL "Target quality:"
+    IDS_ITERATION_RENDER_TIME "Iteration rendered and processed in %.3fs"
+    IDS_RENDER_INIT_SCENE   "Initialiazing scene"
+    IDS_PROGRESS_RENDERED_ITERATION "Rendered %d Iterations"
+    IDS_RENDERED_DOWN_RES_ITERATION 
+                            "Rendered interactive iteration with down-resolution factor %u."
+    IDS_RENDER_TRANSLATING_TONEOPANDCAM "Translating Tone Operator and Camera"
+    IDS_RENDER_RAPID_SETUP  "Adding scene to Rapid data"
+    IDS_ERROR_PLANAR_ISOTROPIC_LIGHT 
+                            "Light '%s' has a planar shape (disc or rectangle) and a Uniform Spherical distribution, a combination which is physically implausible and unsupported. Light will render with a Uniform Diffuse distribution instead. Use a sphere shape to get a proper Uniform Spherical distribution."
+    IDS_COMPILATION_MESSAGE_FORMAT "(While compiling shader %s) %s"
+    IDS_UNSUPPORTED_LIGHT_NODE "This light object is not supported: %s (%s)"
+    IDS_UNSUPPORTED_GENERIC_NODE "This object is not supported: %s (%s)"
+    IDS_UNSUPPORTED_MATERIAL 
+                            "This material is not supported: %s (%s). An approximation will be used."
+    IDS_MISSING_SHADER_FILE "Missing shader file: %s"
+    IDS_ENVIRONMENT_SHADER_NAME "Environment"
+    IDS_PROGRESS_TERMINATION_ITERATION "Rendered %d of %d Iterations"
+    IDS_PARAM_ENABLE_DOF    "Enable Depth of Field"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PROGRESS_RENDERED_QUALITY_INFINITE 
+                            "Quality Reached: Infinite (Beyond the Moon!)"
+    IDS_PARAM_ENABLE_ANIMATED_NOISE "Enable Animated Noise"
+    IDS_ERROR_INODE_TRANSLATION_FAILED "Failed to translate object: %s"
+    IDS_ERROR_TEXTURE_TRANSLATION_FAILED 
+                            "Failed to translate texture map: %s (%s)"
+    IDS_ERROR_BOKEH_TEXTURE_TRANSLATION_FAILED 
+                            "Failed to translate bokeh texture map for camera: %s"
+    IDS_ERROR_DISTORTION_TEXTURE_TRANSLATION_FAILED 
+                            "Failed to translate distortion texture map for camera: %s"
+    IDS_ERROR_WIREMTL_TRANSLATION_FAILURE 
+                            "Failed to translate material for object: %s"
+    IDS_RENDER_TRANSLATING_NODE "Initializing object %d of %d: %s"
+    IDS_NOISEFILTER_SUCCEED "Noise filter processed in %.1fs"
+    IDS_NOISEFILTER_STARTED "Processing noise filter on frame buffer..."
+    IDS_NOISEFILTER_OUT_OF_MEMORY "Not enough memory to process noise filter"
+    IDS_NOISEFILTER_ABORTED "Noise filter processing aborted"
+    IDS_NOISEFILTER_ERROR   "Error while processing noise filter"
+    IDS_RENDERING_OUT_OF_MEMORY "Not enough memory to continue rendering"
+    IDS_RENDERING_ERROR     "Error while rendering"
+    IDS_NOISEFILTER_ELEMENT_UNFILTERED "Unfiltered"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PARAM_ENABLE_CAUSTICS "Enable Caustics"
+    IDS_PARAM_ENABLE_CLUSTER "Enable Cluster"
+    IDS_PARAM_CLUSTER_ADDRESS "Cluster Address"
+    IDS_PARAM_RENDER_METHOD "Render Method"
+    IDS_PARAM_POINT_LIGHT_DIAMETER "Point Light Diameter"
+    IDS_TOOLTIP_POINT_LIGHT_DIAMETER 
+                            "All point lights are rendered as spherical or disc lights of the given diameter. Similarly, linear lights are rendered as cylindrical or rectangular lights with this value as the diameter/width."
+    IDS_PARAM_ENABLE_MOTION_BLUR "Enable Motion Blur"
+    IDS_PARAM_MOTION_BLUR_SHUTTER_LENGTH "Motion Blur Shutter Length"
+    IDS_TOOLTIP_ITERATIONS  "If enabled, rendering will stop after reaching the given number of iterations."
+    IDS_PARAM_ENABLE_OUTLIER_CLAMP "Enable Outlier Clamp"
+    IDS_PARAM_TIME_SPLIT_SECONDS "Time Split Seconds"
+    IDS_PARAM_TIME_SPLIT_MINUTES "Time Split Minutes"
+    IDS_PARAM_TIME_SPLIT_HOURS "Time Split Hours"
+    IDS_PARAM_ENABLE_FAST_PATH_TRACING "Enable Fast Path Tracing"
+    IDS_PARAM_ENABLE_LOW_NOISE_DIRECT "Enable Low Noise Direct"
+    IDS_TOOLTIP_MOTION_BLUR_ALL_OBJECTS 
+                            "Enables motion blur on all objects in the scene, regardless of whether they have it enabled in the object properties."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SHADER_COMPILE_FAILED "Failed to compile shader %s in file: %s"
+    IDS_PARAM_DOF_APERTURE_FSTOP "Depth of Field Lens Aperture"
+    IDS_PARAM_ANTI_ALIASING_FILTER_DIAMETER "Anti-Aliasing Filter Diameter"
+    IDS_PHYSICAL_CAMERA_SHADER_NAME "Physical Camera"
+    IDS_STANDARD_CAMERA_SHADER_NAME "Standard Camera"
+    IDS_RENDER_UPDATING_ITERATION "Updating frame buffer (iteration %d)"
+    IDS_PROGRESS_RENDERED_QUALITY "Quality Reached: %.1f dB (%s)"
+    IDS_PROGRESS_RENDERED_TIME "Rendered for %02dh %02dm %02ds"
+    IDS_PARAM_ENABLE_ITERATIONS "Enable Iterations"
+    IDS_RENDERMETHOD_PATH_TRACING "Advanced Path Tracing"
+    IDS_PARAM_ENABLE_QUALITY "Enable Quality"
+    IDS_RENDERMETHOD_FAST_PATH_TRACING "Fast Path Tracing"
+    IDS_PARAM_QUALITY_DB    "Quality dB"
+    IDS_TOOLTIP_QUALITY     "Rendering will stop once the image has reached the desired quality. Quality is measured as the signal to noise ratio (SNR) in decibels (dB)."
+    IDS_TOOLTIP_TIME        "If enabled, rendering will stop after the given time limit has elapsed."
+    IDS_PROGRESS_TERMINATION_TIME 
+                            "Rendered for %02dh %02dm %02ds of %02dh %02dm %02ds"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TITLE_ITERATIONS_CHECKBOX "Iterations:"
+    IDS_TITLE_ANTI_ALIASING_GROUP "Anti-Aliasing"
+    IDS_TITLE_FILTER_LABEL  "Filter Diameter:"
+    IDS_PIXELS_UNIT_SUFFIX  " pixels"
+    IDS_TITLE_SCENE_OPTIONS_GROUP "Scene"
+    IDS_PARAM_ENABLE_TIME   "Enable Time"
+    IDS_PARAM_TIME          "Time in Seconds"
+    IDS_TITLE_POINT_LIGHT_DIAM_LABEL "Point Light Diameter:"
+    IDS_TITLE_MOTION_BLUR_ALL_OBJECTS_CHECKBOX 
+                            "All Objects Receive Motion Blur"
+    IDS_RENDERMETHOD_LOW_NOISE "Low Noise"
+    IDS_RENDERMETHOD_LOW_NOISE_DIRECT "Low Noise for Exteriors"
+    IDS_TITLE_RENDERING_METHOD_GROUP "Lighting and Material Fidelity"
+    IDS_TOOLTIP_RENDER_MODE "Selects the technique to be used for rendering the image.\n\nThe Low Noise modes quickly produce noise-free images by compromising fidelity of lighting and shading.\n\nThe Path Tracing modes provide very high fidelity but will take longer to render to a noise-free image."
+    IDS_MR_SUNSKY_USED_WITHOUT_ENV 
+                            "A mr Sun & Sky system is being used without the ""mr Physical Sky"" environment map. The Sun & Sky system will not render without this environment map."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PROGRESS_TERMINATION_QUALITY 
+                            "Quality Reached: %.1f dB (%s), Target: %.1f dB"
+    IDS_PROGRESS_TIME_ESTIMATE "Estimated Time Left: %02dh %02dm %02ds"
+    IDS_PROGRESS_TIME_EXACT "Time Left: %02dh %02dm %02ds"
+    IDS_QUALITY_PRESET_CUSTOM "Custom"
+    IDS_QUALITY_DRAFT       "Draft"
+    IDS_QUALITY_MEDIUM      "Medium"
+    IDS_QUALITY_HIGH        "High"
+    IDS_QUALITY_VERY_HIGH   "X-High"
+    IDS_QUALITY_MAXIMUM     "Max."
+    IDS_TERMINATING_ITERATIONS 
+                            "Terminating render: desired number of iterations reached."
+    IDS_TERMINATING_TIME    "Terminating render: desired time limit reached."
+    IDS_TERMINATING_QUALITY "Terminating render: desired quality threshold reached."
+    IDS_WARNING_OUTLIER_CLAMP_EXPOSURE_CONTROL 
+                            "Outlier clamp could not be configured with the current exposure control. It is disabled."
+    IDS_TERMINATING_USER_REQUEST "Terminating render due to user request."
+    IDS_GENERAL_PARAMETERS_PB_NAME "Parameters"
+    IDS_TOOLTIP_PATH_TRACING 
+                            "<b>Advanced path tracing</b>:<ul><li>Very high fidelity</li><li>Renders complex light interactions</li><li>Long render times</li></ul>"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TOOLTIP_LOW_NOISE   "<b>Low noise</b>:<ul><li>Low fidelity</li><li>De-noises quickly</li><li>Simple indirect illumination</li><li>No glossy reflections</li><li>Recommended for interactive previews, draft</li></ul>"
+    IDS_TOOLTIP_FAST_PATH_TRACING 
+                            "<b>Fast path tracing</b>:<ul><li>High fidelity</li><li>Optimized indirect illumination for reduced noise</li><li>Recommended for production rendering</li></ul>"
+    IDS_TOOLTIP_LOW_NOISE_DIRECT 
+                            "<b>Low noise for exteriors</b>:<ul><li>Low fidelity</li><li>De-noises quickly</li><li>No indirect illumination</li><li>No glossy reflections</li><li>Recommended for interactive previews, draft</li><li><b>Only for outdoor scenes and environment-lit objects</b></li></ul>"
+    IDS_TOOLTIP_FILTER_DIAMETER 
+                            "Sets the diameter of the anti-aliasing filter. Increasing this value will add some blurring to the rendered image, but will smooth harsh (aliased) edges."
+    IDS_TITLE_RENDERING_METHOD "Rendering Method:"
+    IDS_PARAM_MAX_DOWN_RES_FACTOR "Maximum Interactive Down Res Factor"
+    IDS_TITLE_TERMINATION_GROUP "Render Quality"
+    IDS_TITLE_QUALITY_CHECKBOX "Quality:"
+    IDS_DECIBELS_UNIT_SUFFIX " dB"
+    IDS_TITLE_TIME_CHECKBOX "Time:"
+    IDS_HOURS_UNIT_SUFFIX   " h"
+    IDS_MINUTES_UNIT_SUFFIX " m"
+    IDS_SECONDS_UNIT_SUFFIX " s"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_NOISEFILTER_ELEMENT_25PCT "25%"
+    IDS_NOISEFILTER_ELEMENT_50PCT "50%"
+    IDS_NOISEFILTER_ELEMENT_PARAMBLOCK_NAME 
+                            "Noise Filter Render Element Parameters"
+    IDS_NOISEFILTER_ELEMENT_ENABLED "Enabled"
+    IDS_NOISEFILTER_ELEMENT_BITMAP "Bitmap"
+    IDS_NOISEFILTER_ELEMENT_STRENGTH "Strength"
+    IDS_NOISEFILTER_ELEMENT_NAME "Name"
+    IDS_NOISEFILTER_ELEMENT_CLASSNAME "ART Renderer Noise Filter"
+    IDS_NOISEFILTER_ELEMENT_75PCT "75%"
+    IDS_NOISEFILTER_ELEMENT_FULLYFILTERED "Fully filtered"
+    IDS_NOISEFILER_ELEMENT_STRENGTH_LABEL "Strength:"
+    IDS_NOISEFILTER_ELEMENT_STRENGTH_UNIT "%"
+    IDS_NOISEFITLER_ELEMENT_STRENGTH_TOOLTIP 
+                            "This filter can completely eliminate noise from the rendered image, but at the cost of some detail. The noisier the image, the more detail lost.\n\nThe filter strength enables mixing of the filtered and unfiltered images.\n\n100% is useful for draft as it produces a completely noise-free image.\n50% is useful for final frames as it reduces the noise significantly while preserving most of the detail."
+    IDS_ROLLOUT_TITLE_IMAGE_QUALITY "Filtering"
+    IDS_NOISEFILTER_ELEMENT_STRENGTH_PERCENTAGE "Strength Percentage"
+    IDS_ROLLOUT_TITLE_ADVANCED "Advanced"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERROR_LOADING_BITMAP_FAILED "Failed to load texture file: %s"
+    IDS_ERROR_LOADING_BITMAP_MISSING "Missing texture file: %s"
+    IDS_ERROR_TRANSLATING_BITMAP_FAILED "Failed to translate bitmap: %s"
+    IDS_FILTER_STRENGTH     "Filter Strength"
+    IDS_NOISE_FILTERING     "Noise Filtering"
+    IDS_NOISE_PATTERN       "Noise Pattern"
+    IDS_ANIMATE_NOISE_PATTERN "Animate Noise Pattern"
+    IDS_ANIMATE_NOISE_PATTERN_TOOLTIP 
+                            "Enabling this option will vary the noise pattern for each frame of an animation render.\n\nThis is desirable for high quality animation renders, as it produces a more natural look, akin to film grain.\n\nFor low-quality (draft) renders, however, a static noise pattern may be preferable."
+    IDS_ENABLE              "Enable"
+    IDS_FILTER_STRENGTH_LABEL "Filter Strength:"
+    IDS_PARAM_NOISE_FILTER_STRENGTH "Noise Filter Strength"
+    IDS_PARAM_NOISE_FILTER_STRENGTH_PERCENTAGE 
+                            "Noise Filter Strength Percentage"
+    IDS_PARAM_ENABLE_NOISE_FILTER "Enable Noise Filter"
+    IDS_PARAM_TEXTURE_BAKE_RESOLUTION "Texture Bake Resolution"
+    IDS_ERROR_MTL_TRANSLATION_FAILURE 
+                            """Failed to translate material '%s (%s)' for object: %s"""
+    IDS_TIMER_MESH_TRANSLATION "Geometry"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TIMING_LIGHTS       "Lights"
+    IDS_TIMER_AMG_MATERIAL  "AMG Materials"
+    IDS_TIMING_CAMERA       "Camera"
+    IDS_TIMER_BAKED_TEXMAP  "Baked Textures"
+    IDS_TIMER_BITMAP        "Bitmaps"
+    IDS_TIMING_SCENE        "Scene"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+#include "veroverrides.h"
+#include "maxversion.r"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

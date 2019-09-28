@@ -1,0 +1,151 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PARAM_PANEL DIALOGEX 0, 0, 217, 91
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_GAMMA_EDIT,"CustEdit",WS_TABSTOP,169,43,20,10
+    CONTROL         "",IDC_GAMMA_SPIN,"SpinnerControl",0x0,191,43,7,10
+    CONTROL         "Custom1",IDC_MAP,"CustButton",WS_TABSTOP,63,29,135,12
+    CONTROL         "",IDC_MAP_ON,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,49,29,10,10
+    CONTROL         "",IDC_GAIN_EDIT,"CustEdit",WS_TABSTOP,147,55,42,10
+    CONTROL         "",IDC_GAIN_SPIN,"SpinnerControl",0x0,191,55,7,10
+    GROUPBOX        "Color / Gamma / Gain",IDC_STATIC,6,0,204,84
+    CONTROL         "Reverse Gamma",IDC_REVERSE_GAMMA,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,66,66,12
+    LTEXT           "Map:",IDC_STATIC,17,29,17,8
+    LTEXT           "Gamma",IDC_STATIC,17,41,25,8
+    LTEXT           "Gain",IDC_STATIC,17,55,16,8
+    LTEXT           "Solid Color",IDC_STATIC,18,12,34,8
+    CONTROL         "",IDC_SOLID_COLOR,"ColorSwatch",0x0,114,12,84,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_PARAM_PANEL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 209
+        VERTGUIDE, 29
+        VERTGUIDE, 60
+        VERTGUIDE, 113
+        VERTGUIDE, 162
+        VERTGUIDE, 165
+        VERTGUIDE, 198
+        VERTGUIDE, 202
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 83
+        HORZGUIDE, 21
+        HORZGUIDE, 36
+        HORZGUIDE, 88
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "#include ""veroverrides.h""\r\n"
+    "#include ""maxversion.r""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_PARAM_PANEL AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_LIBDESCRIPTION      "Color Map (Autodesk)"
+    IDS_CATEGORY            "other"
+    IDS_CLASS_NAME          "ColorMap"
+    IDS_PARAMS              "Parameters"
+    IDS_SOLID_COLOR         "Solid Color"
+    IDS_MAP                 "Map"
+    IDS_GAMMA               "Gamma"
+    IDS_GAIN                "Gain"
+    IDS_MAP_ON              "Map Enable"
+    IDS_REVERSE_GAMMA       "Reverse Gamma"
+    IDS_CLASS_NAME_IMP      "Color Map"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+#include "veroverrides.h"
+#include "maxversion.r"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

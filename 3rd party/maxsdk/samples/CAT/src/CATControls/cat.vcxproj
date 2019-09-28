@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|x64">
+      <Configuration>Hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>CATControls</ProjectName>
+    <ProjectGuid>{5CF8F09D-CC0F-487D-939A-9C6A83E7ADE4}</ProjectGuid>
+    <RootNamespace>CATControls</RootNamespace>
+    <MaxSDK>../../../../../maxsdk</MaxSDK>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.cpp.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir>$(MaxBuildStdplugs)</OutDir>
+    <TargetName>CAT</TargetName>
+    <TargetExt>.dlc</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>CATPlugins.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>bmm.lib;gup.lib;expr.lib;comctl32.lib;core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;paramblk2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\cat.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USRDLL;CATCONTROLS;CAT_REGO_BUILD;CAT_MAX8;CAT_MAX9;CAT_MAX2010;CAT3;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderOutputFile>$(IntDir)CAT.x64.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USRDLL;CATCONTROLS;CAT_DEBUG;CAT_MAX8;CAT_MAX9;CAT_MAX2010;CAT3;DBGREF;_SECURE_SCL=0;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderOutputFile>$(IntDir)CAT.x64.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USRDLL;CATCONTROLS;CAT_DEBUG;CAT_MAX8;CAT_MAX9;CAT_MAX2010;CAT3;DBGREF;_SECURE_SCL=0;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\CATObjects\HubObject.h" />
+    <ClInclude Include="..\DataRestoreObj.h" />
+    <ClInclude Include="AllClasses.h" />
+    <ClInclude Include="BezierInterp.h" />
+    <ClInclude Include="Callback.h" />
+    <ClInclude Include="cat.h" />
+    <ClInclude Include="CATCharacterRemap.h" />
+    <ClInclude Include="CATDialog.h" />
+    <ClInclude Include="..\CATObjects\CatDotIni.h" />
+    <ClInclude Include="CATFilePaths.h" />
+    <ClInclude Include="CATMessages.h" />
+    <ClInclude Include="CATMotionController.h" />
+    <ClInclude Include="CATNodeControl.h" />
+    <ClInclude Include="CATNodeControlDistributed.h" />
+    <ClInclude Include="CatPlugins.h" />
+    <ClInclude Include="CATToken.h" />
+    <ClInclude Include="..\CATObjects\IniFile.h" />
+    <ClInclude Include="FnPub\IBoneGroupManagerFP.h" />
+    <ClInclude Include="FnPub\ICATControlFP.h" />
+    <ClInclude Include="FnPub\ICATParentFP.h" />
+    <ClInclude Include="FnPub\IExtraRigNodesFP.h" />
+    <ClInclude Include="FnPub\IHubFP.h" />
+    <ClInclude Include="FnPub\ILimbFP.h" />
+    <ClInclude Include="FnPub\INodeControlFP.h" />
+    <ClInclude Include="FnPub\ISpineFP.h" />
+    <ClInclude Include="FnPub\ITailFP.h" />
+    <ClInclude Include="FnPub\ILayerRootFP.h" />
+    <ClInclude Include="Locale.h" />
+    <ClInclude Include="math.h" />
+    <ClInclude Include="ProgressWindow.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="TrackViewFunctions.h" />
+    <ClInclude Include="version.h" />
+    <ClInclude Include="CATClipHierarchy.h" />
+    <ClInclude Include="CATClipRoot.h" />
+    <ClInclude Include="CATClipValue.h" />
+    <ClInclude Include="CATClipValues.h" />
+    <ClInclude Include="CATClipWeights.h" />
+    <ClInclude Include="CATTransformOffset.h" />
+    <ClInclude Include="HDPivotTrans.h" />
+    <ClInclude Include="HIPivotTrans.h" />
+    <ClInclude Include="ICATClipHierarchy.h" />
+    <ClInclude Include="ILayerInfo.h" />
+    <ClInclude Include="LayerTransform.h" />
+    <ClInclude Include="NLAInfo.h" />
+    <ClInclude Include="RootNodeController.h" />
+    <ClInclude Include="ArbBoneTrans.h" />
+    <ClInclude Include="BoneData.h" />
+    <ClInclude Include="BoneSegTrans.h" />
+    <ClInclude Include="..\CATAPI.h" />
+    <ClInclude Include="CATControl.h" />
+    <ClInclude Include="CATGroup.h" />
+    <ClInclude Include="..\CATObjects\CATParent.h" />
+    <ClInclude Include="CATParentTrans.h" />
+    <ClInclude Include="CATRigPresets.h" />
+    <ClInclude Include="CATUnitsPosition.h" />
+    <ClInclude Include="CATWeight.h" />
+    <ClInclude Include="CollarBoneTrans.h" />
+    <ClInclude Include="DigitData.h" />
+    <ClInclude Include="DigitSegTrans.h" />
+    <ClInclude Include="..\CATObjects\ECATParent.h" />
+    <ClInclude Include="ExtraRigNodes.h" />
+    <ClInclude Include="FootTrans2.h" />
+    <ClInclude Include="Hub.h" />
+    <ClInclude Include="ICATParent.h" />
+    <ClInclude Include="IKTargController.h" />
+    <ClInclude Include="LimbData2.h" />
+    <ClInclude Include="PalmTrans2.h" />
+    <ClInclude Include="ProxyTransform.h" />
+    <ClInclude Include="SpineData2.h" />
+    <ClInclude Include="SpineTrans2.h" />
+    <ClInclude Include="TailData2.h" />
+    <ClInclude Include="TailTrans.h" />
+    <ClInclude Include="..\CATObjects\Bone.h" />
+    <ClInclude Include="..\CATObjects\CATObject Superclass.h" />
+    <ClInclude Include="..\CATObjects\ICATObject.h" />
+    <ClInclude Include="..\CATObjects\IKTargetObject.h" />
+    <ClInclude Include="CATGraph.h" />
+    <ClInclude Include="CATHierarchy.h" />
+    <ClInclude Include="CATHierarchyBranch2.h" />
+    <ClInclude Include="CATHierarchyFunctions.h" />
+    <ClInclude Include="CATHierarchyLeaf.h" />
+    <ClInclude Include="CATHierarchyRoot.h" />
+    <ClInclude Include="CATMotionDigitRot.h" />
+    <ClInclude Include="CATMotionHub2.h" />
+    <ClInclude Include="CATMotionLayer.h" />
+    <ClInclude Include="CATMotionLimb.h" />
+    <ClInclude Include="CATMotionPlatform.h" />
+    <ClInclude Include="CATMotionPresets.h" />
+    <ClInclude Include="CATMotionRot.h" />
+    <ClInclude Include="CATMotionTail.h" />
+    <ClInclude Include="CATMotionTailRot.h" />
+    <ClInclude Include="CATp3.h" />
+    <ClInclude Include="CATWindow.h" />
+    <ClInclude Include="ease.h" />
+    <ClInclude Include="FootBend.h" />
+    <ClInclude Include="FootLift.h" />
+    <ClInclude Include="KneeAngle.h" />
+    <ClInclude Include="LegWeight.h" />
+    <ClInclude Include="LiftOffset.h" />
+    <ClInclude Include="LiftPlantMod.h" />
+    <ClInclude Include="MonoGraph.h" />
+    <ClInclude Include="PivotPosData.H" />
+    <ClInclude Include="PivotRot.h" />
+    <ClInclude Include="StepShape.h" />
+    <ClInclude Include="WeightShift.h" />
+    <ClInclude Include="..\CATMuscle\AllClasses.h" />
+    <ClInclude Include="..\CATMuscle\CATMuscle.h" />
+    <ClInclude Include="..\CATMuscle\HdlObj.h" />
+    <ClInclude Include="..\CATMuscle\HdlTrans.h" />
+    <ClInclude Include="..\CATMuscle\IMuscle.h" />
+    <ClInclude Include="..\CATMuscle\Muscle.h" />
+    <ClInclude Include="..\CATMuscle\MuscleBones.h" />
+    <ClInclude Include="..\CATMuscle\MusclePatch.h" />
+    <ClInclude Include="..\CATMuscle\MuscleStrand.h" />
+    <ClInclude Include="..\CATMuscle\SegTrans.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\CATObjects\HubObject.cpp" />
+    <ClCompile Include="..\DataRestoreObj.cpp" />
+    <ClCompile Include="Callback.cpp" />
+    <ClCompile Include="cat.cpp" />
+    <ClCompile Include="CATCharacterRemap.cpp" />
+    <ClCompile Include="CATDialog.cpp" />
+    <ClCompile Include="..\CATObjects\CatDotIni.cpp" />
+    <ClCompile Include="CATFilePaths.cpp" />
+    <ClCompile Include="CATMessages.cpp" />
+    <ClCompile Include="CATMotionController.cpp" />
+    <ClCompile Include="CATNodeControl.cpp" />
+    <ClCompile Include="CATNodeControlDistributed.cpp" />
+    <ClCompile Include="CATToken.cpp" />
+    <ClCompile Include="DllEntry.cpp" />
+    <ClCompile Include="..\CATObjects\IniFile.cpp" />
+    <ClCompile Include="FnPub\IBoneGroupManagerFP.cpp" />
+    <ClCompile Include="FnPub\ICATControlFP.cpp" />
+    <ClCompile Include="FnPub\ICATParentFP.cpp" />
+    <ClCompile Include="FnPub\IExtraRigNodesFP.cpp" />
+    <ClCompile Include="FnPub\IHubFP.cpp" />
+    <ClCompile Include="FnPub\ILimbFP.cpp" />
+    <ClCompile Include="FnPub\INodeControlFP.cpp" />
+    <ClCompile Include="FnPub\ISpineFP.cpp" />
+    <ClCompile Include="FnPub\ITailFP.cpp" />
+    <ClCompile Include="Locale.cpp" />
+    <ClCompile Include="Math.cpp" />
+    <ClCompile Include="ProgressWindow.cpp" />
+    <ClCompile Include="TrackViewFunctions.cpp" />
+    <ClCompile Include="CATClipRoot.cpp" />
+    <ClCompile Include="CATClipValue.cpp" />
+    <ClCompile Include="CATClipValues.cpp" />
+    <ClCompile Include="CATClipWeights.cpp" />
+    <ClCompile Include="CATTransformOffset.cpp" />
+    <ClCompile Include="HDPivotTrans.cpp" />
+    <ClCompile Include="HIPivotTrans.cpp" />
+    <ClCompile Include="LayerTransform.cpp" />
+    <ClCompile Include="NLAInfo.cpp" />
+    <ClCompile Include="RootNodeController.cpp" />
+    <ClCompile Include="ArbBoneTrans.cpp" />
+    <ClCompile Include="BoneData.cpp" />
+    <ClCompile Include="BoneSegTrans.cpp" />
+    <ClCompile Include="CATControl.cpp" />
+    <ClCompile Include="CATGroup.cpp" />
+    <ClCompile Include="..\CATObjects\CATParent.cpp" />
+    <ClCompile Include="CATParentTrans.cpp" />
+    <ClCompile Include="CATRigPresets.cpp" />
+    <ClCompile Include="CATUnitsPosition.cpp" />
+    <ClCompile Include="CATWeight.cpp" />
+    <ClCompile Include="CollarBoneTrans.cpp" />
+    <ClCompile Include="DigitData.cpp" />
+    <ClCompile Include="DigitSegTrans.cpp" />
+    <ClCompile Include="ExtraRigNodes.cpp" />
+    <ClCompile Include="FootTrans2.cpp" />
+    <ClCompile Include="Hub.cpp" />
+    <ClCompile Include="IKTargController.cpp" />
+    <ClCompile Include="LimbData2.cpp" />
+    <ClCompile Include="PalmTrans2.cpp" />
+    <ClCompile Include="ProxyTransform.cpp" />
+    <ClCompile Include="SpineData2.cpp" />
+    <ClCompile Include="SpineTrans2.cpp" />
+    <ClCompile Include="TailData2.cpp" />
+    <ClCompile Include="TailTrans.cpp" />
+    <ClCompile Include="..\CATObjects\Bone.cpp" />
+    <ClCompile Include="..\CATObjects\CATObject Superclass.cpp" />
+    <ClCompile Include="..\CATObjects\IKTargetObject.cpp" />
+    <ClCompile Include="BezierInterp.cpp" />
+    <ClCompile Include="CATGraph.cpp" />
+    <ClCompile Include="CATHierarchy.cpp" />
+    <ClCompile Include="CATHierarchyBranch2.cpp" />
+    <ClCompile Include="CATHierarchyFunctions.cpp" />
+    <ClCompile Include="CATHierarchyLeaf.cpp" />
+    <ClCompile Include="CATHierarchyRoot.cpp" />
+    <ClCompile Include="CATMotionDigitRot.cpp" />
+    <ClCompile Include="CATMotionHub2.cpp" />
+    <ClCompile Include="CATMotionLayer.cpp" />
+    <ClCompile Include="CATMotionLimb.cpp" />
+    <ClCompile Include="CATMotionPlatform.cpp" />
+    <ClCompile Include="CATMotionPresets.cpp" />
+    <ClCompile Include="CATMotionRot.cpp" />
+    <ClCompile Include="CATMotionTail.cpp" />
+    <ClCompile Include="CATMotionTailRot.cpp" />
+    <ClCompile Include="CATp3.cpp" />
+    <ClCompile Include="CATWindow.cpp" />
+    <ClCompile Include="Ease.cpp" />
+    <ClCompile Include="FootBend.cpp" />
+    <ClCompile Include="FootLift.cpp" />
+    <ClCompile Include="KneeAngle.cpp" />
+    <ClCompile Include="LegWeight.cpp" />
+    <ClCompile Include="LiftOffset.cpp" />
+    <ClCompile Include="LiftPlantMod.cpp" />
+    <ClCompile Include="MonoGraph.cpp" />
+    <ClCompile Include="PivotPosData.cpp" />
+    <ClCompile Include="PivotRot.cpp" />
+    <ClCompile Include="StepShape.cpp" />
+    <ClCompile Include="WeightShift.cpp" />
+    <ClCompile Include="..\CATMuscle\CATMuscle.cpp" />
+    <ClCompile Include="..\CATMuscle\HdlObj.cpp" />
+    <ClCompile Include="..\CATMuscle\HdlTrans.cpp" />
+    <ClCompile Include="..\CATMuscle\Muscle.cpp" />
+    <ClCompile Include="..\CATMuscle\MuscleBones.cpp" />
+    <ClCompile Include="..\CATMuscle\MusclePatch.cpp" />
+    <ClCompile Include="..\CATMuscle\MuscleStrand.cpp" />
+    <ClCompile Include="..\CATMuscle\SegTrans.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CATControls.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Images\cat2.ico" />
+    <None Include="..\Images\CATPaw_Logo_Big.bmp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

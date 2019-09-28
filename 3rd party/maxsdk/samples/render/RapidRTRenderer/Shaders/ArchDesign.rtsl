@@ -1,0 +1,269 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright 2015 Autodesk, Inc.  All rights reserved.
+//
+//  Use of this software is subject to the terms of the Autodesk license 
+//  agreement provided at the time of installation or download, or which 
+//  otherwise accompanies this software in either electronic or hard copy form.   
+//
+//////////////////////////////////////////////////////////////////////////////
+
+const int DIFFUSE   = 0;
+const int GLOSSY    = 1;
+const int SPECULAR  = 2;
+/*
+const int SCATTER_INVALID             = 0;
+const int SCATTER_REFLECT_DIFFUSE     = 1;
+const int SCATTER_REFLECT_GLOSSY      = 2;
+const int SCATTER_REFLECT_SPECULAR    = 4;
+const int SCATTER_TRANSMIT_DIFFUSE    = 8;
+const int SCATTER_TRANSMIT_GLOSSY     = 16;
+const int SCATTER_TRANSMIT_SPECULAR   = 32;
+*/
+
+const int RAY_PRIMARY                 = 1;
+const int RAY_REFLECTION              = 2;
+const int RAY_TRANSMISSION            = 4;
+const int RAY_DIFFUSE                 = 8;
+const int RAY_GLOSSY                  = 16;
+const int RAY_SPECULAR                = 32;
+const int RAY_SHADOW                  = 64;
+
+
+const float PI      = 3.14159265358979323846;
+const float TWO_PI  = 2.0 * PI;
+const float HALF_PI = 0.5 * PI;
+const float INV_PI  = 1.0 / PI;
+const float EPSILON = 0.00001;
+ 
+
+///////////////////////////////////////////////////////////////
+// Utility functions //////////////////////////////////////////
+
+void createBasis(float3 normal, out float3x3 basis) 
+{
+  float e = normal.z;
+  if (abs(e) > 0.99999) {
+    basis[0] = float3(1.0, 0.0, 0.0);
+    basis[1] = float3(0.0, (e<0.0) ? -1.0 : 1.0, 0.0);
+    basis[2] = normal;
+  }
+  else {
+    float h = 1.0 / (1.0 + e);
+    float3 v = float3(normal.y, -normal.x, 0.0);
+    float hvx = h * v.x;
+    float hvxy = hvx * v.y;
+        
+    basis[0] = float3(e + hvx * v.x, hvxy, v.y);
+    basis[1] = float3(hvxy, e + h * v.y*v.y, -v.x);
+    basis[2] = float3(-v.y, v.x, e);
+  }
+}
+
+void basisOrthonormalize(out float3x3 basis)
+{
+    basis[0] = normalize(basis[0] - dot(basis[0], basis[2]) * basis[2]);
+    basis[1] = normalize(cross(basis[2], basis[0]));
+}
+
+float3x3 calcTangentBasis(float3 localTangent, float3 frontFacingShadingNormal, float3x3 rtLocalToWorldNormalMatrix)
+{
+    float3x3 tangentBasis; 
+    tangentBasis[0] = localTangent*rtLocalToWorldNormalMatrix; 
+    tangentBasis[2] = frontFacingShadingNormal;
+    basisOrthonormalize(tangentBasis);
+    return tangentBasis; 
+}
+
+float3 createTangent(float3 normal, float3 ray)
+{
+	float3 tangent = cross(normal, ray);
+	if (float3(0.0)==tangent) {
+		float3 a = cross(normal, float3(0.0, 1.0, 0.0));
+		float3 b = cross(normal, float3(0.0, 0.0, 1.0));
+		if (length(a) > length(b)) {
+			tangent = a;
+		}
+		else {
+			tangent = b;
+		}
+	}
+	return normalize(tangent);
+}
+
+float3 basisToWorld(const float3x3 basis, float3 vec) 
+{
+	return vec.x * basis[0] + vec.y * basis[1] + vec.z * basis[2];
+}
+
+float3 basisToLocal(const float3x3 basis, float3 vec) 
+{
+	return float3(dot(basis[0], vec), dot(basis[1], vec), dot(basis[2], vec));
+}
+
+float3 cosineSampleHem(float2 s)
+{
+	float phi = TWO_PI * s[0];
+	float sintheta = sqrt(s[1]);
+
+	return float3(cos(phi) * sintheta,
+				sin(phi) * sintheta,
+				sqrt(1.0 - s[1]));
+}
+
+float pow5(float x)
+{
+	float y = x*x;
+	return y*y*x;
+}
+
+
+
+
+
+
+shader ArchDesign : material
+{
+	uniform float3    diffuse    = float3(1.0);
+	uniform float3    reflectionColor = float3(1.0);
+	uniform float3    refractionColor = float3(1.0);
+
+	uniform float     transparency = 0.0;
+	uniform float     ior          = 1.5;
+
+	uniform float     reflectiveness = 1.0;
+	uniform float     maxRef     = 1.0;
+	uniform float     minRef     = 0.01; // 0.0 gives an ugly artifact
+	uniform float     refShape   = 5.0;
+
+	uniform float	  roughness = 0.0;
+
+	uniform bool      useIORReflectiveness = false;
+ 
+	uniform bool      hasDiffuseMap = false;
+	uniform texture2D diffuseMap;
+
+	uniform bool      hasReflectionMap = false;
+	uniform texture2D reflectionMap;
+
+	uniform bool      hasBumpMap = false;
+	uniform texture2D bumpMap;
+  
+	varying float2    uv;
+ 
+	uniform float3 emission_color	= float3(0.0);
+	uniform float emission_intensity = 0.0f; 
+
+	float4 getDiffuse()
+	{
+		if (hasDiffuseMap) {
+			return diffuseMap.lookup(uv).rgba;
+		}
+		else {
+			return float4(diffuse.r,diffuse.g,diffuse.b,1.0);
+		}
+	}
+
+ 	float4 getSpecular()
+	{
+		if (hasReflectionMap) {
+			return reflectionMap.lookup(uv).rgba;
+		}
+		else {
+			return float4(reflectionColor.r,reflectionColor.g,reflectionColor.b,1.0);
+		}
+	}
+
+	float3 applyBump(float3 shadingNormal) 
+	{
+		if (hasBumpMap) {
+			float3x3 basis;
+			createBasis(normalize(shadingNormal), basis);
+			return normalize(basisToWorld(basis, bumpMap.lookup(uv).rgb));
+		}
+		else {
+			return normalize(shadingNormal);
+		}
+	}
+
+	void calcProbabilities(out float reflectionProbability, out float refractProbability, float3 normal, float3 rayDirection, float eta)
+	{
+		if (useIORReflectiveness) {
+			float fresnelTerm = fresnel(rayDirection, normal, eta);
+			reflectionProbability = fresnelTerm;
+			refractProbability = (1.0 - fresnelTerm) * transparency;
+		}
+		else {
+			float RdotN = -dot(normalize(rayDirection), normal);
+			reflectionProbability = (minRef + (maxRef - minRef)*pow(1.0 - RdotN, refShape)) * reflectiveness;
+			refractProbability = (1.0 - reflectionProbability) * transparency;
+		}
+	}
+
+	void scattering()
+	{
+		float3 normal = applyBump(rt_ShadingNormal);
+		float4 diffuseColor = getDiffuse();
+		float4 specularColor = getSpecular();
+
+//    float rtIncidentIOR;
+//    float rtRefractedIOR;
+
+		float reflectionProbability, refractProbability;
+
+   	    float fEta = rt_FrontFacing ? 1.0f / ior : ior;
+
+		calcProbabilities(reflectionProbability, refractProbability, normal, rt_RayDirection, fEta);
+
+		//The shading lobes are now in the kernel, so we ask it for the bsdf's we want.
+		BSDF diffuse_bsdf = lambert(diffuseColor.rgb, normal);
+    
+    BSDF specular_bsdf = ward(specularColor.rgb, normal, roughness);
+
+    BSDF transparent_bsdf;
+
+    if (raycount(RAY_DIFFUSE) > 0 || raycount(RAY_GLOSSY) > 0 ) {
+      // HACK: this will reduce the amount of fireflies
+      transparent_bsdf = mix( fresnel( rt_RayDirection, normal, fEta ), 
+                                               transparent(refractionColor),
+                                               ward(float3(1.0), normal, 0.01));
+    } else {
+      transparent_bsdf = dielectric(refractionColor, normal, fEta);
+    }
+      
+
+		//The reflectionProbability determines how much of the diffuse_bsdf and the specular_bsdf should be mixed. 
+		//The result of this is then mixed with the dielectric bsdf and is weighted by the transparency value. 
+
+      rt_Scattering = mix(diffuseColor.a, transparent(float3(1.0)),
+                            mix(transparency, 
+                              mix(reflectionProbability,
+                                  diffuse_bsdf, 
+                                  specular_bsdf),
+                              transparent_bsdf)); 
+
+
+	}
+/*
+	void transmission()
+	{
+		float3 normal = applyBump(rt_ShadingNormal);
+		
+		float3 outColor = getDiffuse();
+
+		float reflectionProbability, refractProbability;
+		calcProbabilities(reflectionProbability, refractProbability, normal, rt_RayDirection, rt_FrontFacing, rt_IncidentIOR, rt_RefractedIOR);
+		
+		rt_SampleTransmission = outColor * refractProbability;
+	}
+
+	void shade() {} */
+
+	void emission()
+	{ 
+		if (rt_FrontFacing) {
+			rt_Emission = (emission_color * emission_intensity);
+		}
+	}
+
+}

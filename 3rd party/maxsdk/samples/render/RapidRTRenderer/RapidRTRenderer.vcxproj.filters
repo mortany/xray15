@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{ad6e765e-4300-41dc-b185-05b019286785}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="Translators">
+      <UniqueIdentifier>{a464b024-3094-4d47-8d85-508c64421b70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translators\Materials">
+      <UniqueIdentifier>{9197c47e-5c4a-401d-a760-6e2b81325430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translators\Geometry">
+      <UniqueIdentifier>{33f3c771-4579-4e0b-804a-83c9cab06ff5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translators\Util">
+      <UniqueIdentifier>{74a354af-eef1-402a-ba15-4c49d1519188}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translators\Textures">
+      <UniqueIdentifier>{dcbfc37b-1e17-4f41-9a8e-722e08820327}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translators\Lights">
+      <UniqueIdentifier>{8303e456-aa64-4ea2-8db2-a6340f3241ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{f4e61dcf-6b33-45de-bd8f-f3ec2fce14e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translators\Scene">
+      <UniqueIdentifier>{0ed00531-5616-4250-a810-6f99176f5f62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{fbad0f2d-faaa-4b0b-865c-583fac8ddcb1}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Translators\Environment">
+      <UniqueIdentifier>{f05a7d96-efbc-4689-af8e-a1bf465bb3a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translators\Camera">
+      <UniqueIdentifier>{1eecb5ab-6417-4e38-bc98-7da29ba0d097}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translators\Base">
+      <UniqueIdentifier>{442caf91-9b78-4c6a-b0ca-c5c7e2d5985e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translators\Misc">
+      <UniqueIdentifier>{b3bf3fbe-db88-4da1-a198-8b93d56aff08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins">
+      <UniqueIdentifier>{eb2b5d5b-c78a-4d0d-a2c3-e35f083e60f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files\Hybrid">
+      <UniqueIdentifier>{d7de42a0-817d-46d3-9fc6-a44a2c8f06aa}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{7bc703dd-ff13-4777-898a-f2ba6c773471}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{21439b2c-77c1-44ad-9d83-b851e3addbf7}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="RRTRendParamDlg.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\PBUtil.cpp">
+      <Filter>Translators\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="RapidRenderSettingsWrapper.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="RapidRTRendererPlugin.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="RapidRenderSession.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="DllEntry.cpp" />
+    <ClCompile Include="Translators\BaseTranslator_to_RTI.cpp">
+      <Filter>Translators\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\BaseTranslator_to_RTIGeometry.cpp">
+      <Filter>Translators\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\BaseTranslator_to_RTIObject.cpp">
+      <Filter>Translators\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\BaseTranslator_to_RTIShader.cpp">
+      <Filter>Translators\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\BaseTranslator_to_RTITexture.cpp">
+      <Filter>Translators\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\BaseTranslator_INode_to_RTIObject.cpp">
+      <Filter>Translators\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_LightscapeLight_to_RTIGeometry.cpp">
+      <Filter>Translators\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_LightINode_to_RTIObject.cpp">
+      <Filter>Translators\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_LightscaleLightINode_to_RTIObject.cpp">
+      <Filter>Translators\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_LightscaleLightWeb_to_RTITexture.cpp">
+      <Filter>Translators\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_LightscapeLight_to_RTIShader.cpp">
+      <Filter>Translators\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_GeomObject_to_RTIGeometry.cpp">
+      <Filter>Translators\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_GeomObjectINode_to_RTIObject.cpp">
+      <Filter>Translators\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_PhysicalCameraAperture_to_RTITexture.cpp">
+      <Filter>Translators\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_Camera_to_RTICamera.cpp">
+      <Filter>Translators\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_StandardCamera_to_RTIShader.cpp">
+      <Filter>Translators\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_PhysicalCamera_to_RTIShader.cpp">
+      <Filter>Translators\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\BaseTranslator_Camera_to_RTIShader.cpp">
+      <Filter>Translators\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\BaseTranslator_Environment_to_RTIShader.cpp">
+      <Filter>Translators\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_PhysSunSkyEnv_to_RTIShader.cpp">
+      <Filter>Translators\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_StandardEnv_to_RTIShader.cpp">
+      <Filter>Translators\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\BaseTranslator_AMG_to_RTIShader.cpp">
+      <Filter>Translators\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\BaseTranslator_Mtl_to_RTIShader.cpp">
+      <Filter>Translators\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_AMGMtl_to_RTIShader.cpp">
+      <Filter>Translators\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_NodeWireColor_to_RTIShader.cpp">
+      <Filter>Translators\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_LegacyMatteMtl_to_RTIShader.cpp">
+      <Filter>Translators\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_UnsupportedMtl_to_RTIShader.cpp">
+      <Filter>Translators\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_RTIRenderAttributes.cpp">
+      <Filter>Translators\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_to_RTIFrameBuffer.cpp">
+      <Filter>Translators\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_SceneRoot_to_RTIGroup.cpp">
+      <Filter>Translators\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_RTIScene.cpp">
+      <Filter>Translators\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_RTIRenderOptions.cpp">
+      <Filter>Translators\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_BakedTexmap_to_RTITexture.cpp">
+      <Filter>Translators\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Plugins\NoiseFilter_RenderElement.cpp">
+      <Filter>Plugins</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_BitmapFile_to_RTITexture.cpp">
+      <Filter>Translators\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Translators\Translator_TextureOutput_to_RTITexture.cpp">
+      <Filter>Translators\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Hybrid\moc_RRTRendParamDlg.cpp">
+      <Filter>Generated Files\Hybrid</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_RRTRendParamDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_RRTRendParamDlg.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Background2D.rtsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\envSphere.rtsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\GenericDielectric.rtsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\MatteShadow.rtsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\PhotometricLightSpot.rtsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\PhotometricLightUniform.rtsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Background.rtsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\PhotometricLightWeb.rtsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\PhysicalCamera.rtsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\ArchDesign.rtsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\StandardCamera.rtsl">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="veroverrides.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\PBUtil.h">
+      <Filter>Translators\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\TranslatorOutputs.h">
+      <Filter>Translators\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\TranslatorOutputs.inline.h">
+      <Filter>Translators\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\TypeUtil.h">
+      <Filter>Translators\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\TypeUtil.inline.h">
+      <Filter>Translators\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="RapidRenderSettingsWrapper.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="RapidRTRendererPlugin.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.inline.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="RapidRenderSession.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="IRapidAPIManager.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="DllEntry.h" />
+    <ClInclude Include="Translators\BaseTranslator_to_RTI.h">
+      <Filter>Translators\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\BaseTranslator_to_RTI.inline.h">
+      <Filter>Translators\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\BaseTranslator_to_RTIGeometry.h">
+      <Filter>Translators\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\BaseTranslator_to_RTIObject.h">
+      <Filter>Translators\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\BaseTranslator_to_RTIShader.h">
+      <Filter>Translators\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\BaseTranslator_to_RTIShader.inline.h">
+      <Filter>Translators\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\BaseTranslator_to_RTITexture.h">
+      <Filter>Translators\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\BaseTranslator_INode_to_RTIObject.h">
+      <Filter>Translators\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_LightscapeLight_to_RTIGeometry.h">
+      <Filter>Translators\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_LightINode_to_RTIObject.h">
+      <Filter>Translators\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_LightscaleLightINode_to_RTIObject.h">
+      <Filter>Translators\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_LightscaleLightWeb_to_RTITexture.h">
+      <Filter>Translators\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_LightscapeLight_to_RTIShader.h">
+      <Filter>Translators\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_GeomObject_to_RTIGeometry.h">
+      <Filter>Translators\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_GeomObjectINode_to_RTIObject.h">
+      <Filter>Translators\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_PhysicalCameraAperture_to_RTITexture.h">
+      <Filter>Translators\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_Camera_to_RTICamera.h">
+      <Filter>Translators\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_StandardCamera_to_RTIShader.h">
+      <Filter>Translators\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_PhysicalCamera_to_RTIShader.h">
+      <Filter>Translators\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\BaseTranslator_Camera_to_RTIShader.h">
+      <Filter>Translators\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\BaseTranslator_Environment_to_RTIShader.h">
+      <Filter>Translators\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_PhysSunSkyEnv_to_RTIShader.h">
+      <Filter>Translators\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_StandardEnv_to_RTIShader.h">
+      <Filter>Translators\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\BaseTranslator_AMG_to_RTIShader.h">
+      <Filter>Translators\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\BaseTranslator_Mtl_to_RTIShader.h">
+      <Filter>Translators\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_AMGMtl_to_RTIShader.h">
+      <Filter>Translators\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_NodeWireColor_to_RTIShader.h">
+      <Filter>Translators\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_LegacyMatteMtl_to_RTIShader.h">
+      <Filter>Translators\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_UnsupportedMtl_to_RTIShader.h">
+      <Filter>Translators\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_RTIRenderAttributes.h">
+      <Filter>Translators\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_RTIRenderAttributes.inline.h">
+      <Filter>Translators\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_to_RTIFrameBuffer.h">
+      <Filter>Translators\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_SceneRoot_to_RTIGroup.h">
+      <Filter>Translators\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_RTIScene.h">
+      <Filter>Translators\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_RTIRenderOptions.h">
+      <Filter>Translators\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_BakedTexmap_to_RTITexture.h">
+      <Filter>Translators\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugins\NoiseFilter_RenderElement.h">
+      <Filter>Plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_BitmapFile_to_RTITexture.h">
+      <Filter>Translators\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Translators\Translator_TextureOutput_to_RTITexture.h">
+      <Filter>Translators\Textures</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RapidRTRenderer.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="RRTRendParamDlg.h">
+      <Filter>Renderer</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,49 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright 2015 Autodesk, Inc.  All rights reserved.
+//
+//  Use of this software is subject to the terms of the Autodesk license 
+//  agreement provided at the time of installation or download, or which 
+//  otherwise accompanies this software in either electronic or hard copy form.   
+//
+//////////////////////////////////////////////////////////////////////////////
+
+const int DIFFUSE   = 0;
+const int GLOSSY    = 1;
+const int SPECULAR  = 2;
+
+const int RAY_PRIMARY                 = 1;
+const int RAY_REFLECTION              = 2;
+const int RAY_TRANSMISSION            = 4;
+const int RAY_DIFFUSE                 = 8;
+const int RAY_GLOSSY                  = 16;
+const int RAY_SPECULAR                = 32;
+const int RAY_SHADOW                  = 64;
+
+
+const float PI      = 3.14159265358979323846;
+const float TWO_PI  = 2.0 * PI;
+const float HALF_PI = 0.5 * PI;
+const float INV_PI  = 1.0 / PI;
+const float EPSILON = 0.00001;
+ 
+
+///////////////////////////////////////////////////////////////
+
+
+shader Background2D : environment
+{
+    uniform texture2D backgroundTexture;
+
+    void shade()
+    {
+      float invVpWidth = 1.0 / float(rt_ImageResolution.x);
+      float invVpHeight = 1.0 / float(rt_ImageResolution.y);
+
+      float2 uv = float2(float(rt_RasterPosition.x) * invVpWidth,
+                 float(rt_RasterPosition.y) * invVpHeight);
+
+      rt_Environment = backgroundTexture.lookup(uv).rgb;
+    }
+}
+

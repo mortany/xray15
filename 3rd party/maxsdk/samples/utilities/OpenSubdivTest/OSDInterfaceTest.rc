@@ -1,0 +1,137 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PANEL DIALOGEX 0, 0, 108, 122
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CTEXT           "Line 1",IDC_LINE1,7,34,94,9
+    CTEXT           "Line 2",IDC_LINE2,7,43,94,9
+    CTEXT           "Line 3",IDC_LINE3,7,52,94,9
+    CTEXT           "Line 4",IDC_LINE4,7,61,94,9
+    CTEXT           "Line 5",IDC_LINE5,7,70,94,9
+    CTEXT           "Line 6",IDC_LINE6,7,79,94,9
+    CTEXT           "Line 7",IDC_LINE7,7,88,94,9
+    CTEXT           "Line 8",IDC_LINE8,7,97,94,9
+    CONTROL         "Pick Object",IDC_PICK_OBJECT,"CustButton",WS_GROUP | WS_TABSTOP,15,17,78,12
+    CTEXT           "OpenSubdiv Interface Test",IDC_STATIC,7,7,94,9
+    CTEXT           "Line 9",IDC_LINE9,7,106,94,9
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_PANEL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 101
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 115
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "#include ""veroverrides.h""\r\n"
+    "#include ""maxversion.r""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_LIBDESC             "OpenSubdiv Interface Test Utility"
+    IDS_CLASSNAME           "OSD Interface Test"
+    IDS_PARAMETERS          "Parameters"
+    IDS_CAGE_PATTERN        "Cage: %d Verts, %d Faces"
+    IDS_MESH_PATTERN        "Mesh: %d Verts, %d Faces"
+    IDS_NO_INTERFACE        "No OSD interface found"
+    IDS_LINE1_PATTERN       "Tess Level: %d"
+    IDS_LINE2_PATTERN       "Boundary Verts: %d"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_LINE3_PATTERN       "Boundary FVars: %d"
+    IDS_LINE4_PATTERN       "Crease Method: %d"
+    IDS_LINE5_PATTERN       "Smooth Triangle: %s"
+    IDS_LINE6_PATTERN       "Prop. Corners: %s"
+    IDS_LINE7_PATTERN       "Adaptive: %s"
+    IDS_LINE8_PATTERN       "Adaptive Tess: %d"
+    IDS_TRUE                "True"
+    IDS_FALSE               "False"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+#include "veroverrides.h"
+#include "maxversion.r"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

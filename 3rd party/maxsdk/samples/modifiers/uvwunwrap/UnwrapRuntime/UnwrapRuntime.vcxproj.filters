@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\UnwrapModifier">
+      <UniqueIdentifier>{33ba31b0-e0c5-42d2-b7f4-566c1c7435fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MapIO">
+      <UniqueIdentifier>{399d4681-d696-42a4-a776-c2cefd058a9c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="UnwrapRuntime_banned.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\uvwunwrap\MapIOModifier\MapIO.h">
+      <Filter>Source Files\MapIO</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UnwrapRuntime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ActionLookup.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\Actions.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\Actions_Checked.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\Actions_Enabled.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\Actions_Execute.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\Defaults.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\IniFileIO.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\MeshTopoData.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\MeshTopoData_MappingMethods.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\MeshTopoData_MeshMethods.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\MeshTopoData_MNMeshMethods.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\MeshTopoData_PatchMethods.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\MeshTopoData_RelaxMethods.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\PeelModeDialog.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\publishedfunctions.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\sctex.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolCopyPaste.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolFlatten.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolGrouping.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolGroupingActions.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolGroupingData.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolGroupingUndo.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolLSCM.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolMapping.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolNormalMap.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolPelt.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolPeltEdgeSelectMode.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolRegularMap.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolRegularMapScriptCommands.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolRegularMapUndo.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolRelax.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolRelaxBySprings.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolRenderUVs.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolSelect.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolSketch.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolSolver.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolSplineMapping.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolSplineMapping_CommandModes.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolSplineMapping_SplineData.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolSplineMapping_Undo.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolSplineMapping_UnwrapFunctions.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolStitch.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolUnfold.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\ToolUVWTweak.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\TvConnectionInfo.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\tvdata.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\undo.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\unwrap.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\Unwrap_PaintDialogMethods.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\Unwrap_PaintDialogMethodsLegacy.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\Unwrap_SnapSetting.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\UnwrapCustomToolBar.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\UnwrapCustomToolBarSetup.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\UnwrapCustomUI.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\UnwrapImages.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\UnwrapModifierPanel.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\unwrapMouseProc.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\UnwrapRenderItem.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\UnwrapRenderItemDistortion.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\UnwrapSideBarUI.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\UtilCluster.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\UtilityMethods.cpp">
+      <Filter>Source Files\UnwrapModifier</Filter>
+    </ClCompile>
+    <ClCompile Include="strings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\uvwunwrap\MapIOModifier\MapIO.cpp">
+      <Filter>Source Files\MapIO</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

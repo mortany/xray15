@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SunPositioner_SunPosition</class>
+ <widget class="QWidget" name="SunPositioner_SunPosition">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>235</width>
+    <height>1105</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QPushButton" name="pushButton_installEnvironment">
+     <property name="text">
+      <string>Install Sun &amp;&amp; Sky Environment</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="title">
+      <string>Date &amp;&amp; Time Mode</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_7">
+      <item>
+       <widget class="QRadioButton" name="datetime">
+        <property name="toolTip">
+         <string>Position the sun according to date, time, and location information.</string>
+        </property>
+        <property name="text">
+         <string>Date, Time &amp;&amp; Location</string>
+        </property>
+        <attribute name="buttonGroup">
+         <string notr="true">mode</string>
+        </attribute>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QRadioButton" name="weatherfile">
+            <property name="toolTip">
+             <string>Use weather data to position the sun and define sky illuminance.</string>
+            </property>
+            <property name="text">
+             <string>Weather Data File</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">mode</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="pushButton_weatherFile">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Setup</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_weatherFileStatus">
+          <property name="text">
+           <string>Weather file status message</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+          <property name="indent">
+           <number>25</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="manual">
+        <property name="toolTip">
+         <string>Manually position the sun by translation/rotation, or by azimuth/altitude.</string>
+        </property>
+        <property name="text">
+         <string>Manual</string>
+        </property>
+        <attribute name="buttonGroup">
+         <string notr="true">mode</string>
+        </attribute>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_dateTime">
+     <property name="title">
+      <string>Date &amp;&amp; Time</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <widget class="QLabel" name="label_15">
+          <property name="text">
+           <string>Time:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="MaxSDK::QmaxSpinBox" name="hours">
+          <property name="toolTip">
+           <string>Hours</string>
+          </property>
+          <property name="wrapping">
+           <bool>true</bool>
+          </property>
+          <property name="suffix">
+           <string> h</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="MaxSDK::QmaxSpinBox" name="minutes">
+          <property name="toolTip">
+           <string>Minutes</string>
+          </property>
+          <property name="wrapping">
+           <bool>true</bool>
+          </property>
+          <property name="suffix">
+           <string> min</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox">
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_17">
+           <property name="text">
+            <string>Month</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_18">
+           <property name="text">
+            <string>Year</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="MaxSDK::QmaxSpinBox" name="month">
+           <property name="toolTip">
+            <string>Month</string>
+           </property>
+           <property name="wrapping">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_16">
+           <property name="text">
+            <string>Day</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="MaxSDK::QmaxSpinBox" name="day">
+           <property name="toolTip">
+            <string>Day of month</string>
+           </property>
+           <property name="wrapping">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="MaxSDK::QmaxSpinBox" name="year">
+           <property name="toolTip">
+            <string>Year</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="dst">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="title">
+         <string>Daylight Saving Time</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QCheckBox" name="dst_use_date_range">
+           <property name="text">
+            <string>Use Date Range</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_26">
+             <property name="text">
+              <string>Day</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_27">
+             <property name="text">
+              <string>Start:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="MaxSDK::QmaxSpinBox" name="dst_start_day">
+             <property name="toolTip">
+              <string>Day of month</string>
+             </property>
+             <property name="wrapping">
+              <bool>true</bool>
+             </property>
+             <property name="value">
+              <number>15</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="MaxSDK::QmaxSpinBox" name="dst_start_month">
+             <property name="toolTip">
+              <string>Month</string>
+             </property>
+             <property name="wrapping">
+              <bool>true</bool>
+             </property>
+             <property name="value">
+              <number>3</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_28">
+             <property name="text">
+              <string>End:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="MaxSDK::QmaxSpinBox" name="dst_end_day">
+             <property name="toolTip">
+              <string>Day of month</string>
+             </property>
+             <property name="wrapping">
+              <bool>true</bool>
+             </property>
+             <property name="value">
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="MaxSDK::QmaxSpinBox" name="dst_end_month">
+             <property name="toolTip">
+              <string>Month</string>
+             </property>
+             <property name="wrapping">
+              <bool>true</bool>
+             </property>
+             <property name="value">
+              <number>11</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_25">
+             <property name="text">
+              <string>Month</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_Location">
+     <property name="title">
+      <string>Location on Earth</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QPushButton" name="location">
+        <property name="toolTip">
+         <string>Select a location from a user-configurable database.</string>
+        </property>
+        <property name="text">
+         <string>Choose Location</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Latitude:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="MaxSDK::QmaxDoubleSpinBox" name="latitude_deg">
+          <property name="toolTip">
+           <string>Latitude</string>
+          </property>
+          <property name="suffix">
+           <string>˚</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>Longitude:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="MaxSDK::QmaxDoubleSpinBox" name="longitude_deg">
+          <property name="toolTip">
+           <string>Longitude</string>
+          </property>
+          <property name="suffix">
+           <string>˚</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <widget class="QLabel" name="label_19">
+          <property name="text">
+           <string>Time Zone (±GMT):</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="MaxSDK::QmaxDoubleSpinBox" name="time_zone">
+          <property name="toolTip">
+           <string>Time zone, as the offset from GMT.</string>
+          </property>
+          <property name="suffix">
+           <string> h</string>
+          </property>
+          <property name="decimals">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_horizontalCoords">
+     <property name="title">
+      <string>Horizontal Coordinates</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Azimuth:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="MaxSDK::QmaxDoubleSpinBox" name="azimuth_deg">
+          <property name="toolTip">
+           <string>Azimuth of the sun position in the sky, relative to the North direction.</string>
+          </property>
+          <property name="suffix">
+           <string>˚</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_10">
+        <item>
+         <widget class="QLabel" name="label_20">
+          <property name="text">
+           <string>Altitude:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="MaxSDK::QmaxDoubleSpinBox" name="altitude_deg">
+          <property name="toolTip">
+           <string>Altitude of the sun in the sky, relative to the horizon.</string>
+          </property>
+          <property name="suffix">
+           <string>˚</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MaxSDK::QmaxDoubleSpinBox</class>
+   <extends>QDoubleSpinBox</extends>
+   <header location="global">Qt/QmaxSpinBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MaxSDK::QmaxSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header location="global">Qt/QmaxSpinBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>datetime</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>groupBox_dateTime</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>168</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>91</x>
+     <y>410</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>datetime</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>groupBox_Location</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>206</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>134</x>
+     <y>597</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>weatherfile</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_weatherFileStatus</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>76</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>112</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>weatherfile</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>pushButton_weatherFile</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>147</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>189</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dst_use_date_range</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_26</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>74</x>
+     <y>470</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>124</x>
+     <y>504</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dst_use_date_range</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_25</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>472</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>186</x>
+     <y>499</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dst_use_date_range</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_27</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>478</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>69</x>
+     <y>521</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dst_use_date_range</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dst_start_day</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>474</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>110</x>
+     <y>527</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dst_use_date_range</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dst_start_month</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>145</x>
+     <y>471</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>172</x>
+     <y>526</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dst_use_date_range</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_28</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>37</x>
+     <y>466</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>47</x>
+     <y>562</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dst_use_date_range</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dst_end_day</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>112</x>
+     <y>476</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>110</x>
+     <y>558</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dst_use_date_range</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dst_end_month</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>471</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>182</x>
+     <y>559</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <buttongroups>
+  <buttongroup name="mode"/>
+ </buttongroups>
+</ui>

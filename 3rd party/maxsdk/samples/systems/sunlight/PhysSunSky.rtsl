@@ -1,0 +1,346 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright 2014 Autodesk, Inc.  All rights reserved.
+//
+//  Use of this software is subject to the terms of the Autodesk license 
+//  agreement provided at the time of installation or download, or which 
+//  otherwise accompanies this software in either electronic or hard copy form.   
+//
+//////////////////////////////////////////////////////////////////////////////
+
+#ifndef PI
+#define PI 3.14159265358979323846
+#endif
+
+// Matrix for conversion between sRGB and CIE with D65 whitepoint.
+const float3x3 XYZToRGB = float3x3( 3.240479f, -1.537150f, -0.498535f,
+                                   -0.969256f,  1.875992f,  0.041556f,
+                                    0.055648f, -0.204043f,  1.057311f);
+
+// Returns the human-perceptivle luminance of the given color
+float rgb_luminance(const float3 color)
+{
+    return dot(color, float3(0.212671f, 0.715160f, 0.072169f));
+}
+
+// Converts Yxy color to xyz
+float3 Yxy_to_xyz(const float3 Yxy)
+{
+    const float Y = Yxy.x;
+    const float x = Yxy.y;
+    const float y = Yxy.z;
+    const float z = max(1.0 - x - y, 0.0);  // Sanity check: not supposed to happen, but floating-point precision could make it happen.
+    const float Y_over_y = (y > 0.0) ? (Y / y) : 0.0;       // Sanity check: shouldn't happen, but floating-point precision is what it is.
+
+    return float3(
+        Y_over_y * x,
+        Y,
+        Y_over_y * z);
+}
+
+// Converts xyz color to sRGB
+float3 xyz_to_srgb(const float3 xyz)
+{
+     return xyz * XYZToRGB;
+}
+
+// Converts Yxy color to sRGB
+float3 Yxy_to_srgb(const float3 Yxy)
+{
+    return xyz_to_srgb(Yxy_to_xyz(Yxy));
+}
+
+// Implementation of the Perez ABCDE sky model.
+float perez_model(
+    // Distribution coefficients to the Perez model
+    const float A, const float B, const float C, const float D, const float E,
+    // Zenith value
+    const float zenith_value,
+    // Angles for sun and viewing direction
+    const float cos_theta,
+    const float gamma, const float cos_gamma, 
+    const float theta_s, const float cos_theta_s)
+{
+    return zenith_value
+        * ((1.0 + A * exp(B / cos_theta)) * (1.0 + C * exp(D * gamma) + E * cos_gamma * cos_gamma))
+        / ((1.0 + A * exp(B)) * (1.0 + C * exp(D * theta_s) + E * cos_theta_s * cos_theta_s));
+}
+
+// Computes the sky contribution from the Perez model, not taking into account additional effects like night luminance
+float3 compute_perez_sky_Yxy(
+    // This is the direction towards the sun, in the +Z hemisphere, normalized
+    const float3 sun_direction,
+    // This is the direction of the ray which hit the environment, normalized
+    const float3 ray_direction,
+    // Angle between the sun direction and ray direction, passed as an argument (rather than being computed by this function) for optimization
+    const float angle_between_sun_and_ray_directions,
+    const float cosine_angle_between_sun_and_ray_directions,
+    const float night_falloff,
+    const float3 A, const float3 B, const float3 C, const float3 D, const float3 E, const float3 Z)
+{
+    if(ray_direction.z > 0.0)
+    {
+        const float cos_theta_s = sun_direction.z;
+        const float theta_s = acos(cos_theta_s);
+        const float cos_theta = ray_direction.z;
+        const float cos_gamma = cosine_angle_between_sun_and_ray_directions;
+        const float gamma = angle_between_sun_and_ray_directions;
+
+        const float3 sky_color_Yxy = float3(
+            // Night falloff applies to the luminance
+            night_falloff * perez_model(A.x, B.x, C.x, D.x, E.x, Z.x, cos_theta, gamma, cos_gamma, theta_s, cos_theta_s),
+            perez_model(A.y, B.y, C.y, D.y, E.y, Z.y, cos_theta, gamma, cos_gamma, theta_s, cos_theta_s),
+            perez_model(A.z, B.z, C.z, D.z, E.z, Z.z, cos_theta, gamma, cos_gamma, theta_s, cos_theta_s));
+
+        return sky_color_Yxy;
+    }
+    else
+    {
+        // Below the horizon, sky is black
+        return float3(0.0);
+    }
+}
+
+// computes the overall sky contribution, including effects like night luminance
+float3 compute_sky_contribution_rgb(
+    // This is the direction towards the sun, in the +Z hemisphere, normalized
+    const float3 sun_direction,
+    // This is the direction of the ray which hit the environment, normalized
+    const float3 ray_direction,
+    // Angle between the sun direction and ray direction, passed as an argument (rather than being computed by this function) for optimization
+    const float angle_between_sun_and_ray_directions,
+    const float cosine_angle_between_sun_and_ray_directions,
+    const float3 night_luminance,
+    const float night_falloff,
+    const float3 A, const float3 B, const float3 C, const float3 D, const float3 E, const float3 Z)
+{
+    const float3 perez_Yxy = compute_perez_sky_Yxy(
+        sun_direction, 
+        ray_direction,
+        angle_between_sun_and_ray_directions,
+        cosine_angle_between_sun_and_ray_directions,
+        night_falloff,
+        A, B, C, D, E, Z);
+
+    float3 sky_rgb = Yxy_to_srgb(perez_Yxy);
+
+    // Apply night color, as minimum clamp, using the contribution of the sun & sky as a factor - as the goal is to do as if it only
+    // affected the sun & sky component, while applying it after the saturation & red-blue shift.
+    sky_rgb = max(sky_rgb, night_luminance);
+
+    return sky_rgb;
+}
+
+float3 compute_sun_contribution(
+    // Distance, in radians, of the point/direction to be shaded, to the sun's position on the environment sphere.
+    const float angular_distance_from_sun_position,
+    const float sun_disc_angular_radius,
+    const float sun_smooth_angular_radius,
+    const float sun_glow_angular_radius,
+    const float sun_glow_multiplier,
+    const float3 sun_luminance)
+{
+    float sun_contribution = 0.0;
+
+    // Sun disc
+    if(angular_distance_from_sun_position < sun_disc_angular_radius)
+    {
+        // Within solid disc
+        sun_contribution += 1.0;
+    }
+    else if(angular_distance_from_sun_position < sun_smooth_angular_radius)
+    {
+        // Within smoothing area: smooth edge of sun disc using cosine curve
+        const float smooth_curve_position = (angular_distance_from_sun_position - sun_smooth_angular_radius) / (sun_disc_angular_radius - sun_smooth_angular_radius);
+        sun_contribution += (-cos(smooth_curve_position*PI) + 1.0) * 0.5;
+    }
+
+    // Sun glow
+    if(angular_distance_from_sun_position < sun_glow_angular_radius)
+    {
+        // Smooth sun glow, radiating from sun center, using a cubic falloff
+        const float glow_curve_position = 1.0 - (angular_distance_from_sun_position / sun_glow_angular_radius);
+        const float glow_curve = glow_curve_position * exp(6.0 * glow_curve_position - 6.0);
+        sun_contribution += sun_glow_multiplier * glow_curve;
+    }
+
+    return sun_contribution * sun_luminance;
+}
+
+float3 compute_sunsky_env_color(
+    const float3 input_ray_direction,
+    const float horizon_height,
+    const float horizon_blur,
+    const float3 global_multiplier,
+    const float3 sun_illuminance,
+    const float3 sun_luminance,
+    const float sun_glow_multiplier,
+    const float sky_contribution_multiplier,
+    const float3 sky_ground_contribution,
+    const float sun_disc_angular_radius,
+    const float sun_smooth_angular_radius,
+    const float sun_glow_angular_radius,
+    const float color_saturation,
+    const float3 color_tint,
+    const float3 ground_color,
+    const float3 night_luminance,
+    const float night_falloff,
+    const float3 sun_direction,
+    const float3 sun_direction_for_sky_contribution,
+    const float3 perez_A,
+    const float3 perez_B,
+    const float3 perez_C,
+    const float3 perez_D,
+    const float3 perez_E,
+    const float3 perez_Z)
+{
+    // Compute the interpolation factor between ground and sky, which is dependent on how far we are from the horizon; contribution sun&sky is the 1.0-this
+    const float ground_relative_contribution =
+        (input_ray_direction.z >= horizon_height)
+        ? 0.0
+        : smoothstep(0.0, 1.0, (horizon_height - input_ray_direction.z) / horizon_blur);
+
+    // Offset the ray and sun directions according to the horizon height. The moves the horizon and adjust the resulting luminance of the
+    // sun accordingly. We also clamp the Z component to a minimum value, as the sky isn't defined at the horizon and we don't want to let
+	// precision get in the way.
+    const float3 ray_direction = normalize(float3(input_ray_direction.x, input_ray_direction.y, max(input_ray_direction.z - horizon_height, 1e-4f)));
+
+    // This is the final environment color, to which we add contributions from various sources.
+    float3 environment_color = float3(0.0);
+
+    // Add sun and sky contributions, if applicable
+    if(ground_relative_contribution < 1.0)
+    {
+        // Compute sky contribution
+        const float sky_sun_dir_cosine = dot(ray_direction, sun_direction_for_sky_contribution);
+        const float sky_sun_dir_angle = max(acos(sky_sun_dir_cosine), 0.0);         // precision issues can cause this value to be negative
+        float3 sky_contribution = 
+                compute_sky_contribution_rgb(
+                    sun_direction_for_sky_contribution,
+                    ray_direction,
+                    sky_sun_dir_angle, sky_sun_dir_cosine,
+                    night_luminance,
+                    night_falloff,
+                    perez_A, perez_B, perez_C, perez_D, perez_E, perez_Z);
+        sky_contribution *= sky_contribution_multiplier;
+
+        // Computer sun contribution
+        const float sun_dir_cosine = dot(ray_direction, sun_direction);
+        const float sun_dir_angle = max(acos(sun_dir_cosine), 0.0);           // precision issues can cause this value to be negative
+        const float3 sun_contribution = compute_sun_contribution(sun_dir_angle, sun_disc_angular_radius, sun_smooth_angular_radius, sun_glow_angular_radius, sun_glow_multiplier, sun_luminance);
+
+        // Add the sun & sky contribution to the result, modulated by the remainder from the ground contribution
+        environment_color += (sky_contribution + sun_contribution) * (1.0 - ground_relative_contribution);
+    }
+
+    // Add ground contribution, if applicable
+    if(ground_relative_contribution > 0.0)
+    {
+        // Fake ground illumination: use the sun and sky illuminances and shade with a simple lambertian logic.
+        float3 ground_contribution = sky_ground_contribution;
+        if(sun_direction.z > 0.0)
+        {
+            ground_contribution += (sun_illuminance * sun_direction.z * float(1.0 / PI));
+        }
+        environment_color += ground_color * ground_contribution * ground_relative_contribution;
+    }
+
+    // Apply saturation and color tinting 
+    {
+        if(color_saturation != 1.0)
+        {
+            environment_color = max((environment_color * color_saturation) + float3(rgb_luminance(environment_color) * (1.0 - color_saturation)), float3(0.0));
+        }
+        environment_color *= color_tint;
+    }
+
+    environment_color *= global_multiplier;
+    return environment_color;
+}
+
+#ifndef RTSL_INCLUDED_BY_CPP_CODE
+
+shader PhysSunSky : environment
+{
+    // Horizon adjustment
+    uniform float m_horizon_height = 0.0;       // Horizon height modifier, offset to ray direction Z
+    uniform float m_horizon_blur = 0.01;        // Horizon blur range, offset to ray direction Z
+
+    // Global multiplier is applied to the entire environment
+    uniform float3 m_global_multiplier = float3(1.0);
+
+    // The toal illuminance of the sun, used to fake ground plane lighting
+    uniform float3 m_sun_illuminance = float3(1.0);
+    // The luminance of the sun (illuminance divided by integral of sun intensity function), to be multiplied by the sun intensity function, in cd
+    uniform float3 m_sun_luminance = float3(1.0);
+    // Multiplier for the sun glow
+    uniform float m_sun_glow_multiplier = 1.0;
+
+    // Multiplier for the sky contribution
+    uniform float m_sky_contribution_multiplier = 1.0;
+    // Integrated contribution of sky on lambertian ground plane
+    uniform float3 m_sky_ground_contribution = float3(0.0);
+
+    // Angular radius, in radians, of the sun disc, smoothing region, and glow
+    uniform float m_sun_disc_angular_radius = 1.0;
+    uniform float m_sun_smooth_angular_radius = 1.0;
+    uniform float m_sun_glow_angular_radius = 1.0;
+
+    // Color adjustment
+    uniform float m_saturation = 1.0;
+    uniform float3 m_color_tint = float3(1.0);
+
+    // Fake ground plane color
+    uniform float3 m_ground_color = float3(0.2, 0.2, 0.2);
+    
+    // Night color - used as a floor value for the sky
+    uniform float3 m_night_luminance = float3(0.2, 0.2, 0.2);
+    // Night falloff - falloff used to dim the sky as the sun dips below the horizon. Applied to sky color,
+    // before the night luminance is applied
+    uniform float m_night_falloff = 1.0;
+
+    // The sun direction which already takes the horizon height into account
+    uniform float3 m_sun_direction = float3(0.0, 0.0, 1.0);
+    // The sun direction to be used when calculating the sky contribution.
+    uniform float3 m_sun_direction_for_sky_contribution = float3(0.0, 0.0, 1.0);
+
+    // Perez model coefficients for each of the Yxy components of the sky color. 
+    uniform float3 m_perez_A = float3(1.0);
+    uniform float3 m_perez_B = float3(1.0);
+    uniform float3 m_perez_C = float3(1.0);
+    uniform float3 m_perez_D = float3(1.0);
+    uniform float3 m_perez_E = float3(1.0);
+    uniform float3 m_perez_Z = float3(1.0);
+
+    void shade()
+    {
+        rt_Environment = compute_sunsky_env_color(
+            rt_RayDirection,
+            m_horizon_height,
+            m_horizon_blur,
+            m_global_multiplier,
+            m_sun_illuminance,
+            m_sun_luminance,
+            m_sun_glow_multiplier,
+            m_sky_contribution_multiplier,
+            m_sky_ground_contribution,
+            m_sun_disc_angular_radius,
+            m_sun_smooth_angular_radius,
+            m_sun_glow_angular_radius,
+            m_saturation,
+            m_color_tint,
+            m_ground_color,
+            m_night_luminance,
+            m_night_falloff,
+            m_sun_direction,
+            m_sun_direction_for_sky_contribution,
+            m_perez_A,
+            m_perez_B,
+            m_perez_C,
+            m_perez_D,
+            m_perez_E,
+            m_perez_Z);
+    }
+}
+
+#endif

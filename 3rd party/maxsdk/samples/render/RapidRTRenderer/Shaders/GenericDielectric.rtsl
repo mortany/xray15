@@ -1,0 +1,219 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+//  Copyright 2015 Autodesk, Inc.  All rights reserved.
+//
+//  Use of this software is subject to the terms of the Autodesk license 
+//  agreement provided at the time of installation or download, or which 
+//  otherwise accompanies this software in either electronic or hard copy form.   
+//
+//////////////////////////////////////////////////////////////////////////////
+
+const int DIFFUSE   = 0;
+const int GLOSSY    = 1;
+const int SPECULAR  = 2;
+/*
+const int SCATTER_INVALID             = 0;
+const int SCATTER_REFLECT_DIFFUSE     = 1;
+const int SCATTER_REFLECT_GLOSSY      = 2;
+const int SCATTER_REFLECT_SPECULAR    = 4;
+const int SCATTER_TRANSMIT_DIFFUSE    = 8;
+const int SCATTER_TRANSMIT_GLOSSY     = 16;
+const int SCATTER_TRANSMIT_SPECULAR   = 32;
+*/
+
+const int RAY_PRIMARY                 = 1;
+const int RAY_REFLECTION              = 2;
+const int RAY_TRANSMISSION            = 4;
+const int RAY_DIFFUSE                 = 8;
+const int RAY_GLOSSY                  = 16;
+const int RAY_SPECULAR                = 32;
+const int RAY_SHADOW                  = 64;
+
+
+const float PI      = 3.14159265358979323846;
+const float TWO_PI  = 2.0 * PI;
+const float HALF_PI = 0.5 * PI;
+const float INV_PI  = 1.0 / PI;
+const float EPSILON = 0.00001;
+ 
+
+///////////////////////////////////////////////////////////////
+// Utility functions //////////////////////////////////////////
+
+void createBasis(float3 normal, out float3x3 basis) 
+{
+  float e = normal.z;
+  if (abs(e) > 0.99999) {
+    basis[0] = float3(1.0, 0.0, 0.0);
+    basis[1] = float3(0.0, (e<0.0) ? -1.0 : 1.0, 0.0);
+    basis[2] = normal;
+  }
+  else {
+    float h = 1.0 / (1.0 + e);
+    float3 v = float3(normal.y, -normal.x, 0.0);
+    float hvx = h * v.x;
+    float hvxy = hvx * v.y;
+        
+    basis[0] = float3(e + hvx * v.x, hvxy, v.y);
+    basis[1] = float3(hvxy, e + h * v.y*v.y, -v.x);
+    basis[2] = float3(-v.y, v.x, e);
+  }
+}
+
+void basisOrthonormalize(out float3x3 basis)
+{
+    basis[0] = normalize(basis[0] - dot(basis[0], basis[2]) * basis[2]);
+    basis[1] = normalize(cross(basis[2], basis[0]));
+}
+
+float3x3 calcTangentBasis(float3 localTangent, float3 frontFacingShadingNormal, float3x3 rtLocalToWorldNormalMatrix)
+{
+    float3x3 tangentBasis; 
+    tangentBasis[0] = localTangent*rtLocalToWorldNormalMatrix; 
+    tangentBasis[2] = frontFacingShadingNormal;
+    basisOrthonormalize(tangentBasis);
+    return tangentBasis; 
+}
+
+float3 createTangent(float3 normal, float3 ray)
+{
+	float3 tangent = cross(normal, ray);
+	if (float3(0.0)==tangent) {
+		float3 a = cross(normal, float3(0.0, 1.0, 0.0));
+		float3 b = cross(normal, float3(0.0, 0.0, 1.0));
+		if (length(a) > length(b)) {
+			tangent = a;
+		}
+		else {
+			tangent = b;
+		}
+	}
+	return normalize(tangent);
+}
+
+float3 basisToWorld(const float3x3 basis, float3 vec) 
+{
+	return vec.x * basis[0] + vec.y * basis[1] + vec.z * basis[2];
+}
+
+float3 basisToLocal(const float3x3 basis, float3 vec) 
+{
+	return float3(dot(basis[0], vec), dot(basis[1], vec), dot(basis[2], vec));
+}
+
+float3 cosineSampleHem(float2 s)
+{
+	float phi = TWO_PI * s[0];
+	float sintheta = sqrt(s[1]);
+
+	return float3(cos(phi) * sintheta,
+				sin(phi) * sintheta,
+				sqrt(1.0 - s[1]));
+}
+
+float pow5(float x)
+{
+	float y = x*x;
+	return y*y*x;
+}
+
+
+
+shader GenericDielectric : material
+{
+	uniform float ior = 1.5;
+	uniform float3    diffuse    = float3(1.0);
+	uniform float3    specular   = float3(1.0);
+	uniform float     shininess  = 0.0;
+	uniform float     shininessStr = 1.0;
+
+	uniform float     transparency  = 0.0;
+	uniform float     reflectiveness = 0.0;
+ 
+	uniform bool      hasDiffuseMap = false;
+	uniform texture2D diffuseMap;
+
+	uniform bool      hasBumpMap = false;
+	uniform texture2D bumpMap;
+
+	varying float2    uv;
+
+	void scattering()
+	{
+	   	float fEta = rt_FrontFacing ? 1.0f / ior : ior;
+
+		float3 diffuseColor = float3(0.0f);
+		if (hasDiffuseMap) {
+			diffuseColor = diffuseMap.lookup(uv).rgb;
+		}
+		else {
+			diffuseColor = diffuse;
+		}
+
+		float3 normal;
+		if (hasBumpMap) {
+			float3x3 basis;
+			createBasis(normalize(rt_ShadingNormal), basis);
+			normal = normalize(basisToWorld(basis, bumpMap.lookup(uv).rgb));
+		}
+		else {
+			normal = rt_ShadingNormal;
+		}
+
+		float RdotN = -dot(rt_RayDirection, normal);
+		float reflectionProbability = reflectiveness + ((1.0 - reflectiveness)*pow5(1.0 - RdotN))*(pow5(reflectiveness - 1.0) + 1.0);
+		float refractProbability = transparency;
+
+		if (reflectionProbability + refractProbability > 1.0) {
+			reflectionProbability = reflectionProbability / (reflectionProbability + refractProbability);
+			refractProbability = 1.0 - reflectionProbability;
+		}
+		
+		BSDF diffuse_bsdf = lambert(diffuseColor, normal);
+		BSDF specular_bsdf = reflection(specular, normal);
+
+		rt_Scattering = mix(transparency , 
+                            mix(reflectionProbability,
+                                diffuse_bsdf, 
+                                specular_bsdf),
+                            dielectric(diffuseColor, normal, fEta));
+	}
+ /*
+	void transmission()
+	{
+		float3 normal;
+		if (hasBumpMap) {
+			float3x3 basis;
+			createBasis(normalize(rt_ShadingNormal), basis);
+			normal = normalize(basisToWorld(basis, bumpMap.lookup(uv).rgb));
+		}
+		else {
+			normal = rt_ShadingNormal;
+		}
+		
+		float3 diffuseColor = float3(0.0f);
+		if (hasDiffuseMap) {
+			diffuseColor = diffuseMap.lookup(uv).rgb;
+		}
+		else {
+			diffuseColor = diffuse;
+		}
+
+		float RdotN = -dot(rt_RayDirection, normal);
+		float reflectionProbability = reflectiveness + ((1.0 - reflectiveness)*pow5(1.0 - RdotN))*(pow5(reflectiveness - 1.0) + 1.0);
+		float refractProbability = transparency;
+
+		if (reflectionProbability + refractProbability > 1.0) {
+			reflectionProbability = reflectionProbability / (reflectionProbability + refractProbability);
+			refractProbability = 1.0 - reflectionProbability;
+		}
+
+		rt_SampleTransmission = diffuseColor * refractProbability;
+	}
+
+	void shade()
+	{
+	} */
+}
+
+

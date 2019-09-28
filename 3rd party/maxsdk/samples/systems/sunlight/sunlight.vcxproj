@@ -1,0 +1,285 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build" ToolsVersion="15.0">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|x64">
+      <Configuration>Hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{62B37E8F-5BF3-4B5C-A3F4-2E024A85EC03}</ProjectGuid>
+    <RootNamespace>sunlight</RootNamespace>
+    <MaxSDK>../../../../maxsdk</MaxSDK>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <Keyword>Qt4VS</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.cpp.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir>$(MaxBuildBinAssembly)</OutDir>
+    <TargetName>Sunlight</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);$(QTDIR)\include;$(DirectXSDKInc);.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories Condition="'$(Configuration)'!='Hybrid'">$(MaxSdkAssemblies);%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      
+      <AdditionalUsingDirectories Condition="'$(Configuration)'=='Hybrid'">$(MaxSdkAssemblies);$(MaxSdkDir)\assemblies\x64\$(ConfigRelease);%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <AdditionalOptions>/wd4945 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);$(QTDIR)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_CRT_NON_CONFORMING_SWPRINTFS;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Notificationsystem.lib;MaxQtBridge.lib;MouseCursors.lib;bmm.lib;assetmanagement.lib;comctl32.lib;paramblk2.lib;core.lib;geom.lib;gfx.lib;maxscrpt.lib;maxutil.lib;mesh.lib;mnmath.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Notificationsystem.lib;MaxQtBridge.lib;MouseCursors.lib;bmm.lib;assetmanagement.lib;comctl32.lib;paramblk2.lib;core.lib;geom.lib;gfx.lib;maxscrpt.lib;maxutil.lib;mesh.lib;mnmath.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_CRT_NON_CONFORMING_SWPRINTFS;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Notificationsystem.lib;MaxQtBridge.lib;MouseCursors.lib;bmm.lib;assetmanagement.lib;comctl32.lib;paramblk2.lib;core.lib;geom.lib;gfx.lib;maxscrpt.lib;maxutil.lib;mesh.lib;mnmath.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyEntry.cpp">
+      <CompileAsManaged>true</CompileAsManaged>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <CompileAsManaged>true</CompileAsManaged>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <ClCompile Include="autovis.cpp" />
+    <ClCompile Include="citylist.cpp" />
+    <ClCompile Include="compass.cpp" />
+    <ClCompile Include="CompassRoseObjClassDesc.cpp" />
+    <ClCompile Include="CompassRoseObjCreateCallBack.cpp" />
+    <ClCompile Include="DaylightSystemFactory.cpp" />
+    <ClCompile Include="DaylightSystemFactory2.cpp" />
+    <ClCompile Include="DayMasterClassDesc.cpp" />
+    <ClCompile Include="DaySlaveControlFloatClassDesc.cpp" />
+    <ClCompile Include="DaySlaveControlPosClassDesc.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_PhysicalSunSkyEnv_UI.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SunPositioner_UI.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Hybrid\moc_PhysicalSunSkyEnv_UI.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Hybrid\moc_SunPositioner_UI.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_PhysicalSunSkyEnv_UI.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_SunPositioner_UI.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="geoloc.cpp" />
+    <ClCompile Include="natLight.cpp" />
+    <ClCompile Include="NatLightAssemblyClassDesc.cpp" />
+    <ClCompile Include="PhysicalSunSkyEnv.cpp" />
+    <ClCompile Include="PhysicalSunSkyEnv_UI.cpp" />
+    <ClCompile Include="SlaveControlFloatClassDesc.cpp" />
+    <ClCompile Include="SlaveControlPosClassDesc.cpp" />
+    <ClCompile Include="sunlight.cpp" />
+    <ClCompile Include="SunlightClassDescFactory.cpp">
+      <CompileAsManaged>true</CompileAsManaged>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <ClCompile Include="SunMasterClassDesc.cpp" />
+    <ClCompile Include="SunMasterCreateMode.cpp" />
+    <ClCompile Include="SunMasterCreationManager.cpp" />
+    <ClCompile Include="SunPositioner.cpp" />
+    <ClCompile Include="SunPositioner_UI.cpp" />
+    <ClCompile Include="TimeDimension.cpp" />
+    <ClCompile Include="Utils.cpp">
+      <CompileAsManaged>true</CompileAsManaged>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <ClCompile Include="weatherdata.cpp">
+      <CompileAsManaged>true</CompileAsManaged>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <ClCompile Include="WeatherFileDialog.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="SunPositioner_Display.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+    <CustomBuild Include="PhysSunSky.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="sunlight.RC" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\DaylightSimulation\IPhysicalSunSky.h" />
+    <ClInclude Include="..\..\..\include\DaylightSimulation\IPhysicalSunSky.inline.h" />
+    <ClInclude Include="..\..\..\include\DaylightSimulation\ISunPositioner.h" />
+    <ClInclude Include="..\..\..\include\DaylightSimulation\ISunPositioner.inline.h" />
+    <ClInclude Include="AssemblyEntry.h" />
+    <ClInclude Include="autovis.h" />
+    <ClInclude Include="citylist.h" />
+    <ClInclude Include="compass.h" />
+    <ClInclude Include="CompassRoseObjClassDesc.h" />
+    <ClInclude Include="CompassRoseObjCreateCallBack.h" />
+    <ClInclude Include="DaylightSystemFactory.h" />
+    <ClInclude Include="DaylightSystemFactory2.h" />
+    <ClInclude Include="DayMasterClassDesc.h" />
+    <ClInclude Include="DaySlaveControlFloatClassDesc.h" />
+    <ClInclude Include="DaySlaveControlPosClassDesc.h" />
+    <ClInclude Include="GeneratedFiles\ui_PhysSunSky.h" />
+    <ClInclude Include="GeneratedFiles\ui_SunPositioner_Display.h" />
+    <ClInclude Include="GeneratedFiles\ui_SunPositioner_SunPosition.h" />
+    <ClInclude Include="natLight.h" />
+    <ClInclude Include="NatLightAssemblyClassDesc.h" />
+    <CustomBuild Include="PhysicalSunSkyEnv_UI.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">Moc%27ing PhysicalSunSkyEnv_UI.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_SECURE_SCL=0 -D_CRT_NON_CONFORMING_SWPRINTFS -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_ADESK_3DSMAX_WINDOWS_ -DWINVER=0x0601 -D_WIN32_WINNT=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_IE=0x0800 -D_WINDOWS -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SCL_SECURE_NO_DEPRECATE -D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES=1 -D_CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES=1 -DISOLATION_AWARE_ENABLED=1 "-DMODULE_NAME=$(TargetFileName)\." -D_HYBRID -DIS_HYBRID -DSECURE_SCL=0 -DWIN32 -DWIN64 -D_WINDLL -D_UNICODE -DUNICODE  "-I$(MaxSdkInc)\." "-I$(QTDIR)\include" "-I$(DirectXSDKInc)\." "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing PhysicalSunSkyEnv_UI.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_CRT_NON_CONFORMING_SWPRINTFS -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_ADESK_3DSMAX_WINDOWS_ -DWINVER=0x0601 -D_WIN32_WINNT=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_IE=0x0800 -D_WINDOWS -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SCL_SECURE_NO_DEPRECATE -D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES=1 -D_CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES=1 -DISOLATION_AWARE_ENABLED=1 "-DMODULE_NAME=$(TargetFileName)\." -D_DEBUG -DWIN32 -DWIN64 -D_WINDLL -D_UNICODE -DUNICODE  "-I$(MaxSdkInc)\." "-I$(QTDIR)\include" "-I$(DirectXSDKInc)\." "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing PhysicalSunSkyEnv_UI.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_SECURE_SCL=0 -D_CRT_NON_CONFORMING_SWPRINTFS -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_ADESK_3DSMAX_WINDOWS_ -DWINVER=0x0601 -D_WIN32_WINNT=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_IE=0x0800 -D_WINDOWS -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SCL_SECURE_NO_DEPRECATE -D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES=1 -D_CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES=1 -DISOLATION_AWARE_ENABLED=1 "-DMODULE_NAME=$(TargetFileName)\." -DNDEBUG -DSECURE_SCL=0 -DWIN32 -DWIN64 -D_WINDLL -D_UNICODE -DUNICODE  "-I$(MaxSdkInc)\." "-I$(QTDIR)\include" "-I$(DirectXSDKInc)\." "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="PhysicalSunSkyEnv.h" />
+    <ClInclude Include="PhysicalSunSkyShader.h" />
+    <ClInclude Include="SlaveControlFloatClassDesc.h" />
+    <ClInclude Include="SlaveControlPosClassDesc.h" />
+    <ClInclude Include="sunclass.h" />
+    <ClInclude Include="sunlight.H" />
+    <ClInclude Include="SunlightClassDescFactory.h" />
+    <ClInclude Include="sunlightOverride.h" />
+    <ClInclude Include="SunMasterClassDesc.h" />
+    <ClInclude Include="SunMasterCreateMode.h" />
+    <ClInclude Include="SunMasterCreationManager.h" />
+    <ClInclude Include="SunPositioner.h" />
+    <CustomBuild Include="SunPositioner_UI.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">Moc%27ing SunPositioner_UI.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_SECURE_SCL=0 -D_CRT_NON_CONFORMING_SWPRINTFS -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_ADESK_3DSMAX_WINDOWS_ -DWINVER=0x0601 -D_WIN32_WINNT=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_IE=0x0800 -D_WINDOWS -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SCL_SECURE_NO_DEPRECATE -D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES=1 -D_CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES=1 -DISOLATION_AWARE_ENABLED=1 "-DMODULE_NAME=$(TargetFileName)\." -D_HYBRID -DIS_HYBRID -DSECURE_SCL=0 -DWIN32 -DWIN64 -D_WINDLL -D_UNICODE -DUNICODE  "-I$(MaxSdkInc)\." "-I$(QTDIR)\include" "-I$(DirectXSDKInc)\." "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing SunPositioner_UI.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_CRT_NON_CONFORMING_SWPRINTFS -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_ADESK_3DSMAX_WINDOWS_ -DWINVER=0x0601 -D_WIN32_WINNT=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_IE=0x0800 -D_WINDOWS -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SCL_SECURE_NO_DEPRECATE -D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES=1 -D_CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES=1 -DISOLATION_AWARE_ENABLED=1 "-DMODULE_NAME=$(TargetFileName)\." -D_DEBUG -DWIN32 -DWIN64 -D_WINDLL -D_UNICODE -DUNICODE  "-I$(MaxSdkInc)\." "-I$(QTDIR)\include" "-I$(DirectXSDKInc)\." "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing SunPositioner_UI.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_SECURE_SCL=0 -D_CRT_NON_CONFORMING_SWPRINTFS -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_ADESK_3DSMAX_WINDOWS_ -DWINVER=0x0601 -D_WIN32_WINNT=0x0601 -D_WIN32_WINDOWS=0x0601 -D_WIN32_IE=0x0800 -D_WINDOWS -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_SCL_SECURE_NO_DEPRECATE -D_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES=1 -D_CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES=1 -DISOLATION_AWARE_ENABLED=1 "-DMODULE_NAME=$(TargetFileName)\." -DNDEBUG -DSECURE_SCL=0 -DWIN32 -DWIN64 -D_WINDLL -D_UNICODE -DUNICODE  "-I$(MaxSdkInc)\." "-I$(QTDIR)\include" "-I$(DirectXSDKInc)\." "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="suntypes.h" />
+    <ClInclude Include="TimeDimension.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="veroverrides.h" />
+    <ClInclude Include="verts.h" />
+    <ClInclude Include="weatherdata.h" />
+    <ClInclude Include="WeatherFileCache.h" />
+    <ClInclude Include="WeatherFileDialog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="SunPositioner_SunPosition.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PhysSunSky.rtsl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Qt5Version_x0020_x64="$(DefaultQtVersion)" />
+    </VisualStudio>
+  </ProjectExtensions>
+<ItemGroup><ClCompile Include="GeneratedFiles\qrc_sunlight_translations.cpp"><PrecompiledHeader /></ClCompile></ItemGroup></Project>

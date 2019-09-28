@@ -1,0 +1,17 @@
+(
+	-- this file is used by the test_getCommandLine function in mxsagni_misc_Tests.UnitTest.ms
+	local testFile = @"$temp\test_getCommandLine.txt"
+	deleteFile testFile
+	local f = createFile testFile
+	format "%\n" (sysinfo.getCommandLine()) to:f
+	format "#(" to:f
+	local sep_char = ""
+	for ele in (sysinfo.getCommandLineArgs()) do
+	(
+		format "%@\"%\"" sep_char ele to:f
+		sep_char = ", "
+	)
+	format ")\n" to:f
+	close f
+	quitmax #noprompt
+)

@@ -1,0 +1,211 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PANEL DIALOGEX 0, 0, 108, 270
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "Enable In Renderer",IDC_RENDERABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,4,1,77,10
+    CONTROL         "Enable In Viewport",IDC_DISPRENDERMESH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,4,11,75,10
+    CONTROL         "Use Viewport Settings",IDC_USE_VIEWPORT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,20,85,10
+    CONTROL         "Generate Mapping Coords.",IDC_GENMAPPING,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,4,30,97,10
+    GROUPBOX        "",IDC_STATIC,4,48,100,129
+    CONTROL         "Radial",IDC_SYMMETRICAL,"Button",BS_AUTORADIOBUTTON,7,64,36,10
+    CONTROL         "",IDC_THICKNESS,"CustEdit",WS_TABSTOP,48,75,38,10
+    CONTROL         "",IDC_SIDES,"CustEdit",WS_TABSTOP,48,87,38,10
+    CONTROL         "",IDC_ANGLE,"CustEdit",WS_TABSTOP,48,99,38,10
+    CONTROL         "",IDC_LENGTH,"CustEdit",WS_TABSTOP,49,125,38,10
+    CONTROL         "",IDC_WIDTH,"CustEdit",WS_TABSTOP,49,138,38,10
+    CONTROL         "",IDC_ANGLE2,"CustEdit",WS_TABSTOP,49,150,38,10
+    CONTROL         "",IDC_ASPECT,"CustEdit",WS_TABSTOP,49,163,27,10
+    CONTROL         "",IDC_ASPECTLOCK,"CustButton",WS_TABSTOP,87,163,10,10
+    CONTROL         "Auto Smooth",IDC_AUTOSMOOTH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,4,179,57,10
+    CONTROL         "",IDC_THRESHOLD,"CustEdit",WS_TABSTOP,49,190,38,10
+    CONTROL         "Viewport",IDC_VIEWPORT,"Button",BS_AUTORADIOBUTTON,7,54,43,10
+    CONTROL         "Renderer",IDC_RENDERER,"Button",BS_AUTORADIOBUTTON,55,54,45,10
+    RTEXT           "Thickness:",IDC_THICKTEXT,10,76,36,8
+    CONTROL         "",IDC_THICKSPIN,"SpinnerControl",0x0,88,75,7,10
+    RTEXT           "Sides:",IDC_SIDESTEXT,26,88,20,8
+    CONTROL         "",IDC_SIDESSPIN,"SpinnerControl",0x0,88,87,7,10
+    RTEXT           "Angle:",IDC_ANGLETEXT,25,100,21,8
+    CONTROL         "",IDC_ANGLESPIN,"SpinnerControl",0x0,88,99,7,10
+    CONTROL         "Rectangular",IDC_RECTANGULAR,"Button",BS_AUTORADIOBUTTON,7,113,55,10
+    RTEXT           "Length:",IDC_LENGTHTEXT,23,126,25,8
+    CONTROL         "",IDC_LENGTHSPIN,"SpinnerControl",0x0,89,125,7,10
+    RTEXT           "Width:",IDC_WIDTHTEXT,26,139,22,8
+    CONTROL         "",IDC_WIDTHSPIN,"SpinnerControl",0x0,89,138,7,10
+    RTEXT           "Angle:",IDC_ANGLE2TEXT,27,151,21,8
+    CONTROL         "",IDC_ANGLESPIN2,"SpinnerControl",0x0,89,150,7,10
+    RTEXT           "Aspect:",IDC_ASPECTTEXT,23,164,25,8
+    CONTROL         "",IDC_ASPECTSPIN,"SpinnerControl",0x0,78,163,7,10
+    RTEXT           "Threshold:",IDC_STATIC,14,191,34,8
+    CONTROL         "",IDC_THRESHOLDSPIN,"SpinnerControl",0x0,89,190,7,10
+    CONTROL         "Rectangular",IDC_VIEW_RECTANGULAR,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,7,113,57,10
+    CONTROL         "Radial",IDC_VIEW_SYMMETRICAL,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,7,64,59,10
+    CONTROL         "Real-World Map Size",IDC_REAL_WORLD_MAP_SIZE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,4,40,97,10
+    GROUPBOX        "Capping Options",IDC_CAPPING_OPTIONS,4,221,102,46
+    CONTROL         "Twist Correction",IDC_TWIST_CORRECTION,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,201,100,10
+    CONTROL         "Cap",IDC_CAP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,211,93,10
+    CONTROL         "Quad Cap",IDC_QUAD_CAP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,9,231,91,10
+    CONTROL         "",IDC_CAPSEGS,"CustEdit",WS_TABSTOP,52,243,38,10
+    CONTROL         "",IDC_CAPSEGS_SPIN,"SpinnerControl",0x0,92,243,7,10
+    RTEXT           "Segments:",IDC_CAP_SEGMENTS_LABEL,8,244,43,8
+    CONTROL         "",IDC_CAPSPHERE,"CustEdit",WS_TABSTOP,52,255,38,10
+    CONTROL         "",IDC_CAPSPHERE_SPIN,"SpinnerControl",0x0,92,255,7,10
+    RTEXT           "Sphere:",IDC_SPHERE_LABEL,8,256,43,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_PANEL, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 104
+        VERTGUIDE, 54
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 266
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "#include ""veroverrides.h""\r\n"
+    "#include ""maxversion.r""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_LOCKMASK            BITMAP                  "lockmask.bmp"
+
+IDB_LOCK                BITMAP                  "lock.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_PANEL AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_LIBDESCRIPTION      "Renderable Spline Modifier (Autodesk)"
+    IDS_CATEGORY            "MAX STANDARD"
+    IDS_CLASS_NAME          "Renderable Spline"
+    IDS_PARAMS              "Parameters"
+    IDS_THICK               "Thickness"
+    IDS_RENDERABLE          "Renderable"
+    IDS_DISPLAY             "displayRenderSettings"
+    IDS_SIDES               "Sides"
+    IDS_ANGLE               "Angle"
+    IDS_GENUVW              "mapcoords"
+    IDS_SHAPE_PARAMETER_CHANGE "Parameter Change"
+    IDS_VIEW_THICK          "Viewport_Thickness"
+    IDS_VIEW_SIDES          "Viewport_Sides"
+    IDS_VIEW_ANGLE          "Viewport_Angle"
+    IDS_VIEW                "useViewportSettings"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_VIEWPORTORRENDERER  "ViewportOrRender"
+    IDS_AUTOSMOOTH          "Autosmooth"
+    IDS_THRESHOLD           "Threshold"
+    IDS_ANGLE2              "Angle 2"
+    IDS_LENGTH              "Length"
+    IDS_LOCK_ASPECT         "Lock_Aspect"
+    IDS_VIEW_ANGLE2         "Viewport_Angle2"
+    IDS_VIEW_LENGTH         "Viewport_Length"
+    IDS_VIEW_LOCK_ASPECT    "Viewport_Lock_Aspect"
+    IDS_VIEW_WIDTH          "Viewport_Width"
+    IDS_WIDTH               "Width"
+    IDS_SYMMORRECT          "SymmetricalOrRectangular"
+    28                      "Viewport_SymmetricalOrRectangular"
+    IDS_PARAM_CHANGE        "Parameter Change"
+    IDS_CAP_SEGMENTS        "Cap_Segments"
+    IDS_SPHERE_CAP          "Sphere_Cap"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+#include "veroverrides.h"
+#include "maxversion.r"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

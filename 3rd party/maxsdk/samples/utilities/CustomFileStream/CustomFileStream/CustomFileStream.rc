@@ -1,0 +1,99 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "#include ""veroverrides.h""\r\n"
+    "#include ""maxversion.r""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_LIBDESCRIPTION      "CustomFileStream (Autodesk)"
+	IDS_FILE_NOT_FOUND    "File not found: "
+	IDS_STREAM_NOT_OPENED_FOR_READ    "Stream cannot be opened for read: "
+	IDS_STREAM_NOT_OPENED_FOR_WRITE    "Stream cannot be opened for write: "
+	IDS_STORAGE_NOT_OPENED_FOR_READ    "Storage cannot be opened for read: "
+	IDS_STORAGE_NOT_OPENED_FOR_WRITE    "Storage cannot be opened for write: "
+	IDS_ERROR_PERFORMING_OLE_OPERATION  "Error performing OLE operation: "
+	IDS_STREAM_NOT_CUSTOMFILESTREAM_CREATED_STREAM "Attempting to operate on stream not created by CustomFileStream or CustomSceneStreamManager methods: "
+	IDS_SET_FLAGS_ON_NONEXISTANT_STREAM "Attempt to set flags on non-existent stream: "
+	IDS_STREAM_APPENDING_STRING_TO_ARRAY_STREAM "Attempting to append string to stream containing array: "
+	IDS_STREAM_APPENDING_ARRAY_TO_STRING_STREAM "Attempting to append array to stream containing string: "
+	IDS_NAMED_STREAM_DOESNT_EXIST "Named stream does not exist: "
+	IDS_INDEX_OUT_OF_RANGE "Index out of range: %d"
+	IDS_NAMED_STREAM_ALREADY_EXISTS "Named stream already exists: "
+	IDS_INDEX_OUT_OF_RANGE_NO_ENTRIES "Index out of range - value %d; no entries exist"
+	IDS_INDEX_OUT_OF_RANGE_RANGE "Index out of range - value %d; range %d to %d"
+	IDS_FUNCTION_ARG_COUNT_ERROR "Expected function to have %d args, has: %d args"
+	IDS_EXPECTED_FUNCTION "Expected function, got: "
+	IDS_EXPECTED_NAME "Expected name value, got: "
+	IDS_ERROR_RUNNING_CALLBACK "Error running CustomSceneStreamManager callback function"
+	IDS_STREAM_NAME_TOO_LONG "Stream name longer than 31 characters: "
+	IDS_STREAM_NAME_EMPTY "Stream name is empty"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+#include "veroverrides.h"
+#include "maxversion.r"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,4 @@
+LIBRARY CustomFileStreamAPI.dll
+EXPORTS
+SECTIONS
+   .data READ WRITE
