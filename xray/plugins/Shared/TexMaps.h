@@ -75,7 +75,7 @@ class Texmaps: public TexmapContainer {
 		Class_ID ClassID();
 
 		void DeleteThis();
-		RefTargetHandle Clone(RemapDir &remap = NoRemap());	
+		RefTargetHandle Clone(RemapDir &remap = DefaultRemapDir());
 		RefResult NotifyRefChanged( Interval changeInt, RefTargetHandle hTarget, 
 		   PartID& partID, RefMessage message );
 

@@ -186,7 +186,7 @@ bool CEditableMesh::Convert(CExporter* E)
 {
 	bool bResult		= true;
 
-	m_Name				= E->m_MeshNode->GetName();
+	m_Name				= StringFromUTF8(E->m_MeshNode->GetName());
 
 	// maps
 	// Weight maps 

@@ -31,7 +31,7 @@ public:
 	class _ConsoleMsg{
 	public:
 		char buf[1024];
-		_ConsoleMsg(LPCSTR b){ strcpy(buf,b); }
+		_ConsoleMsg(LPCSTR b){ strcpy_s(buf,b); }
 	};
 		
 	std::list<_ConsoleMsg> m_Messages;
@@ -55,6 +55,8 @@ public:
 
 	CExportConsole();
 	~CExportConsole();
+
+	static INT_PTR CALLBACK ConsoleDialogProc(HWND hw, UINT msg, WPARAM wp, LPARAM lp);
 };
 
 extern CExportConsole EConsole;

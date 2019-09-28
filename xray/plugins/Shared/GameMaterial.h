@@ -7,6 +7,8 @@
 #include "texmaps.h"
 #include "XRayMtlRes.h"
 
+#pragma warning(disable:4100)
+
 #define XRAYMTL_CLASS_ID	Class_ID(0x35e04198, 0x2293156c)
 
 // XRayMtl flags values
@@ -177,7 +179,9 @@ public:
 	// new PB2 paramblocks, one per rollout
 	IParamBlock2 *pb_xray;		// 
 	IParamBlock2 *pb_shader;	// ref 3, 4, ...
-	IParamBlock2 *pb_extended;	
+	IParamBlock2 *pb_extended;
+	IParamBlock *pb_extended_2;
+
 	IParamBlock2 *pb_sampling;	
 	IParamBlock2 *pb_maps;	
 	IParamBlock2 *pb_dynamics;	
@@ -216,7 +220,8 @@ public:
 	void SetFlag(ULONG f, ULONG val);
 	void EnableMap(int i, BOOL onoff);
 	BOOL IsMapEnabled(int i) { return (*maps)[i].mapOn; }
-	BOOL KeyAtTime(int id,TimeValue t) { return (id == OPACITY_PARAM) ? pb_extended->KeyFrameAtTime(std2_opacity, t) : FALSE; }
+	BOOL KeyAtTime(int id,TimeValue t) { return (id == OPACITY_PARAM) ? pb_extended_2->KeyFrameAtTime(int(std2_opacity), t) : FALSE; }
+
 	BOOL AmtKeyAtTime(int i, TimeValue t);
 	int  GetMapState( int indx ); //returns 0 = no map, 1 = disable, 2 = mapon
 	TSTR  GetMapName( int indx ); 
@@ -285,9 +290,9 @@ public:
 	long GetEShaderIndx(){ return eshaderId; }
 	long GetCShaderIndx(){ return cshaderId; }
 	long GetGameMtlIndx(){ return gamemtlId; }
-	LPCSTR GetEShaderName(){ return GetEShader(eshaderId); }
-	LPCSTR GetCShaderName(){ return GetCShader(cshaderId); }
-	LPCSTR GetGameMtlName(){ return GetGameMtl(gamemtlId); }
+	TCHAR* GetEShaderName(){ return GetEShader(eshaderId); }
+	TCHAR* GetCShaderName(){ return GetCShader(cshaderId); }
+	TCHAR* GetGameMtlName(){ return GetGameMtl(gamemtlId); }
 
 	static void		XRayMtl::LoadXRayShaderList		();
 	static void		XRayMtl::UnloadXRayShaderList	();
@@ -459,7 +464,7 @@ public:
 	RefTargetHandle GetReference(int i);
 	void SetReference(int i, RefTargetHandle rtarg);
 
-	RefTargetHandle Clone(RemapDir &remap = NoRemap());
+	RefTargetHandle Clone(RemapDir &remap = DefaultRemapDir());
 	RefResult NotifyRefChanged( Interval changeInt, RefTargetHandle hTarget, 
 		PartID& partID, RefMessage message );
 

@@ -3,12 +3,6 @@
 
 #include "Bone.h"
 #include "Motion.h"
-#ifdef _EDITOR
-#	include "../../../xrServerEntities/PropertiesListTypes.h"
-//	#include "PropertiesListHelper.h"
-#	include "GameMtlLib.h"
-#	include "pick_defs.h"
-#endif
 //----------------------------------------------------
 struct 	SRayPickInfo;
 class 	CEditableMesh;
@@ -94,13 +88,6 @@ public:
     {
     	return (0!=xr_strlen(m_Texture))&&(0!=xr_strlen(m_ShaderName));
     }
-#ifdef _EDITOR
-					~CSurface		(){R_ASSERT(!m_Shader);xr_delete(m_ImageData);}
-	IC void			CopyFrom		(CSurface* surf){*this = *surf; m_Shader=0;}
-    IC int			_Priority		()	{return _Shader()?_Shader()->E[0]->flags.iPriority:1;}
-    IC bool			_StrictB2F		()	{return _Shader()?_Shader()->E[0]->flags.bStrictB2F:false;}
-	IC ref_shader	_Shader			()	{if (!m_RTFlags.is(rtValidShader)) OnDeviceCreate(); return m_Shader;}
-#endif
     IC LPCSTR		_Name			()const {return *m_Name;}
     IC LPCSTR		_ShaderName		()const {return *m_ShaderName;}
     IC LPCSTR		_GameMtlName	()const {return *m_GameMtlName;}
@@ -113,32 +100,12 @@ public:
 	{
 		R_ASSERT2(name&&name[0],"Empty shader name."); 
 		m_ShaderName=name; 
-#ifdef _EDITOR 
-		OnDeviceDestroy(); 
-#endif
 	}
     IC void 		SetShaderXRLC	(LPCSTR name){m_ShaderXRLCName=name;}
     IC void			SetGameMtl		(LPCSTR name){m_GameMtlName=name;}
     IC void			SetFVF			(u32 fvf){m_dwFVF=fvf;}
-    IC void			SetTexture		(LPCSTR name){string512 buf; strcpy(buf,name); if(strext(buf)) *strext(buf)=0; m_Texture=buf;}
+    IC void			SetTexture		(LPCSTR name){string512 buf; strcpy_s(buf,name); if(strext(buf)) *strext(buf)=0; m_Texture=buf;}
     IC void			SetVMap			(LPCSTR name){m_VMap=name;}
-#ifdef _EDITOR
-    IC u32			_GameMtl		()const	{return GMLib.GetMaterialID	(*m_GameMtlName);}
-    IC void			OnDeviceCreate	()
-    { 
-        R_ASSERT(!m_RTFlags.is(rtValidShader));
-    	if (m_ShaderName.size()&&m_Texture.size())	m_Shader.create(*m_ShaderName,*m_Texture); 
-        else                                       	m_Shader.create("editor\\wire");
-        m_RTFlags.set(rtValidShader,TRUE);
-    }
-    IC void			OnDeviceDestroy	()
-    {
-    	m_Shader.destroy();
-        m_RTFlags.set(rtValidShader,FALSE);
-    }
-    void			CreateImageData	();
-    void			RemoveImageData	();
-#endif
 };
 
 DEFINE_VECTOR	(CSurface*,SurfaceVec,SurfaceIt);
@@ -164,9 +131,6 @@ class ECORE_API CEditableObject{
 	friend class TfrmEditLibrary;
 	friend class MeshExpUtility;
 
-#ifdef _EDITOR
-	ref_geom 		vs_SkeletonGeom;
-#endif
 // desc
 	shared_str 		m_CreateName;
     time_t			m_CreateTime;
@@ -344,24 +308,6 @@ public:
 
     // pick methods
 	bool 			RayPick					(float& dist, const Fvector& S, const Fvector& D, const Fmatrix& inv_parent, SRayPickInfo* pinf=0);
-#ifdef _EDITOR
-    void			AddBone					(CBone* parent_bone);
-    void			DeleteBone				(CBone* bone);
-    void			RenameBone				(CBone* bone, LPCSTR new_name);
-
-	void 			RayQuery				(SPickQuery& pinf);
-	void 			RayQuery				(const Fmatrix& parent, const Fmatrix& inv_parent, SPickQuery& pinf);
-	void 			BoxQuery				(const Fmatrix& parent, const Fmatrix& inv_parent, SPickQuery& pinf);
-    bool 			BoxPick					(CCustomObject* obj, const Fbox& box, const Fmatrix& inv_parent, SBoxPickInfoVec& pinf);
-	bool 			FrustumPick				(const CFrustum& frustum, const Fmatrix& parent);
-    bool 			SpherePick				(const Fvector& center, float radius, const Fmatrix& parent);
-
-    // bone
-	CBone* 			PickBone				(const Fvector& S, const Fvector& D, const Fmatrix& parent);
-	void 			SelectBones				(bool bVal);
-	void 			SelectBone				(CBone* b, bool bVal);
-    void			ClampByLimits			(bool bSelOnly);
-#endif
     // change position/orientation methods
 	void 			TranslateToWorld		(const Fmatrix& parent);
 
@@ -382,15 +328,6 @@ public:
 	bool 			SaveObject				(LPCSTR fname);
   	bool 			Load					(IReader&);
 	void 			Save					(IWriter&);
-#ifdef _EDITOR
-	void 			FillMotionList			(LPCSTR pref, ListItemsVec& items, int modeID);
-	void 			FillBoneList			(LPCSTR pref, ListItemsVec& items, int modeID);
-    void			FillSurfaceList			(LPCSTR pref, ListItemsVec& items, int modeID);
-    void			FillSurfaceProps		(CSurface* surf, LPCSTR pref, PropItemVec& items);
-	void 			FillBasicProps			(LPCSTR pref, PropItemVec& items);
-	void 			FillSummaryProps		(LPCSTR pref, PropItemVec& items);
-	bool			CheckShaderCompatible	();
-#endif
 	bool			Import_LWO				(LPCSTR fname, bool bNeedOptimize);
 
     // contains methods
@@ -437,18 +374,6 @@ public:
 	BOOL			ParseXRayMaterial		(XRayMtl* src, u32 mid, CSurface* dest);
 	CSurface*		CreateSurface			(Mtl* M, u32 mat_id);
 	bool			ImportMAXSkeleton		(CExporter* exporter);
-#endif
-#ifdef _LW_EXPORT
-	bool			Import_LWO				(st_ObjectDB *I);
-	Flags32         m_Flags;
-#endif
-#ifdef _LW_IMPORT
-	bool			Export_LW				(LWObjectImport *local);
-#endif
-#ifdef _MAYA_EXPORT
-	BOOL			ParseMAMaterial			(CSurface* dest, SXRShaderData& d);
-	CSurface*		CreateSurface			(LPCSTR m_name, SXRShaderData& d);
-	CSurface*		CreateSurface			(MObject shader);
 #endif
 	bool			ExportLWO				(LPCSTR fname);
 

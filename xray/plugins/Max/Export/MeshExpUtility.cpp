@@ -11,8 +11,7 @@
 //-------------------------------------------------------------------
 //  Dialog Handler for Utility
 
-
-static BOOL CALLBACK DefaultDlgProc(
+static INT_PTR CALLBACK DefaultDlgProc(
 		HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg) {
@@ -55,21 +54,19 @@ static BOOL CALLBACK DefaultDlgProc(
 //-------------------------------------------------------------------
 //     Utility implimentations
 
-MeshExpUtility::MeshExpUtility()
+MeshExpUtility::MeshExpUtility() :iu(nullptr), ip(nullptr), hPanel(nullptr)
 {
-	iu = 0;
-	ip = 0;	
-	hPanel = 0;
-
 	m_ObjectFlipFaces			= false;
 	m_SkinFlipFaces				= false;
 	m_SkinAllowDummy			= false;
+	hItemList					= nullptr;
 }
 
 MeshExpUtility::~MeshExpUtility()
 {
 }
 
+static const TCHAR _className[] = _T("S.T.A.L.K.E.R. Export");
 
 void MeshExpUtility::BeginEditParams(Interface *ip,IUtil *iu) 
 {
@@ -77,7 +74,9 @@ void MeshExpUtility::BeginEditParams(Interface *ip,IUtil *iu)
 	this->ip = ip;
 	EConsole.Init( hInstance, 0 );
 
-	hPanel = ip->AddRollupPage(hInstance, MAKEINTRESOURCE(IDD_MWND), DefaultDlgProc, "S.T.A.L.K.E.R. Export", 0);
+	ELog.Msg(mtInformation, "1-2-3-4-5");
+
+	hPanel = ip->AddRollupPage(hInstance, MAKEINTRESOURCE(IDD_MWND), DefaultDlgProc, _className, 0);
 }
 	
 void MeshExpUtility::EndEditParams(Interface *ip,IUtil *iu) 
@@ -100,15 +99,20 @@ void MeshExpUtility::SelectionSetChanged(Interface *ip,IUtil *iu)
 	UpdateSelectionListBox();
 }
 
+#include <3dsmaxport.h>
+
 void MeshExpUtility::Init(HWND hWnd)
 {
 	hPanel = hWnd;
+	ELog.Msg(mtInformation, "1-2-3-4-5");
 
 	hItemList = GetDlgItem(hWnd, IDC_OBJLIST);
 
 	CheckDlgButton( hPanel, IDC_OBJECT_FLIPFACES,				m_ObjectFlipFaces );
 	CheckDlgButton( hPanel, IDC_SKIN_FLIPFACES,					m_SkinFlipFaces );
 	CheckDlgButton( hPanel, IDC_SKIN_ALLOW_DUMMY,				m_SkinAllowDummy );
+
+	ELog.Msg(mtInformation, "1-2-3-4-5");
 
 	RefreshExportList();
 	UpdateSelectionListBox();
@@ -119,17 +123,29 @@ void MeshExpUtility::Destroy(HWND hWnd)
 }
 
 void MeshExpUtility::RefreshExportList(){
+	ELog.Msg(mtInformation, "Name of poor");
 	m_Items.clear();
+	ELog.Msg(mtInformation, "2");
 	ExportItem item;
+	ELog.Msg(mtInformation, "3");
+
+	if (!ip) return;
+
 	int i = ip->GetSelNodeCount();
+	ELog.Msg(mtInformation, "4");
 	while( i-- ){
+		ELog.Msg(mtInformation, "5");
 		item.pNode = ip->GetSelNode(i);
+		ELog.Msg(mtInformation, "6");
 		m_Items.push_back( item );
+		ELog.Msg(mtInformation, "7");
 	}
 }
 
 void MeshExpUtility::UpdateSelectionListBox()
 {
+	ELog.Msg(mtInformation, "745645");
+	return;
 	SendMessage( hItemList, LB_RESETCONTENT, 0, 0 );
 	ExportItemIt it = m_Items.begin();
 	for(;it!=m_Items.end();it++)
@@ -175,7 +191,7 @@ BOOL MeshExpUtility::BuildObject(CEditableObject*& exp_obj, LPCSTR m_ExportName)
 			if(m_ObjectFlipFaces)		submesh->FlipFaces();
 			submesh->RecomputeBBox();
 			// append mesh
-			submesh->SetName			(it->pNode->GetName());
+			submesh->SetName			(StringFromUTF8(it->pNode->GetName()));
 			exp_obj->m_Meshes.push_back	(submesh);
 		}else{
 			ELog.Msg(mtError,"! can't convert", it->pNode->GetName());

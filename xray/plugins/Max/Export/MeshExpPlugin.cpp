@@ -3,66 +3,88 @@
 #include "stdafx.h"
 #pragma hdrstop
 
+#include <gdiplus.h>
+
 #include "MeshExpUtility.h"
 
+static const TCHAR _className[] = _T("S.T.A.L.K.E.R. Export");
+static const TCHAR _classNameDesc[] = _T("S.T.A.L.K.E.R. Mesh Export utility");
+
+Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+ULONG_PTR gdiplusToken;
+
+#define ApexImp_CLASS_ID	Class_ID(0xceb7b2fb, 0x8a86cdb0)
 
 //-------------------------------------------------------------------
 // Class Descriptor
 
-class MeshExpUtilityClassDesc : public ClassDesc {
-	public:
-	int 			IsPublic()					{ return 1; }
-	void *			Create( BOOL loading )		{ return &U; }
-	const TCHAR *	ClassName()					{ return "S.T.A.L.K.E.R. Export"; }
-	SClass_ID		SuperClassID()				{ return UTILITY_CLASS_ID; }
-	Class_ID 		ClassID()					{ return Class_ID(EXP_UTILITY_CLASSID,0); }
-	const TCHAR* 	Category()					{ return "S.T.A.L.K.E.R. Export";  }
+class MeshExpUtilityClassDesc : public ClassDesc2 {
+public:
+	virtual int 					IsPublic()	override { return TRUE; }
+	virtual void* Create(BOOL/*loading = FALSE*/) override { return MeshExpUtility::GetInstance(); }
+	virtual const TCHAR* ClassName()		override { return _className; }
+	virtual SClass_ID				SuperClassID()	override { return UTILITY_CLASS_ID; }
+	virtual Class_ID 				ClassID()	override { return ApexImp_CLASS_ID; }
+	virtual const TCHAR* Category()	 override { return NULL; }
+	virtual HINSTANCE		HInstance() override { return hInstance; }// returns owning module handle
 };
 
+ClassDesc2* GetMeshExpUtility() 
+{ 
+	static MeshExpUtilityClassDesc MeshExpUtilityClassDescCD;
+	return &MeshExpUtilityClassDescCD; 
+
+}
+
 MeshExpUtility U;
-MeshExpUtilityClassDesc MeshExpUtilityClassDescCD;
+//MeshExpUtilityClassDesc MeshExpUtilityClassDescCD;
 
 //-------------------------------------------------------------------
 // DLL interface
+
+ClassDesc2* GetMeshExpUtility();
+
 HINSTANCE hInstance;
 int controlsInit = FALSE;
 
-
-BOOL WINAPI DllMain(HINSTANCE hinstDLL,ULONG fdwReason,LPVOID lpvReserved) 
+BOOL WINAPI DllMain(HINSTANCE hinstDLL, ULONG fdwReason, LPVOID /*lpvReserved*/)
 {
-	hInstance = hinstDLL;
-
-	if ( !controlsInit ) {
-		controlsInit = TRUE;
-		Core._initialize("S.T.A.L.K.E.R.Plugin",ELogCallback,FALSE);
-		FS._initialize	(CLocatorAPI::flScanAppRoot,NULL,"xray_path.ltx");
-		FPU::m64r	(); // ����� ����� ���� �� ��������� ���������� � 0
-		InitCustomControls(hInstance);
-		InitCommonControls();
-		ELog.Msg(mtInformation,"S.T.A.L.K.E.R. Object Export (ver. %d.%02d)",EXPORTER_VERSION,EXPORTER_BUILD);
-		ELog.Msg(mtInformation,"-------------------------------------------------------" );
+	if (fdwReason == DLL_PROCESS_ATTACH)
+	{
+		MaxSDK::Util::UseLanguagePackLocale();
+		// Hang on to this DLL's instance handle.
+		hInstance = hinstDLL;
+		DisableThreadLibraryCalls(hInstance);
+		// DO NOT do any initialization here. Use LibInitialize() instead.
 	}
-
-	switch(fdwReason) {
-
-		case DLL_PROCESS_ATTACH:
-			break;
-		case DLL_THREAD_ATTACH:
-			break;
-		case DLL_THREAD_DETACH:
-			break;
-
-		case DLL_PROCESS_DETACH:
-			Core._destroy();
-			break;
-		}
 	return(TRUE);
 }
 
+__declspec(dllexport) int LibInitialize(void)
+{
+	if (!controlsInit) 
+	{
+		controlsInit = TRUE;
+		Core._initialize("S.T.A.L.K.E.R.Plugin", ELogCallback, FALSE);
+		FS._initialize(CLocatorAPI::flScanAppRoot, NULL, "xray_path.ltx");
+		//FPU::m64r(); // нужно чтобы макс не сбрасывал контрольки в 0
+		//InitCustomControls(hInstance);
+		//InitCommonControls();
+		Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+		ELog.Msg(mtInformation, "S.T.A.L.K.E.R. Object Export (ver. %d.%02d)", EXPORTER_VERSION, EXPORTER_BUILD);
+		ELog.Msg(mtInformation, "-------------------------------------------------------");
+	}
+	//Core._initialize("S.T.A.L.K.E.R.Plugin", ELogCallback, FALSE);
+	//FS._initialize(CLocatorAPI::flScanAppRoot, NULL, "xray_path.ltx");
+	//FPU::m64r(); // нужно чтобы макс не сбрасывал контрольки в 0
+	//InitCommonControls();
+	//Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+	return TRUE;
+}
 
 
 __declspec( dllexport ) const TCHAR *
-LibDescription() { return "S.T.A.L.K.E.R. Mesh Export utility"; }
+LibDescription() { return _classNameDesc; }
 
 
 __declspec( dllexport ) int LibNumberClasses() {
@@ -72,11 +94,17 @@ __declspec( dllexport ) int LibNumberClasses() {
 
 __declspec( dllexport ) ClassDesc* LibClassDesc(int i) {
 	switch(i) {
-		case 0: return &MeshExpUtilityClassDescCD;
+		case 0: return GetMeshExpUtility();
 		default: return 0;
 	}
 }
 
+
+__declspec(dllexport) int LibShutdown(void)
+{
+	Gdiplus::GdiplusShutdown(gdiplusToken);
+	return TRUE;
+}
 
 __declspec( dllexport ) ULONG LibVersion() 
 {
@@ -84,3 +112,14 @@ __declspec( dllexport ) ULONG LibVersion()
 }
 
 
+TCHAR* GetString(int id)
+{
+	static TCHAR buf[256];
+
+	if (hInstance)
+	{
+		return LoadString(hInstance, id, buf, _countof(buf)) ? buf : NULL;
+	}
+
+	return NULL;
+}

@@ -4,3 +4,13 @@
 *.user
 *.VC.opendb
 *.VC.db
+*.obj
+*.tlog
+*.pdb
+*.iobj
+*.ipdb
+
+/intermediate_plugs
+/x64
+*.log
+*.txt

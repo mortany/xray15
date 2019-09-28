@@ -14,7 +14,9 @@
 // refs
 class CEditableObject;
 
-#define	EXP_UTILITY_CLASSID 0x507d29c0
+//#define	EXP_UTILITY_CLASSID 0x507d29c0
+
+//#define EXP_UTILITY_CLASSID Class_ID(0x91c4f4b3, 0x64453c86)
 
 class ExportItem {
 public:
@@ -65,6 +67,15 @@ public:
 	void		ExportLWO		();
 	void		ExportSkin		();
 	void		ExportSkinKeys	();
+
+	// Singleton access
+	static MeshExpUtility* GetInstance() {
+		static MeshExpUtility themaxProject2;
+		return &themaxProject2;
+	}
+
+private:
+	static INT_PTR CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 };
 
 extern MeshExpUtility U;

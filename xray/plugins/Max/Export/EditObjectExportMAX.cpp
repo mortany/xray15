@@ -19,7 +19,7 @@ BOOL CEditableObject::ExtractTexName(Texmap *src, LPSTR dest)
 	if( src->ClassID() != Class_ID(BMTEX_CLASS_ID,0) )
 		return FALSE;
 	BitmapTex *bmap = (BitmapTex*)src;
-	_splitpath( bmap->GetMapName(), 0, 0, dest, 0 );
+	_splitpath(StringFromUTF8(bmap->GetMapName()), 0, 0, dest, 0 );
 	EFS.AppendFolderToName(dest,1,TRUE);
 	return TRUE;
 }
@@ -51,7 +51,7 @@ BOOL CEditableObject::ParseStdMaterial(StdMat* src, CSurface* dest)
 	}
 	dest->m_Flags.set(CSurface::sf2Sided,!!src->GetTwoSided());
 	if (src->GetTwoSided()) ELog.Msg(mtInformation,"  - material 2-sided");
-	dest->SetName(GenerateSurfaceName(src->GetName()));
+	dest->SetName(GenerateSurfaceName(StringFromUTF8(src->GetName())));
 	dest->SetFVF(D3DFVF_XYZ|D3DFVF_NORMAL|(1<<D3DFVF_TEXCOUNT_SHIFT));
 	dest->SetVMap("Texture");
 	dest->SetShader("default");
@@ -94,9 +94,10 @@ BOOL CEditableObject::ParseXRayMaterial(XRayMtl* src, u32 mid, CSurface* dest)
 		ELog.Msg(mtError,"'%s' -> bad material",src->GetName());
 		return FALSE;
 	}
-	LPCSTR e_shader		= src->GetEShaderName();
-	LPCSTR c_shader		= src->GetCShaderName();
-	LPCSTR g_mtl		= src->GetGameMtlName();
+
+	LPCSTR e_shader		= StringFromUTF8(src->GetEShaderName());
+	LPCSTR c_shader		= StringFromUTF8(src->GetCShaderName());
+	LPCSTR g_mtl		= StringFromUTF8(src->GetGameMtlName());
 	dest->SetShader		(e_shader?e_shader:"default");
 	dest->SetShaderXRLC	(c_shader?c_shader:"default"); 
 	dest->SetGameMtl	(g_mtl?g_mtl:"default");
@@ -165,7 +166,8 @@ bool CEditableObject::ImportMAXSkeleton(CExporter* E)
 
 		BONE->SetWMap		(bone->name.c_str());
 		BONE->SetName		(bone->name.c_str());
-		BONE->SetParentName	(Helper::ConvertSpace(string(bone->pBone->GetParentNode()->GetName())).c_str());
+		string res = Helper::ConvertSpace(StringFromUTF8_convert(bone->pBone->GetParentNode()->GetName()));
+		BONE->SetParentName	(res.c_str());
 		BONE->SetRestParams	(length,offset,rotate);
 	}
 
