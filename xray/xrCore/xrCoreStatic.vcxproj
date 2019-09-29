@@ -217,7 +217,7 @@
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <AdditionalIncludeDirectories>C:\X-RAY\xray15\SDK\include\BugTrap;../../sdk/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>XRCORE_STATIC;UTILITY_EXPORTS;_WIN32;NDEBUG;_WINDOWS;_USRDLL;XRCORE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>XRCORE_STATIC;UTILITY_EXPORTS;WIN32;NDEBUG;_WINDOWS;_USRDLL;XRCORE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -245,7 +245,7 @@
     <Lib>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>BugTrap-x64.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\user\Desktop\xray15-master\SDK\libraries\x64</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\sdk\libraries\x64\</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
