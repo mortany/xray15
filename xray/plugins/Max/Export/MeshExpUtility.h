@@ -43,11 +43,10 @@ protected:
 	void		RefreshExportList();
 	void		UpdateSelectionListBox();
 
-	BOOL		BuildObject		(CEditableObject*& obj, LPCSTR m_ExportName);
-	BOOL		SaveAsObject	(const char* n);
-	BOOL		SaveAsLWO		(const char* n);
-	BOOL		SaveAsSkin		(const char* n);
-	BOOL		SaveSkinKeys	(const char* n);
+	BOOL		BuildObject		(CEditableObject*& obj, LPCTSTR m_ExportName);
+	BOOL		SaveAsObject	(LPCTSTR n);
+	BOOL		SaveAsSkin		(LPCTSTR n);
+	BOOL		SaveSkinKeys	(LPCTSTR n);
 public:
 	int			m_ObjectFlipFaces;
 	int			m_SkinFlipFaces;
@@ -64,7 +63,6 @@ public:
 	void		Init			(HWND hWnd);
 	void		Destroy			(HWND hWnd);
 	void		ExportObject	();
-	void		ExportLWO		();
 	void		ExportSkin		();
 	void		ExportSkinKeys	();
 

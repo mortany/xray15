@@ -11,7 +11,7 @@
 #include "Motion.h"
 #include "Envelope.h"
 
-BOOL CExporter::ExportMotion(INode* pNode, LPCSTR fname)
+BOOL CExporter::ExportMotion(INode* pNode, LPCTSTR fname)
 {
 	m_Style				= eExportMotion;
 	ScanBones			(pNode);
@@ -28,13 +28,13 @@ BOOL CExporter::ExportMotion(INode* pNode, LPCSTR fname)
 	// build motion
 	CSMotion* MOT		= xr_new<CSMotion>();
 	MOT->SetParam		(iStartTick/iTPF,iEndTick/iTPF,(float)iFPS);
-	string64 nm;		_splitpath(fname,0,0,nm,0);
+	string64 nm;		_wsplitpath(fname,0,0,nm,0);
 	MOT->SetName		(nm);
 
 	BoneMotionVec& BMVec= MOT->BoneMotions();
 	BMVec.reserve		(m_Bones.size());
 
-	EConsole.ProgressStart((float)m_Bones.size(),"..Exporting per bone motions");
+	EConsole.ProgressStart((float)m_Bones.size(),TEXT("..Exporting per bone motions"));
 	Fmatrix tmBone;
 	for(int boneId = 0; boneId < int(m_Bones.size()); boneId++){
 		CBoneDef* bone	= m_Bones[boneId];

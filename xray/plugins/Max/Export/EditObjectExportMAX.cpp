@@ -14,12 +14,12 @@
 //----------------------------------------------------------------------------
 // Material parsing
 //----------------------------------------------------------------------------
-BOOL CEditableObject::ExtractTexName(Texmap *src, LPSTR dest)
+BOOL CEditableObject::ExtractTexName(Texmap *src, TCHAR *dest)
 {
 	if( src->ClassID() != Class_ID(BMTEX_CLASS_ID,0) )
 		return FALSE;
 	BitmapTex *bmap = (BitmapTex*)src;
-	_splitpath(StringFromUTF8(bmap->GetMapName()), 0, 0, dest, 0 );
+	_wsplitpath((bmap->GetMapName()), 0, 0, dest, 0 );
 	EFS.AppendFolderToName(dest,1,TRUE);
 	return TRUE;
 }
@@ -29,7 +29,7 @@ BOOL CEditableObject::ParseStdMaterial(StdMat* src, CSurface* dest)
 {
 	R_ASSERT(src);
 	R_ASSERT((src->ClassID()==Class_ID(DMTL_CLASS_ID,0))||(src->ClassID()==XRAYMTL_CLASS_ID));
-	Msg("- Processing material '%s' ...", src->GetName() );
+	Msg(TEXT("- Processing material '%s' ..."), src->GetName() );
 	// ------- texture (if exist)
 	string1024 tname;
 	if( src->MapEnabled( ID_AM ) ){
@@ -50,12 +50,12 @@ BOOL CEditableObject::ParseStdMaterial(StdMat* src, CSurface* dest)
 		return FALSE;
 	}
 	dest->m_Flags.set(CSurface::sf2Sided,!!src->GetTwoSided());
-	if (src->GetTwoSided()) ELog.Msg(mtInformation,"  - material 2-sided");
-	dest->SetName(GenerateSurfaceName(StringFromUTF8(src->GetName())));
+	if (src->GetTwoSided()) ELog.Msg(mtInformation,TEXT("  - material 2-sided"));
+	dest->SetName(GenerateSurfaceName((src->GetName())));
 	dest->SetFVF(D3DFVF_XYZ|D3DFVF_NORMAL|(1<<D3DFVF_TEXCOUNT_SHIFT));
-	dest->SetVMap("Texture");
-	dest->SetShader("default");
-	dest->SetShaderXRLC("default");
+	dest->SetVMap(TEXT("Texture"));
+	dest->SetShader(TEXT("default"));
+	dest->SetShaderXRLC(TEXT("default"));
 	return TRUE;
 }
 
@@ -68,20 +68,20 @@ BOOL CEditableObject::ParseMultiMaterial(MultiMtl* src, u32 mid, CSurface* dest)
 		if (M->ClassID()==Class_ID(DMTL_CLASS_ID,0)){
 			StdMat *smtl = (StdMat*)src->GetSubMtl(mid);
 			if (!ParseStdMaterial(smtl,dest)){
-				ELog.Msg(mtError,"'%s' -> bad submaterial",src->GetName());
+				ELog.Msg(mtError,TEXT("'%s' -> bad submaterial"),src->GetName());
 				return FALSE;
 			}
 			return TRUE;
 		}else if (M->ClassID()==XRAYMTL_CLASS_ID){
 			XRayMtl *smtl = (XRayMtl*)src->GetSubMtl(mid);
 			if (!ParseXRayMaterial(smtl,mid,dest)){
-				ELog.Msg(mtError,"'%s' -> bad submaterial",src->GetName());
+				ELog.Msg(mtError,TEXT("'%s' -> bad submaterial"),src->GetName());
 				return FALSE;
 			}
 		} 
 		return TRUE;
 	}else{
-		ELog.Msg(mtError,"'%s' -> can't extract multi-material items.",src->GetName());
+		ELog.Msg(mtError,TEXT("'%s' -> can't extract multi-material items."),src->GetName());
 		return FALSE;
 	}
 }
@@ -91,29 +91,29 @@ BOOL CEditableObject::ParseXRayMaterial(XRayMtl* src, u32 mid, CSurface* dest)
 	R_ASSERT(src);
 	R_ASSERT(src->ClassID()==XRAYMTL_CLASS_ID);
 	if (!ParseStdMaterial((StdMat*)src,dest)){
-		ELog.Msg(mtError,"'%s' -> bad material",src->GetName());
+		ELog.Msg(mtError,TEXT("'%s' -> bad material"),src->GetName());
 		return FALSE;
 	}
 
-	LPCSTR e_shader		= StringFromUTF8(src->GetEShaderName());
-	LPCSTR c_shader		= StringFromUTF8(src->GetCShaderName());
-	LPCSTR g_mtl		= StringFromUTF8(src->GetGameMtlName());
-	dest->SetShader		(e_shader?e_shader:"default");
-	dest->SetShaderXRLC	(c_shader?c_shader:"default"); 
-	dest->SetGameMtl	(g_mtl?g_mtl:"default");
+	LPCTSTR e_shader		= src->GetEShaderName();
+	LPCTSTR c_shader		= src->GetCShaderName();
+	LPCTSTR g_mtl			= src->GetGameMtlName();
+	dest->SetShader		(e_shader?e_shader:TEXT("default"));
+	dest->SetShaderXRLC	(c_shader?c_shader:TEXT("default")); 
+	dest->SetGameMtl	(g_mtl?g_mtl:TEXT("default"));
 	if (e_shader&&c_shader&&g_mtl){
-		ELog.Msg(mtInformation," -Found S.T.A.L.K.E.R. shaders [E:'%s', C:'%s', M:'%s']", dest->_ShaderName(), dest->_ShaderXRLCName(), dest->_GameMtlName() );
+		ELog.Msg(mtInformation,TEXT(" -Found S.T.A.L.K.E.R. shaders [E:'%s', C:'%s', M:'%s']"), dest->_ShaderName(), dest->_ShaderXRLCName(), dest->_GameMtlName() );
 	}else{
-		if (!e_shader)		ELog.Msg(mtError," *Empty engine shader! Set 'DEFAULT'.");
-		if (!c_shader)		ELog.Msg(mtError," *Empty compiler shader! Set 'DEFAULT'.");
-		if (!g_mtl)			ELog.Msg(mtError," *Empty game material! Set 'DEFAULT'.");
+		if (!e_shader)		ELog.Msg(mtError,TEXT(" *Empty engine shader! Set 'DEFAULT'."));
+		if (!c_shader)		ELog.Msg(mtError,TEXT(" *Empty compiler shader! Set 'DEFAULT'."));
+		if (!g_mtl)			ELog.Msg(mtError,TEXT(" *Empty game material! Set 'DEFAULT'."));
 	}
 	return TRUE;
 }
 
 CSurface* CEditableObject::CreateSurface(Mtl* mtl, u32 mid)
 {
-	if (!mtl){ ELog.Msg(mtError,"Empty material..."); return 0;	}
+	if (!mtl){ ELog.Msg(mtError,TEXT("Empty material...")); return 0;	}
 	for (SurfaceIt s_it=m_Surfaces.begin(); s_it!=m_Surfaces.end(); s_it++)
 		if (((*s_it)->mid==mid)&&((*s_it)->mtl==mtl)) return *s_it;
 	CSurface* S		= xr_new<CSurface>();
@@ -125,12 +125,12 @@ CSurface* CEditableObject::CreateSurface(Mtl* mtl, u32 mid)
 	else if (cls_id==Class_ID(DMTL_CLASS_ID,0))	bRes=ParseStdMaterial	((StdMat*)mtl,S);
 	else if (cls_id==XRAYMTL_CLASS_ID)			bRes=ParseXRayMaterial	((XRayMtl*)mtl,mid,S);
 	else{
-		ELog.Msg	(mtError,"'%s' -> unsuported material class...",mtl->GetName());
+		ELog.Msg	(mtError,TEXT("'%s' -> unsuported material class..."),mtl->GetName());
 		xr_delete		(S);
 		return 0;
 	}
 	if (!bRes){
-		ELog.Msg	(mtError,"'%s' -> can't parse material",mtl->GetName());
+		ELog.Msg	(mtError,TEXT("'%s' -> can't parse material"),mtl->GetName());
 		return		 0;
 	}
 	m_Surfaces.push_back(S);
@@ -166,7 +166,7 @@ bool CEditableObject::ImportMAXSkeleton(CExporter* E)
 
 		BONE->SetWMap		(bone->name.c_str());
 		BONE->SetName		(bone->name.c_str());
-		string res = Helper::ConvertSpace(StringFromUTF8_convert(bone->pBone->GetParentNode()->GetName()));
+		xr_string res = Helper::ConvertSpace((bone->pBone->GetParentNode()->GetName()));
 		BONE->SetParentName	(res.c_str());
 		BONE->SetRestParams	(length,offset,rotate);
 	}
@@ -174,7 +174,7 @@ bool CEditableObject::ImportMAXSkeleton(CExporter* E)
 	// DEFAULT BONE PART
 	m_BoneParts.push_back(SBonePart());
 	SBonePart& BP = m_BoneParts.back();
-	BP.alias = "default";
+	BP.alias = TEXT("default");
 	for (int b_i=0; b_i<(int)m_Bones.size(); b_i++)
 		BP.bones.push_back(Bones()[b_i]->Name());
 
@@ -183,7 +183,7 @@ bool CEditableObject::ImportMAXSkeleton(CExporter* E)
 	if ((0==GetVertexCount())||(0==GetFaceCount())){ 
 		bResult = false;
 	}else{
-		ELog.Msg(mtInformation,"Model '%s' contains: %d points, %d faces, %d bones", E->m_MeshNode->GetName(), GetVertexCount(), GetFaceCount(), Bones().size());
+		ELog.Msg(mtInformation,TEXT("Model '%s' contains: %d points, %d faces, %d bones"), E->m_MeshNode->GetName(), GetVertexCount(), GetFaceCount(), Bones().size());
 	}
 
 	return bResult;

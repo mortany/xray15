@@ -34,7 +34,7 @@ CBone::~CBone()
 void CBone::ResetData()
 {
     IK_data.Reset	();
-    game_mtl		= "default_object";
+    game_mtl		= TEXT("default_object");
     shape.Reset		();
 
     mass			= 10.f;;

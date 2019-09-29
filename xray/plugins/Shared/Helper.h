@@ -38,9 +38,9 @@ public:
 	static BOOL		IsBone			(INode *pNode, BOOL bAllowDummy);
 	static BOOL		IsMesh			(INode *pNode);
 	static void		SetBipedUniform	(INode *pNode, BOOL bUniform, BOOL bFigure);
-	static IC string ConvertSpace	(string input)
+	static IC xr_string ConvertSpace	(xr_string input)
 	{
-		string result = "";
+		xr_string result = TEXT("");
 		for (DWORD i=0; i<input.size(); i++)
 			result += (input[i]==' ')?'_':input[i];
 		char * res_ptr = (char *)result.c_str();
@@ -48,15 +48,6 @@ public:
 		return result;
 	}
 
-	static IC string ConvertSpace(xr_string input)
-	{
-		string result = "";
-		for (DWORD i = 0; i < input.size(); i++)
-			result += (input[i] == ' ') ? '_' : input[i];
-		char* res_ptr = (char*)result.c_str();
-		_strlwr(res_ptr);
-		return result;
-	}
 
 	static IC void ConvertMatrix	(const Matrix3& _src, Fmatrix& dest)
 	{

@@ -61,7 +61,7 @@ public:
 		w_u8(13);
 		w_u8(10);
     }
-	IC void			w_stringZ(const char *p) 	{	write(p,xr_strlen(p)+1); if (!(xr_strlen(p)&1)) w_u8(0);}
+	IC void			w_stringZ(const TCHAR *p) 	{	write(p,xr_strlen(p)+1); if (!(xr_strlen(p)&1)) w_u8(0);}
 	IC void			w_vector(Fvector v)			{	revbytes(&v,4,3); write(&v,3*sizeof(float));	}
 	IC void			w_color	(Fcolor c)			{	revbytes(&c,4,4); write(&c,4*sizeof(float));	}
 
@@ -134,12 +134,12 @@ public:
 	u8*	pointer	()	{ return data; }
 	u32	size	()	{ return file_size;	}
 	void	clear	()  { file_size=0; position=0;	}
-	void	SaveTo	(const char* fn)
+	void	SaveTo	(LPCTSTR fn)
 	{
     #ifdef M_BORLAND
         int H = open(fn,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY,S_IREAD|S_IWRITE);
     #else
-        int H = _open(fn,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY,S_IREAD|S_IWRITE);
+        int H = _wopen(fn,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY,S_IREAD|S_IWRITE);
     #endif
         R_ASSERT(H>0);
         _write(H,pointer(),size());
@@ -164,8 +164,8 @@ class ENGINE_API CLWMemoryStream: public CMemoryStream{
 
 public:
 	IC void		begin_save		()				{ open_chunk(ID_FORM); w_u32(ID_LWO2);}
-	IC void		end_save		(LPCSTR name)	{ close_chunk(); SaveTo(name);}
-	IC void		w_layer			(u16 number, LPCSTR name){
+	IC void		end_save		(LPCTSTR name)	{ close_chunk(); SaveTo(name);}
+	IC void		w_layer			(u16 number, LPCTSTR name){
 		open_chunk(ID_LAYR);
 			w_u16	(number);	// num
 			w_u16	(0);
@@ -187,7 +187,7 @@ public:
 	IC void		w_face3			(int i0, int i1, int i2)
 	{	w_u16(3); w_vx(i0); w_vx(i1); w_vx(i2); }
 
-	IC void		begin_vmap		(BOOL polymap, u32 type, int dim, LPCSTR name){
+	IC void		begin_vmap		(BOOL polymap, u32 type, int dim, LPCTSTR name){
 		open_chunk(polymap?ID_VMAD:ID_VMAP);
 		w_u32	(type);
 		w_u16	((u16)dim);
@@ -203,12 +203,12 @@ public:
 	IC void		w_vmad			(int v_index, int f_index, int dim, float* uv)
 	{	w_vx(v_index); w_vx(f_index); w_float(uv[0]); if (dim==2) w_float(1.f-uv[1]); }
 
-	IC void Wsurface(LPCSTR name, BOOL b2Sided, u16 image, LPCSTR vmap, LPCSTR sh_eng, LPCSTR sh_comp){
+	IC void Wsurface(LPCTSTR name, BOOL b2Sided, u16 image, LPCTSTR vmap, LPCTSTR sh_eng, LPCTSTR sh_comp){
 		// surf screen
-		char ord[2];
+		TCHAR ord[2];
 		open_chunk(ID_SURF);
 			w_stringZ(name);
-			w_stringZ("");
+			w_stringZ(TEXT(""));
 			open_subchunk(ID_COLR);
  				w_float(1.f);w_float(1.f);w_float(1.f); w_u16(0);
 			close_subchunk();

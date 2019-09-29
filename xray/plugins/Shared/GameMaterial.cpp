@@ -4725,7 +4725,7 @@ TCHAR*	XRayMtl::GetGameMtl	(DWORD i)
 	return (i<GameMtls.size())?(TCHAR*)GameMtls[i]:0;
 }
 
-int		XRayMtl::FindEShader(LPCSTR name)
+int		XRayMtl::FindEShader(LPCTSTR name)
 {
 	if (!name) return -1;
 	for (LPSTRIt it=XRayMtl::EShaders.begin(); it!=XRayMtl::EShaders.end(); it++)
@@ -4733,7 +4733,7 @@ int		XRayMtl::FindEShader(LPCSTR name)
 	return -1;
 }
 
-int		XRayMtl::FindCShader(LPCSTR name)
+int		XRayMtl::FindCShader(LPCTSTR name)
 {
 	if (!name) return -1;
 	for (LPSTRIt it=XRayMtl::CShaders.begin(); it!=XRayMtl::CShaders.end(); it++)
@@ -4741,7 +4741,7 @@ int		XRayMtl::FindCShader(LPCSTR name)
 	return -1;
 }
 
-int		XRayMtl::FindGameMtl(LPCSTR name)
+int		XRayMtl::FindGameMtl(LPCTSTR name)
 {
 	if (!name) return -1;
 	for (LPSTRIt it=XRayMtl::GameMtls.begin(); it!=XRayMtl::GameMtls.end(); it++)

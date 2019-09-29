@@ -6,7 +6,7 @@
 #include "MeshExpUtility.h"
 //----------------------------------------------------------------------------------------------
 
-BOOL CExporter::ExportSkin(INode* pNode, LPCSTR fname)
+BOOL CExporter::ExportSkin(INode* pNode, LPCTSTR fname)
 {
 	m_Style				= eExportSkin;
 //	ScanBones			(pNode);
@@ -16,7 +16,7 @@ BOOL CExporter::ExportSkin(INode* pNode, LPCSTR fname)
 
 	if (!Capture())		return FALSE;
 	if (m_bHasError)	return FALSE;
-	CEditableObject* OBJECT = xr_new<CEditableObject>("object");
+	CEditableObject* OBJECT = xr_new<CEditableObject>(TEXT("object"));
 	OBJECT->SetVersionToCurrent(TRUE,TRUE);
 	if (!OBJECT->ImportMAXSkeleton(this)){
 		xr_delete(OBJECT);

@@ -10,26 +10,16 @@
 #include "Bone.h"
 #include "../../../common/itterate_adjacents.h"
 #include "itterate_adjacents_dynamic.h"
-#ifdef _EDITOR
-#	include "ETools.h"
-#	include "UI_ToolsCustom.h"
-#endif
 
 CEditableMesh::~CEditableMesh(){
 	Clear();
-#ifdef _EDITOR
-    R_ASSERT2(0==m_RenderBuffers,"Render buffer still referenced.");
-#endif
 }
 
 void CEditableMesh::Construct()
 {
 	m_Box.set		(0,0,0,0,0,0);
 	m_Flags.assign	(flVisible);
-    m_Name			= "";
-#ifdef _EDITOR
-    m_CFModel		= 0;         
-#endif
+    m_Name			= TEXT("");
 	m_Vertices		= 0;
     m_SmoothGroups	= 0;
     m_Adjs			= 0;
@@ -38,9 +28,6 @@ void CEditableMesh::Construct()
     m_VertexNormals	= 0;
     m_SVertices		= 0;
     m_SVertInfl		= 0;
-#ifdef _EDITOR
-    m_RenderBuffers	= 0;
-#endif
 	m_FNormalsRefs	= 0;
 	m_VNormalsRefs	= 0;
 	m_AdjsRefs		= 0;
@@ -342,8 +329,7 @@ void CEditableMesh::GenerateSVertices(u32 influence)
 
                     if (wb.back().bone==BI_NONE)
                     {
-                        ELog.DlgMsg			(mtError,"Can't find bone assigned to weight map %s",*VM.name);
-                        FATAL				("Editor crashed.");
+                        ELog.DlgMsg			(mtError,TEXT("Can't find bone assigned to weight map %s"),*VM.name);
                         return;
                     }
                 }else if(VM.type==vmtUV)
@@ -472,8 +458,8 @@ int CEditableMesh::GetSurfFaceCount(CSurface* surf, bool bMatch2Sided)
 }
 
 void CEditableMesh::DumpAdjacency(){
-	Log("Adjacency dump.");
-	Log("------------------------------------------------------------------------");
+	Log(TEXT("Adjacency dump."));
+	Log(TEXT("------------------------------------------------------------------------"));
 /*    for (u32 i=0; i<m_Adjs.size(); i++){
         IntVec& a_lst	= m_Adjs[i];
         AnsiString s; s = "Point "; s+=AnsiString(i); s+=":";
@@ -485,10 +471,10 @@ void CEditableMesh::DumpAdjacency(){
 }
 //----------------------------------------------------------------------------
 
-int CEditableMesh::FindVMapByName(VMapVec& vmaps, const char* name, u8 t, bool polymap)
+int CEditableMesh::FindVMapByName(VMapVec& vmaps, LPCTSTR name, u8 t, bool polymap)
 {
 	for (VMapIt vm_it=vmaps.begin(); vm_it!=vmaps.end(); vm_it++){               
-		if (((*vm_it)->type==t)&&(_stricmp((*vm_it)->name.c_str(),name)==0)&&(polymap==(*vm_it)->polymap)) return vm_it-vmaps.begin();
+		if (((*vm_it)->type==t)&&(_wcsicmp((*vm_it)->name.c_str(),name)==0)&&(polymap==(*vm_it)->polymap)) return vm_it-vmaps.begin();
 	}
 	return -1;
 }

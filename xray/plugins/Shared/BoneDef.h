@@ -9,7 +9,7 @@ class CBoneDef
 {
 public:
 	CBoneDef*	parent;
-	string		name;
+	xr_string	name;
 	INode*		pBone;
 
 	Fmatrix		matInit;
@@ -17,7 +17,7 @@ public:
 public:
 				CBoneDef(INode* pNode);
 	IC BOOL		isEqual(INode* pNode){ return	pBone==pNode; }
-	LPCSTR		GetParentName();
+	LPCTSTR		GetParentName();
 	BOOL		SetInitTM(IPhysiqueExport* pExport, const Matrix3& matMesh);
 	void		CalculateLocalMatrix(TimeValue tick, Fmatrix& mat)
 	{

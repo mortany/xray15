@@ -7,9 +7,9 @@
 DEFINE_VECTOR(INode*,INodeVec,INodeIt);
 
 //-----------------------------------------------------------------------------
-IC void ERR(LPCSTR s, LPCSTR dop="") 
+IC void ERR(LPCTSTR s, LPCTSTR dop=TEXT("")) 
 { 
-	Msg("!Error: %s%s",s,dop);
+	Msg(TEXT("!Error: %s%s"),s,dop);
 }
 IC int CGINTM(INode* node, int r)
 {
@@ -21,7 +21,7 @@ IC int CGINTM(INode* node, int r)
 	case INVALID_MOD_POINTER:	msg = "INVALID_MOD_POINTER"; break;
 	}
 	if (msg)
-		Msg("* '%s': GetInitNodeTM failed (%s)",node->GetName(),msg);
+		Msg(TEXT("* '%s': GetInitNodeTM failed (%s)"),node->GetName(),msg);
 	return r;
 }
 //-----------------------------------------------------------------------------
@@ -74,10 +74,10 @@ public:
 		return V;
 	}
 	//-----------------------------------------------------------------------------
-	CBoneDef*		FindBone	(LPCSTR name)
+	CBoneDef*		FindBone	(LPCTSTR name)
 	{
 		if (name&&name[0]){
-			string nm = Helper::ConvertSpace(string(name));
+			xr_string nm = Helper::ConvertSpace(xr_string(name));
 			for (BoneDefIt it=m_Bones.begin(); it!=m_Bones.end(); it++)
 				if ((*it)->name==nm) return *it;
 			return 0;
@@ -93,6 +93,6 @@ public:
 public:
 					CExporter	(){	m_bHasError=FALSE; m_MtlMain=0; m_Style=eExportUndef; m_bFindMesh = FALSE; m_fGlobalScale=1.f; m_MeshNode=0;};
 	virtual			~CExporter	();
-	BOOL			ExportSkin	(INode *pNode, LPCSTR fname);
-	BOOL			ExportMotion(INode *pNode, LPCSTR fname);
+	BOOL			ExportSkin	(INode *pNode, LPCTSTR fname);
+	BOOL			ExportMotion(INode *pNode, LPCTSTR fname);
 };

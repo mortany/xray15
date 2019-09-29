@@ -362,7 +362,7 @@ void SceneEnumProc::BuildNames()
 //--------------------------------------------------------------------------------------------------
 
 
-bool MeshExpUtility::SaveSkinKeys(const char* n){
+bool MeshExpUtility::SaveSkinKeys(LPCTSTR n){
 	CFS_Memory F;
 
 	int FramesPerSecond = GetFrameRate();

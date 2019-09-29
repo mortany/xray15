@@ -7,15 +7,15 @@ CBoneDef::CBoneDef(INode* pNode)
 {
 	parent	= 0;
 	pBone	= pNode;
-	name	= Helper::ConvertSpace(string(StringFromUTF8(pBone->GetName())));
+	name	= Helper::ConvertSpace(xr_string(pBone->GetName()));
 
 	matInit.identity();
 	matOffset.identity();
 }
-LPCSTR CBoneDef::GetParentName()
+LPCTSTR CBoneDef::GetParentName()
 {
 	INode* node=pBone->GetParentNode();
-	if (Helper::IsBone(node,U.m_SkinAllowDummy)) return StringFromUTF8(node->GetName());	
+	if (Helper::IsBone(node,U.m_SkinAllowDummy)) return node->GetName();	
 	return 0;
 }
 BOOL CBoneDef::SetInitTM(IPhysiqueExport* pExport, const Matrix3& matMesh)

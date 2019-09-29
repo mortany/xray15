@@ -5,7 +5,7 @@
 #include "Shader_XRLC.h"
 #include "GameMtlLib.h"
 
-IC bool str_pred(LPCSTR x, LPCSTR y)
+IC bool str_pred(LPCTSTR x, LPCTSTR y)
 {
 	return xr_strcmp(x,y)<0;
 }

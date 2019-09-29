@@ -196,7 +196,7 @@ public:
     void				TransferFromParent(SGameMtlPair* parent);
 #endif
 #ifdef DEBUG
-	LPCSTR				dbg_Name		();
+	LPCTSTR				dbg_Name		();
 #endif
 };
 
@@ -245,7 +245,7 @@ public:
 		material_pairs.clear();
 	}
     // material routine
-    IC GameMtlIt 		GetMaterialIt	(LPCSTR name)
+    IC GameMtlIt 		GetMaterialIt	(LPCTSTR name)
     {
         for (GameMtlIt it=materials.begin(); materials.end() != it; ++it)
             if (0==strcmpi(*(*it)->m_Name,name)) return it;
@@ -263,7 +263,7 @@ public:
             if ((*it)->ID==id) return it;
         return materials.end();
     }
-	IC u32				GetMaterialID	(LPCSTR name)
+	IC u32				GetMaterialID	(LPCTSTR name)
     {
     	GameMtlIt it	= GetMaterialIt	(name);
         return (it==materials.end())?GAMEMTL_NONE_ID:(*it)->ID;
@@ -271,13 +271,13 @@ public:
 #ifdef _EDITOR
 	// editor
 	SGameMtl*			AppendMaterial	(SGameMtl* parent);
-	void				RemoveMaterial	(LPCSTR name);
+	void				RemoveMaterial	(LPCTSTR name);
 	IC SGameMtl*		GetMaterialByID	(int ID)
     {
 	    GameMtlIt it=GetMaterialItByID(ID);
     	return materials.end() != it?*it:0;
     }
-	IC SGameMtl*		GetMaterial		(LPCSTR name)
+	IC SGameMtl*		GetMaterial		(LPCTSTR name)
     {
 	    GameMtlIt it=GetMaterialIt(name);
     	return materials.end() != it?*it:0;
@@ -285,7 +285,7 @@ public:
 #else
 	// game
 	IC u16				GetMaterialIdx	(int ID)		{GameMtlIt it=GetMaterialItByID(ID);VERIFY(materials.end() != it); return (u16)(it-materials.begin());}
-	IC u16				GetMaterialIdx	(LPCSTR name)	{GameMtlIt it=GetMaterialIt(name);VERIFY(materials.end() != it); return (u16)(it-materials.begin());}
+	IC u16				GetMaterialIdx	(LPCTSTR name)	{GameMtlIt it=GetMaterialIt(name);VERIFY(materials.end() != it); return (u16)(it-materials.begin());}
 	IC SGameMtl*		GetMaterialByIdx(u16 idx)		{VERIFY(idx<materials.size()); return materials[idx];}
 	IC SGameMtl*		GetMaterialByID (s32 id)		{return GetMaterialByIdx(GetMaterialIdx(id));}
 #endif
@@ -298,12 +298,12 @@ public:
 #ifdef _EDITOR
 	BOOL				UpdateMtlPairs		(SGameMtl* src);
 	BOOL				UpdateMtlPairs		();
-	LPCSTR				MtlPairToName		(int mtl0, int mtl1);
-	void				NameToMtlPair		(LPCSTR name, int& mtl0, int& mtl1);
-	void				MtlNameToMtlPair	(LPCSTR name, int& mtl0, int& mtl1);
+	LPCTSTR				MtlPairToName		(int mtl0, int mtl1);
+	void				NameToMtlPair		(LPCTSTR name, int& mtl0, int& mtl1);
+	void				MtlNameToMtlPair	(LPCTSTR name, int& mtl0, int& mtl1);
 	SGameMtlPair*		CreateMaterialPair	(int m0, int m1, SGameMtlPair* parent=0);
 	SGameMtlPair*		AppendMaterialPair	(int m0, int m1, SGameMtlPair* parent=0);
-	void				RemoveMaterialPair	(LPCSTR name);
+	void				RemoveMaterialPair	(LPCTSTR name);
 	void				RemoveMaterialPair	(GameMtlPairIt rem_it);
 	void				RemoveMaterialPair	(int mtl);
 	void				RemoveMaterialPair	(int mtl0, int mtl1);
@@ -311,7 +311,7 @@ public:
 	SGameMtlPair*		GetMaterialPair		(int id);
 	GameMtlPairIt		GetMaterialPairIt	(int mtl0, int mtl1);
 	SGameMtlPair*		GetMaterialPair		(int mtl0, int mtl1);
-	SGameMtlPair*		GetMaterialPair		(LPCSTR name);
+	SGameMtlPair*		GetMaterialPair		(LPCTSTR name);
 #else
 	// game
 	IC SGameMtlPair*	GetMaterialPair		(u16 idx0, u16 idx1){R_ASSERT((idx0<material_count)&&(idx1<material_count)); return material_pairs_rt[idx1*material_count+idx0];}

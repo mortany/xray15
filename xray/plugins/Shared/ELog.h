@@ -10,12 +10,12 @@ public:
 	bool 		in_use;
 public:
 				CLog	(){in_use=false;}
-	void 		Msg   	(TMsgDlgType mt, LPCSTR _Format, ...);
-	int 		DlgMsg 	(TMsgDlgType mt, LPCSTR _Format, ...);
-	int 		DlgMsg 	(TMsgDlgType mt, TMsgDlgButtons btn, LPCSTR _Format, ...);
+	void 		Msg   	(TMsgDlgType mt, LPCTSTR _Format, ...);
+	int 		DlgMsg 	(TMsgDlgType mt, LPCTSTR _Format, ...);
+	int 		DlgMsg 	(TMsgDlgType mt, TMsgDlgButtons btn, LPCTSTR _Format, ...);
 };
 
-void ECORE_API ELogCallback(LPCSTR txt);
+void ECORE_API ELogCallback(LPCTSTR txt);
 
 extern ECORE_API CLog ELog;
 

@@ -26,12 +26,12 @@ public:
 	CRITICAL_SECTION m_CSection;
 
 	bool m_Enter;
-	char m_EnterBuffer[256];
+	TCHAR m_EnterBuffer[256];
 
 	class _ConsoleMsg{
 	public:
-		char buf[1024];
-		_ConsoleMsg(LPCSTR b){ strcpy_s(buf,b); }
+		TCHAR buf[1024];
+		_ConsoleMsg(LPCTSTR b){ wcscpy_s(buf,b); }
 	};
 		
 	std::list<_ConsoleMsg> m_Messages;
@@ -42,11 +42,11 @@ public:
 	bool Init( HINSTANCE _Inst, HWND _Window );
 	void Clear();
 
-	void print	(TMsgDlgType mt, const char *buf);
+	void print	(TMsgDlgType mt, const TCHAR *buf);
 
 	bool valid();
 
-	void ProgressStart(float max_val, const char* text=0);
+	void ProgressStart(float max_val, LPCTSTR text=0);
 	void ProgressEnd();
 	void ProgressInc();
 	void ProgressUpdate(float val);

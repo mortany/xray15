@@ -90,16 +90,16 @@ void COMotion::_Evaluate(float t, Fvector& T, Fvector& R)
 	R.z = envs[ctRotationB]->Evaluate(t);
 }
 
-void COMotion::SaveMotion(const char* buf){
+void COMotion::SaveMotion(LPCTSTR buf){
 	CMemoryWriter	F;
 	F.open_chunk	(EOBJ_OMOTION);
 	Save			(F);
 	F.close_chunk	();
 	if (!F.save_to(buf)) 
-        Log			("!Can't save object motion:",buf);
+        Log			(TEXT("!Can't save object motion:"),buf);
 }
 
-bool COMotion::LoadMotion(const char* buf)
+bool COMotion::LoadMotion(LPCTSTR buf)
 {
 	destructor<IReader>	F(FS.r_open(buf));
 	R_ASSERT(F().find_chunk(EOBJ_OMOTION));
@@ -346,16 +346,16 @@ void CSMotion::WorldRotate(int boneId, float h, float p, float b)
 	BM.envs[ctRotationB]->RotateKeys(b);
 }
 
-void CSMotion::SaveMotion(const char* buf){
+void CSMotion::SaveMotion(LPCTSTR buf){
 	CMemoryWriter	F;
 	F.open_chunk	(EOBJ_SMOTION);
 	Save			(F);
 	F.close_chunk	();
 	if (!F.save_to(buf)) 
-        Log			("!Can't save skeleton motion:",buf);
+        Log			(TEXT("!Can't save skeleton motion:"),buf);
 }
 
-bool CSMotion::LoadMotion(const char* buf)
+bool CSMotion::LoadMotion(LPCTSTR buf)
 {
 	destructor<IReader>	F(FS.r_open(buf));
 	R_ASSERT		(F().find_chunk(EOBJ_SMOTION));
@@ -405,7 +405,7 @@ bool CSMotion::Load(IReader& F)
 		bone_mots.resize(F.r_u32());
         string64	temp_buf;
 		for(BoneMotionIt bm_it=bone_mots.begin(); bm_it!=bone_mots.end(); bm_it++){
-        	bm_it->SetName	(itoa(int(bm_it-bone_mots.begin()),temp_buf,10));
+        	bm_it->SetName	(_itow(int(bm_it-bone_mots.begin()),temp_buf,10));
 			bm_it->m_Flags.assign((u8)F.r_u32());
 			for (int ch=0; ch<ctMaxChannel; ch++){
 				bm_it->envs[ch] = xr_new<CEnvelope> ();

@@ -33,7 +33,6 @@ static INT_PTR CALLBACK DefaultDlgProc(
 					U.ExportObject();
 					break;
 				case IDC_EXPORT_AS_LWO:
-					U.ExportLWO();
 					break;
 				case IDC_SKIN_EXPORT:
 					U.ExportSkin();
@@ -74,7 +73,6 @@ void MeshExpUtility::BeginEditParams(Interface *ip,IUtil *iu)
 	this->ip = ip;
 	EConsole.Init( hInstance, 0 );
 
-	ELog.Msg(mtInformation, "1-2-3-4-5");
 
 	hPanel = ip->AddRollupPage(hInstance, MAKEINTRESOURCE(IDD_MWND), DefaultDlgProc, _className, 0);
 }
@@ -104,15 +102,12 @@ void MeshExpUtility::SelectionSetChanged(Interface *ip,IUtil *iu)
 void MeshExpUtility::Init(HWND hWnd)
 {
 	hPanel = hWnd;
-	ELog.Msg(mtInformation, "1-2-3-4-5");
 
 	hItemList = GetDlgItem(hWnd, IDC_OBJLIST);
 
 	CheckDlgButton( hPanel, IDC_OBJECT_FLIPFACES,				m_ObjectFlipFaces );
 	CheckDlgButton( hPanel, IDC_SKIN_FLIPFACES,					m_SkinFlipFaces );
 	CheckDlgButton( hPanel, IDC_SKIN_ALLOW_DUMMY,				m_SkinAllowDummy );
-
-	ELog.Msg(mtInformation, "1-2-3-4-5");
 
 	RefreshExportList();
 	UpdateSelectionListBox();
@@ -123,28 +118,20 @@ void MeshExpUtility::Destroy(HWND hWnd)
 }
 
 void MeshExpUtility::RefreshExportList(){
-	ELog.Msg(mtInformation, "Name of poor");
 	m_Items.clear();
-	ELog.Msg(mtInformation, "2");
 	ExportItem item;
-	ELog.Msg(mtInformation, "3");
 
 	if (!ip) return;
 
 	int i = ip->GetSelNodeCount();
-	ELog.Msg(mtInformation, "4");
 	while( i-- ){
-		ELog.Msg(mtInformation, "5");
 		item.pNode = ip->GetSelNode(i);
-		ELog.Msg(mtInformation, "6");
 		m_Items.push_back( item );
-		ELog.Msg(mtInformation, "7");
 	}
 }
 
 void MeshExpUtility::UpdateSelectionListBox()
 {
-	ELog.Msg(mtInformation, "745645");
 	return;
 	SendMessage( hItemList, LB_RESETCONTENT, 0, 0 );
 	ExportItemIt it = m_Items.begin();
@@ -154,21 +141,21 @@ void MeshExpUtility::UpdateSelectionListBox()
 }
 //-------------------------------------------------------------------
 
-BOOL MeshExpUtility::BuildObject(CEditableObject*& exp_obj, LPCSTR m_ExportName)
+BOOL MeshExpUtility::BuildObject(CEditableObject*& exp_obj, LPCTSTR m_ExportName)
 {
 	bool bResult = true;
 
 	if (m_ExportName[0]==0) return false;
 
-	ELog.Msg(mtInformation,"Building object..." );
-	char fname[256]; _splitpath( m_ExportName, 0, 0, fname, 0 );
+	ELog.Msg(mtInformation,TEXT("Building object..." ));
+	TCHAR fname[256]; _wsplitpath( m_ExportName, 0, 0, fname, 0 );
 	exp_obj = xr_new<CEditableObject>(fname);	
 	exp_obj->SetVersionToCurrent(TRUE,TRUE);
 
 	ExportItemIt it = m_Items.begin();
 	for(;it!=m_Items.end();it++){
 		CEditableMesh *submesh = xr_new<CEditableMesh>(exp_obj);
-		ELog.Msg(mtInformation,"Converting node '%s'...", it->pNode->GetName());
+		ELog.Msg(mtInformation,TEXT("Converting node '%s'..."), it->pNode->GetName());
 		if( submesh->Convert(it->pNode) ){
 			// transform
 			Matrix3 mMatrix;
@@ -191,10 +178,10 @@ BOOL MeshExpUtility::BuildObject(CEditableObject*& exp_obj, LPCSTR m_ExportName)
 			if(m_ObjectFlipFaces)		submesh->FlipFaces();
 			submesh->RecomputeBBox();
 			// append mesh
-			submesh->SetName			(StringFromUTF8(it->pNode->GetName()));
+			submesh->SetName			(it->pNode->GetName());
 			exp_obj->m_Meshes.push_back	(submesh);
 		}else{
-			ELog.Msg(mtError,"! can't convert", it->pNode->GetName());
+			ELog.Msg(mtError,TEXT("! can't convert"), it->pNode->GetName());
 			xr_delete(submesh);
 			bResult = false;
 			break;
@@ -204,7 +191,7 @@ BOOL MeshExpUtility::BuildObject(CEditableObject*& exp_obj, LPCSTR m_ExportName)
 	if (bResult){
 		exp_obj->UpdateBox		();
 		exp_obj->VerifyMeshNames();
-		ELog.Msg				(mtInformation,"Object '%s' contains: %d points, %d faces",
+		ELog.Msg				(mtInformation,TEXT("Object '%s' contains: %d points, %d faces"),
 								exp_obj->GetName(), exp_obj->GetVertexCount(), exp_obj->GetFaceCount());
 	}else{
 		xr_delete(exp_obj);
@@ -214,19 +201,19 @@ BOOL MeshExpUtility::BuildObject(CEditableObject*& exp_obj, LPCSTR m_ExportName)
 }
 //-------------------------------------------------------------------
 
-BOOL MeshExpUtility::SaveAsObject(const char* m_ExportName)
+BOOL MeshExpUtility::SaveAsObject(LPCTSTR m_ExportName)
 {
 	BOOL bResult = TRUE;
 
 	if (m_ExportName[0]==0) return FALSE;
 
-	ELog.Msg(mtInformation,"Exporting..." );
-	ELog.Msg(mtInformation,"-------------------------------------------------------" );
+	ELog.Msg(mtInformation,TEXT("Exporting...") );
+	ELog.Msg(mtInformation,TEXT("-------------------------------------------------------" ));
 	CEditableObject* exp_obj=0;	
 	if (bResult=BuildObject(exp_obj,m_ExportName)){
-		ELog.Msg				(mtInformation,"Saving object...");
+		ELog.Msg				(mtInformation,TEXT("Saving object..."));
 		for (SurfaceIt s_it=exp_obj->FirstSurface(); s_it!=exp_obj->LastSurface(); s_it++){
-			LPSTR t=(LPSTR)(*s_it)->_Texture();
+			LPTSTR t=(LPTSTR)(*s_it)->_Texture();
 			if (strext(t)) *strext(t)=0;
 		}
 		exp_obj->Optimize		();
@@ -239,36 +226,17 @@ BOOL MeshExpUtility::SaveAsObject(const char* m_ExportName)
 }
 //-------------------------------------------------------------------
 
-BOOL MeshExpUtility::SaveAsLWO(const char* m_ExportName)
-{
-	BOOL bResult = TRUE;
-
-	if (m_ExportName[0]==0) return FALSE;
-
-	ELog.Msg(mtInformation,"Exporting..." );
-	ELog.Msg(mtInformation,"-------------------------------------------------------" );
-	CEditableObject* exp_obj=0;	
-	if (bResult=BuildObject(exp_obj,m_ExportName)){
-		ELog.Msg				(mtInformation,"Object saved...");
-		exp_obj->Optimize		();
-		exp_obj->ExportLWO		(m_ExportName);
-	}
-
-	xr_delete(exp_obj);
-
-	return bResult;
-}
 //-------------------------------------------------------------------
 
 //-------------------------------------------------------------------
 //     registry access
-const char *g_rOptionsKey		= "SOFTWARE\\NerGoSoft\\S.T.A.L.K.E.R. Map Editor\\2.0\\Options";
-const char *g_rPathValue		= "MainPath";
-const char *g_rObjFlipFacesVal	= "Object Flip Faces";
-const char *g_rObjSuppressSMVal	= "Object Suppress SM";
-const char *g_rNoOptimizeVal	= "Object No Optimize";
-const char *g_rSkinSuppressSMVal= "Skin Suppress SM";
-const char *g_rSkinProgressive	= "Skin Progressive";
+const TCHAR *g_rOptionsKey		= TEXT("SOFTWARE\\NerGoSoft\\S.T.A.L.K.E.R. Map Editor\\2.0\\Options");
+const TCHAR *g_rPathValue		= TEXT("MainPath");
+const TCHAR *g_rObjFlipFacesVal	= TEXT("Object Flip Faces");
+const TCHAR *g_rObjSuppressSMVal	= TEXT("Object Suppress SM");
+const TCHAR *g_rNoOptimizeVal	= TEXT("Object No Optimize");
+const TCHAR *g_rSkinSuppressSMVal= TEXT("Skin Suppress SM");
+const TCHAR *g_rSkinProgressive	= TEXT("Skin Progressive");
 
 //-------------------------------------------------------------------------------------------------
 void MeshExpUtility::ExportObject()
@@ -276,8 +244,8 @@ void MeshExpUtility::ExportObject()
 	BOOL bResult = FALSE;
 
 	if( m_Items.empty() ){
-		ELog.Msg(mtError,"Nothing selected" );
-		ELog.Msg(mtError,"-------------------------------------------------------" );
+		ELog.Msg(mtError,TEXT("Nothing selected" ));
+		ELog.Msg(mtError,TEXT("-------------------------------------------------------" ));
 		return; 
 	}
 
@@ -285,51 +253,22 @@ void MeshExpUtility::ExportObject()
 
 	string_path				m_ExportName;
 	m_ExportName[0]=0;
-	if( !EFS.GetSaveName("$import$",m_ExportName,0,0) )
+	if( !EFS.GetSaveName(TEXT("$import$"),m_ExportName,0,0) )
 	{
-		ELog.Msg(mtInformation,"Export cancelled" );
-		ELog.Msg(mtInformation,"-------------------------------------------------------" );
+		ELog.Msg(mtInformation,TEXT("Export cancelled" ));
+		ELog.Msg(mtInformation,TEXT("-------------------------------------------------------" ));
 		return;
 	}
 	EConsole.StayOnTop(TRUE);
 	if (strext(m_ExportName)) *strext(m_ExportName)=0;
-	strcat(m_ExportName,".object");
+	wcscat(m_ExportName,TEXT(".object"));
 	bResult						= SaveAsObject(m_ExportName);
 
-	ELog.Msg					(mtInformation,bResult?". Export succesfully completed.":"! Export failed.");
-	ELog.Msg					(mtInformation,"-------------------------------------------------------" );
+	ELog.Msg					(mtInformation,bResult?TEXT(". Export succesfully completed."):TEXT("! Export failed."));
+	ELog.Msg					(mtInformation,TEXT("-------------------------------------------------------") );
 	EConsole.StayOnTop(FALSE);
 }
 //-------------------------------------------------------------------------------------------------
-
-void MeshExpUtility::ExportLWO()
-{
-	BOOL bResult = FALSE;
-
-	if( m_Items.empty() ){
-		ELog.Msg(mtError,"Nothing selected" );
-		ELog.Msg(mtError,"-------------------------------------------------------" );
-		return; 
-	}
-
-	m_ObjectFlipFaces			= IsDlgButtonChecked( hPanel, IDC_OBJECT_FLIPFACES );
-
-	string_path m_ExportName;
-	m_ExportName[0]=0;
-	if( !EFS.GetSaveName("$import$",m_ExportName,0,1) ){
-		ELog.Msg(mtInformation,"Export cancelled" );
-		ELog.Msg(mtInformation,"-------------------------------------------------------" );
-		return;
-	}
-	if (strext(m_ExportName)) *strext(m_ExportName)=0;
-	strcat(m_ExportName,".lwo");
-	EConsole.StayOnTop(TRUE);
-	bResult						= SaveAsLWO(m_ExportName);
-
-	ELog.Msg					(mtInformation,bResult?". Export succesfully completed.":"! Export failed.");
-	ELog.Msg					(mtInformation,"-------------------------------------------------------" );
-	EConsole.StayOnTop(FALSE);
-}
 //-------------------------------------------------------------------------------------------------
 
 void MeshExpUtility::ExportSkin()
@@ -337,13 +276,13 @@ void MeshExpUtility::ExportSkin()
 	BOOL bResult = true;
 
 	if( m_Items.empty() ){
-		ELog.Msg(mtError,"Nothing selected." );
-		ELog.Msg(mtError,"-------------------------------------------------------" );
+		ELog.Msg(mtError,TEXT("Nothing selected." ));
+		ELog.Msg(mtError,TEXT("-------------------------------------------------------") );
 		return; 
 	}
 	if( m_Items.size()>1 ){
-		ELog.Msg(mtInformation,"More than one object selected." );
-		ELog.Msg(mtInformation,"-------------------------------------------------------" );
+		ELog.Msg(mtInformation,TEXT("More than one object selected.") );
+		ELog.Msg(mtInformation,TEXT("-------------------------------------------------------" ));
 		return; 
 	}
 
@@ -352,16 +291,16 @@ void MeshExpUtility::ExportSkin()
 
 	string_path m_ExportName;
 	m_ExportName[0]=0;
-	if( !EFS.GetSaveName("$import$",m_ExportName,0,0) ){
-		ELog.Msg(mtInformation,"Export cancelled" );
-		ELog.Msg(mtInformation,"-------------------------------------------------------" );
+	if( !EFS.GetSaveName(TEXT("$import$"),m_ExportName,0,0) ){
+		ELog.Msg(mtInformation,TEXT("Export cancelled") );
+		ELog.Msg(mtInformation,TEXT("-------------------------------------------------------" ));
 		return;
 	}
 
 	EConsole.StayOnTop(TRUE);
 	bResult						= SaveAsSkin(m_ExportName);
-	ELog.Msg					(mtInformation,bResult?". Export succesfully completed.":"! Export failed.");
-	ELog.Msg					(mtInformation,"-------------------------------------------------------" );
+	ELog.Msg					(mtInformation,bResult?TEXT(". Export succesfully completed."):TEXT("! Export failed."));
+	ELog.Msg					(mtInformation,TEXT("-------------------------------------------------------" ));
 	EConsole.StayOnTop(FALSE);
 }
 
@@ -370,13 +309,13 @@ void MeshExpUtility::ExportSkinKeys()
 	BOOL bResult = true;
 
 	if( m_Items.empty() ){
-		ELog.Msg(mtError,"Nothing selected." );
-		ELog.Msg(mtError,"-------------------------------------------------------" );
+		ELog.Msg(mtError,TEXT("Nothing selected." ));
+		ELog.Msg(mtError,TEXT("-------------------------------------------------------" ));
 		return; 
 	}
 	if( m_Items.size()>1 ){
-		ELog.Msg(mtInformation,"More than one object selected." );
-		ELog.Msg(mtInformation,"-------------------------------------------------------" );
+		ELog.Msg(mtInformation,TEXT("More than one object selected." ));
+		ELog.Msg(mtInformation,TEXT("-------------------------------------------------------" ));
 		return; 
 	}
 	m_SkinFlipFaces				= IsDlgButtonChecked( hPanel, IDC_SKIN_FLIPFACES );
@@ -384,16 +323,16 @@ void MeshExpUtility::ExportSkinKeys()
 
 	string_path m_ExportName;
 	m_ExportName[0]=0;
-	if( !EFS.GetSaveName("$smotion$",m_ExportName,0) ){
-		ELog.Msg(mtInformation,"Export cancelled" );
-		ELog.Msg(mtInformation,"-------------------------------------------------------" );
+	if( !EFS.GetSaveName(TEXT("$smotion$"),m_ExportName,0) ){
+		ELog.Msg(mtInformation,TEXT("Export cancelled" ));
+		ELog.Msg(mtInformation,TEXT("-------------------------------------------------------" ));
 		return;
 	}
 
 	EConsole.StayOnTop(TRUE);
 	bResult						= SaveSkinKeys(m_ExportName);
-	ELog.Msg					(mtInformation,bResult?". Export succesfully completed.":"! Export failed.");
-	ELog.Msg					(mtInformation,"-------------------------------------------------------" );
+	ELog.Msg					(mtInformation,bResult?TEXT(". Export succesfully completed."):TEXT("! Export failed."));
+	ELog.Msg					(mtInformation,TEXT("-------------------------------------------------------"));
 	EConsole.StayOnTop(FALSE);
 }
 

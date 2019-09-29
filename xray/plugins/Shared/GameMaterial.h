@@ -299,9 +299,9 @@ public:
 	virtual TCHAR*	GetEShader	(DWORD i);
 	virtual TCHAR*	GetCShader	(DWORD i);
 	virtual TCHAR*	GetGameMtl	(DWORD i);
-	virtual int		FindEShader	(LPCSTR name);
-	virtual int		FindCShader	(LPCSTR name);
-	virtual int		FindGameMtl	(LPCSTR name);
+	virtual int		FindEShader	(LPCTSTR name);
+	virtual int		FindCShader	(LPCTSTR name);
+	virtual int		FindGameMtl	(LPCTSTR name);
 
 	BOOL IsFaceted(){ return GetFlag(NEWSTDMTL_FACETED); }
 	void SetFaceted( BOOL on ){	pb_shader->SetValue(std2_faceted,0, (on!=0) ); }

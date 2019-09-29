@@ -85,7 +85,7 @@ public:
 	IntVec			vindices;
 	IntVec			pindices;
 public:
-	st_VMap			(LPCSTR nm=0, u8 t=vmtUV, bool pm=false)
+	st_VMap			(LPCTSTR nm=0, u8 t=vmtUV, bool pm=false)
     {
 		type		= t;
 		polymap		= pm;
@@ -284,7 +284,7 @@ public:
 	void			Construct				();
     void			Clear					();
 
-	IC void			SetName					(LPCSTR name){m_Name=name;}
+	IC void			SetName					(LPCTSTR name){m_Name=name;}
 	IC shared_str	Name					(){return m_Name;}
 	void            GetBox					(Fbox& box){box.set(m_Box);}
 	CSurface*		GetSurfaceByFaceID		(u32 fid);
@@ -354,7 +354,7 @@ public:
 
 	int				FindSimilarUV			(st_VMap* vmap, Fvector2& _uv);
 	int				FindSimilarWeight		(st_VMap* vmap, float _w);
-	int				FindVMapByName			(VMapVec& vmaps, const char* name, u8 t, bool polymap);
+	int				FindVMapByName			(VMapVec& vmaps, LPCTSTR name, u8 t, bool polymap);
 	void			RebuildVMaps			();
 
     bool			Validate				();

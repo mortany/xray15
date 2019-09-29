@@ -28,7 +28,7 @@ class	CCustomObject;
 	#include <lwsurf.h>
 #endif
 
-#define LOD_SHADER_NAME 		"details\\lod"
+#define LOD_SHADER_NAME 		TEXT("details\\lod")
 #define LOD_SAMPLE_COUNT 		8
 #define LOD_IMAGE_SIZE 			64
 #define RENDER_SKELETON_LINKS	4
@@ -70,7 +70,7 @@ public:
 public:
 	CSurface		()
 	{
-    	m_GameMtlName="default";
+    	m_GameMtlName=TEXT("default");
         m_ImageData	= 0;
 		m_Shader	= 0;
         m_RTFlags.zero	();
@@ -99,13 +99,13 @@ public:
     IC void			SetName			(LPCTSTR name){m_Name=name;}
 	IC void			SetShader		(LPCTSTR name)
 	{
-		R_ASSERT2(name&&name[0],"Empty shader name."); 
+		//R_ASSERT2(name&&name[0],"Empty shader name."); 
 		m_ShaderName=name; 
 	}
     IC void 		SetShaderXRLC	(LPCTSTR name){m_ShaderXRLCName=name;}
     IC void			SetGameMtl		(LPCTSTR name){m_GameMtlName=name;}
     IC void			SetFVF			(u32 fvf){m_dwFVF=fvf;}
-    IC void			SetTexture		(LPCTSTR name){string512 buf; strcpy_s(buf,name); if(strext(buf)) *strext(buf)=0; m_Texture=buf;}
+    IC void			SetTexture		(LPCTSTR name){string512 buf; wcscpy_s(buf,name); if(strext(buf)) *strext(buf)=0; m_Texture=buf;}
     IC void			SetVMap			(LPCTSTR name){m_VMap=name;}
 };
 
@@ -317,7 +317,7 @@ public:
 
     bool			RemoveSMotion			(LPCTSTR name);
     bool			RenameSMotion			(LPCTSTR old_name, LPCTSTR new_name);
-    bool			AppendSMotion			(LPCTSTR fname, SMotionVec* inserted=0);
+    bool			AppendSMotion			(TCHAR* fname, SMotionVec* inserted=0);
     void			ClearSMotions			();
     bool			SaveSMotions			(LPCTSTR fname);
 
@@ -342,7 +342,7 @@ public:
     int				GetSelectedBones		(BoneVec& sel_bones);
     u16				GetBoneIndexByWMap		(LPCTSTR wm_name);
     CSMotion* 		FindSMotionByName		(LPCTSTR name, const CSMotion* Ignore=0);
-    void			GenerateSMotionName		(char* buffer, LPCTSTR start_name, const CSMotion* M);
+    void			GenerateSMotionName		(TCHAR* buffer, LPCTSTR start_name, const CSMotion* M);
     bool			GenerateBoneShape		(bool bSelOnly);
 
     // device dependent routine
@@ -369,7 +369,7 @@ public:
 
 	LPCTSTR			GenerateSurfaceName		(LPCTSTR base_name);
 #ifdef _MAX_EXPORT
-	BOOL			ExtractTexName			(Texmap *src, LPSTR dest);
+	BOOL			ExtractTexName			(Texmap *src, TCHAR *dest);
 	BOOL			ParseStdMaterial		(StdMat* src, CSurface* dest);
 	BOOL			ParseMultiMaterial		(MultiMtl* src, u32 mid, CSurface* dest);
 	BOOL			ParseXRayMaterial		(XRayMtl* src, u32 mid, CSurface* dest);

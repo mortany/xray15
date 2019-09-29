@@ -51,11 +51,11 @@ bool CEditableMesh::Convert( INode *node )
 	TriObject *obj = ExtractTriObject( node, bDeleteObj );
 
 	if( !obj ){
-		ELog.Msg(mtError,"%s -> Can't convert to TriObject", node->GetName() );
+		ELog.Msg(mtError,TEXT("%s -> Can't convert to TriObject"), node->GetName() );
 		return false; }
 
 	if( obj->mesh.getNumFaces() <=0 ){
-		ELog.Msg(mtError,"%s -> There are no faces ?", node->GetName() );
+		ELog.Msg(mtError,TEXT("%s -> There are no faces ?"), node->GetName() );
 		if (bDeleteObj) delete (obj);
 		return false; }
 
@@ -94,7 +94,7 @@ bool CEditableMesh::Convert( INode *node )
 	if (0==obj->mesh.mapFaces(1))
 	{
 		bResult = false;
-		ELog.Msg(mtError,"'%s' hasn't UV mapping!", node->GetName());
+		ELog.Msg(mtError,TEXT("'%s' hasn't UV mapping!"), node->GetName());
 	}
 	if (bResult)
 	{
@@ -106,7 +106,7 @@ bool CEditableMesh::Convert( INode *node )
 			if (!tf)
 			{
 				bResult = false;
-				ELog.Msg(mtError,"'%s' hasn't UV mapping!", node->GetName());
+				ELog.Msg(mtError,TEXT("'%s' hasn't UV mapping!"), node->GetName());
 				break;
 			}
 			m_SmoothGroups[f_i]					= vf->getSmGroup();
@@ -150,7 +150,7 @@ bool CEditableMesh::Convert( INode *node )
 		int vm_cnt = obj->mesh.getNumTVerts();
 		m_VMaps.resize(1);
 		st_VMap*& VM = m_VMaps.back();
-		VM = xr_new<st_VMap>("Texture",vmtUV,false);
+		VM = xr_new<st_VMap>(TEXT("Texture"),vmtUV,false);
 		for (int tx_i=0; tx_i<vm_cnt; tx_i++){
 			UVVert* tv = obj->mesh.tVerts + tx_i;
 			VM->appendUV(tv->x,1-tv->y);
@@ -159,12 +159,12 @@ bool CEditableMesh::Convert( INode *node )
 
 	if ((GetVertexCount()<4)||(GetFaceCount()<2))
 	{
-		ELog.Msg(mtError,"Invalid mesh: '%s'. Faces<2 or Verts<4");
+		ELog.Msg(mtError,TEXT("Invalid mesh: '%s'. Faces<2 or Verts<4"));
 		bResult = false;
 	}
 
 	if (bResult ){
-		ELog.Msg(mtInformation,"Model '%s' contains: %d points, %d faces",
+		ELog.Msg(mtInformation,TEXT("Model '%s' contains: %d points, %d faces"),
 			node->GetName(), m_VertCount, m_FaceCount);
 	}
 
@@ -173,7 +173,7 @@ bool CEditableMesh::Convert( INode *node )
 		RecomputeBBox	();
 		OptimizeMesh	(false);
 		RebuildVMaps	();
-		ELog.Msg(mtInformation,"Model '%s' converted: %d points, %d faces",
+		ELog.Msg(mtInformation,TEXT("Model '%s' converted: %d points, %d faces"),
 			node->GetName(), GetVertexCount(), GetFaceCount());
 	}
 
@@ -186,7 +186,7 @@ bool CEditableMesh::Convert(CExporter* E)
 {
 	bool bResult		= true;
 
-	m_Name				= StringFromUTF8(E->m_MeshNode->GetName());
+	m_Name				= E->m_MeshNode->GetName();
 
 	// maps
 	// Weight maps 
@@ -196,7 +196,7 @@ bool CEditableMesh::Convert(CExporter* E)
 	// UV map
 	int VM_UV_idx		= m_VMaps.size()-1;
 	st_VMap*& VM_UV		= m_VMaps[VM_UV_idx];
-	VM_UV				= xr_new<st_VMap>("texture",vmtUV,false);
+	VM_UV				= xr_new<st_VMap>(TEXT("texture"),vmtUV,false);
 
 	// points
 	{
@@ -254,7 +254,7 @@ bool CEditableMesh::Convert(CExporter* E)
 	}
 	if ((GetVertexCount()<4)||(GetFaceCount()<2))
 	{
-		Log("!Invalid mesh: '%s'. Faces<2 or Verts<4",*Name());
+		Log(TEXT("!Invalid mesh: '%s'. Faces<2 or Verts<4",*Name()));
 		bResult = false;
 	}
 	if (bResult)

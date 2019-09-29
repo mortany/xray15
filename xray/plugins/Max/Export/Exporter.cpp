@@ -159,17 +159,17 @@ void CExporter::ScanMesh(INode *pNode)
 	if (m_bHasError)	return;
 
 	if (!Helper::IsMesh(pNode)){
-//		LPCSTR nm = pNode->GetName();
+//		LPCTSTR nm = pNode->GetName();
 		int	cChildren	= pNode->NumberOfChildren();
 		for (int iChild = 0; iChild < cChildren; iChild++){
-//			LPCSTR nm1	= pNode->GetChildNode(iChild)->GetName();
+//			LPCTSTR nm1	= pNode->GetChildNode(iChild)->GetName();
 			ScanMesh	(pNode->GetChildNode(iChild));
 		}
 	}else{
-//		LPCSTR nm = pNode->GetName();
+//		LPCTSTR nm = pNode->GetName();
 		if (pNode->Selected()){
 			if (m_bFindMesh){
-				ERR("Single mesh support only.");
+				ERR(TEXT("Single mesh support only."));
 				m_bHasError = TRUE; 
 				return;
 			}
@@ -191,7 +191,7 @@ BOOL CExporter::Capture()
 	Matrix3				matZero;
 
 	if (!m_MeshNode){
-		ERR("Select mesh and try again.");
+		ERR(TEXT("Select mesh and try again."));
 		m_bHasError=TRUE; 
 		return FALSE;
 	}
@@ -199,7 +199,7 @@ BOOL CExporter::Capture()
 	
 	pObject				= m_MeshNode->GetObjectRef();
 	if (!IsExportableMesh(m_MeshNode,pObject)){
-		ERR("Can't receive node references.");
+		ERR(TEXT("Can't receive node references."));
 		m_bHasError=TRUE; 
 		return FALSE;
 	}
@@ -207,13 +207,13 @@ BOOL CExporter::Capture()
 	// Get export interface
 	pPhysique			= FindPhysiqueModifier(m_MeshNode);
 	if (!pPhysique){
-		ERR("Can't find Physique modifier.");
+		ERR(TEXT("Can't find Physique modifier."));
 		m_bHasError=TRUE; 
 		return FALSE;
 	}
 	pExport		= (IPhysiqueExport *)pPhysique->GetInterface(I_PHYINTERFACE);
 	if (!pExport){
-		ERR("Can't find Physique interface.");
+		ERR(TEXT("Can't find Physique interface."));
 		m_bHasError=TRUE; 
 		return FALSE;
 	}
@@ -222,7 +222,7 @@ BOOL CExporter::Capture()
 	int rval = CGINTM(m_MeshNode,pExport->GetInitNodeTM(m_MeshNode, matMesh));
 	matZero.Zero();
 	if (rval || matMesh.Equals(matZero, 0.0)){
-		ERR("Old CS version. Can't export mesh");
+		ERR(TEXT("Old CS version. Can't export mesh"));
 		matMesh.IdentityMatrix();
 	}
 
@@ -231,11 +231,11 @@ BOOL CExporter::Capture()
 
 	if (eExportMotion==m_Style){
 		if (m_AllBones.empty()){
-			ERR("Invalid skin object. Bone not found.");
+			ERR(TEXT("Invalid skin object. Bone not found."));
 			return FALSE;
 		}
 
-		EConsole.ProgressStart((float)m_AllBones.size(),"..Capturing bones");
+		EConsole.ProgressStart((float)m_AllBones.size(),TEXT("..Capturing bones"));
 		for (DWORD i=0; i<m_AllBones.size(); i++){
 			AddBone(m_AllBones[i], matMesh, pExport);
 			EConsole.ProgressInc();
@@ -249,7 +249,7 @@ BOOL CExporter::Capture()
 		// ModContext Interface from the Physique Export Interface:
 		pContext = (IPhyContextExport *)pExport->GetContextInterface(m_MeshNode);
 		if (!pContext){
-			ERR("Can't find Physique context interface.");
+			ERR(TEXT("Can't find Physique context interface."));
 			return FALSE;
 		}
 
@@ -259,7 +259,7 @@ BOOL CExporter::Capture()
 
 		// process vertices
 		int	numVertices = pContext->GetNumberVertices();
-		EConsole.ProgressStart(float(numVertices),"..Capturing vertices");
+		EConsole.ProgressStart(float(numVertices),TEXT("..Capturing vertices"));
 		for (int iVertex = 0; iVertex < numVertices; iVertex++ ){
 			IPhyVertexExport *pVertexExport = (IPhyVertexExport *)pContext->GetVertexInterface(iVertex);
 			R_ASSERT(pVertexExport);
@@ -274,14 +274,12 @@ BOOL CExporter::Capture()
 				INode* node				= pRigidVertex->GetNode(); 
 				R_ASSERT				(node);
 
-				LPCSTR nm = StringFromUTF8(node->GetName());
-
-				//LPCSTR nm				= node->GetName();
+				//LPCTSTR nm				= node->GetName();
 				// get bone and create vertex
 				CVertexDef* pVertex		= AddVertex();
 				int boneId				= AddBone(node,matMesh,pExport);
 				if(BONE_NONE==boneId){
-					ERR					("Invalid bone: ", nm);
+					ERR					(TEXT("Invalid bone: "), node->GetName());
 					bRes				= FALSE;
 				}else pVertex->Append	(boneId,1.f);
 							}break;
@@ -292,11 +290,10 @@ BOOL CExporter::Capture()
 				for (int i=0; i<cnt; i++){
 					INode* node			= pBlendedRigidVertex->GetNode(i); 
 					R_ASSERT			(node);
-					LPCSTR nm			= StringFromUTF8(node->GetName());
 					// get bone and create vertex
 					int boneId			= AddBone(node,matMesh,pExport);
 					if(BONE_NONE==boneId){
-						ERR				("Invalid bone: ", StringFromUTF8(node->GetName()));
+						ERR				(TEXT("Invalid bone: "), node->GetName());
 						bRes			= FALSE;
 					}else pVertex->Append(boneId,pBlendedRigidVertex->GetWeight(i));
 				}
@@ -327,12 +324,12 @@ BOOL CExporter::Capture()
 
 		// Process mesh
 		// Get object from node. Abort if no object.
-		Log("..Transforming mesh");
+		Log(TEXT("..Transforming mesh"));
 		BOOL		bDeleteTriObject;
 		R_ASSERT	(pObject);
 		TriObject *	pTriObject	= GetTriObjectFromObjRef(pObject, &bDeleteTriObject);
 		if (!pTriObject){
-			ERR("Can't create tri object.");
+			ERR(TEXT("Can't create tri object."));
 			return FALSE;
 		}
 		Mesh&		M = pTriObject->mesh;
@@ -343,7 +340,7 @@ BOOL CExporter::Capture()
 			int iNumVert = M.getNumVerts();
 			if (!(iNumVert==numVertices && iNumVert==m_Vertices.size()))
 			{
-				ERR("Non attached vertices found.");
+				ERR(TEXT("Non attached vertices found."));
 				if (bDeleteTriObject)	delete(pTriObject);
 				return FALSE;
 			}
@@ -357,7 +354,7 @@ BOOL CExporter::Capture()
 			}
 		}
 
-		Log("..Parsing materials");
+		Log(TEXT("..Parsing materials"));
 		// Parse Materials
 		m_MtlMain = m_MeshNode->GetMtl();
 		R_ASSERT(m_MtlMain);
@@ -371,7 +368,7 @@ BOOL CExporter::Capture()
 		// build normals
 		M.buildRenderNormals();
 
-		Log("..Converting vertices");
+		Log(TEXT("..Converting vertices"));
 		// our Faces and Vertices
 		{
 			for (int i=0; i<M.getNumFaces(); i++){
@@ -413,13 +410,13 @@ BOOL CExporter::Capture()
 	return bRes;
 };
 
-BOOL MeshExpUtility::SaveAsSkin(const char* fname)
+BOOL MeshExpUtility::SaveAsSkin(LPCTSTR fname)
 {
 	BOOL bRes=true;
 	if (!(fname&&fname[0])) return false;
 
-	Log				("Exporting..." );
-	Log				("-------------------------------------------------------" );
+	Log				(TEXT("Exporting..." ));
+	Log				(TEXT("-------------------------------------------------------" ));
 
 	INode			*pRootNode;
 	pRootNode		= ip->GetRootNode();
@@ -434,12 +431,12 @@ BOOL MeshExpUtility::SaveAsSkin(const char* fname)
 }
 //-------------------------------------------------------------------
 
-BOOL MeshExpUtility::SaveSkinKeys(LPCSTR fname){
+BOOL MeshExpUtility::SaveSkinKeys(LPCTSTR fname){
 	BOOL bRes=true;
 	if (!(fname&&fname[0])) return false;
 
-	Log				("Exporting Skin Keys..." );
-	Log				("-------------------------------------------------------" );
+	Log				(TEXT("Exporting Skin Keys..." ));
+	Log				(TEXT("-------------------------------------------------------" ));
 
 	INode			*pRootNode;
 	pRootNode		= ip->GetRootNode();

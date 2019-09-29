@@ -2,13 +2,14 @@
 // file: NetDeviceELog.cpp
 //----------------------------------------------------
 
+//#include "Stdafx.h"
 #include "Stdafx.h"
 #pragma hdrstop
 
 #include "ELog.h"
 #ifdef _MAX_EXPORT
 	#include "..\Max\Export\NetDeviceLog.h"
-	void ELogCallback(LPCSTR txt)
+	void ELogCallback(LPCTSTR txt)
 	{
  		if (0!=txt[0]){
 			if (txt[0]=='!')EConsole.print(mtError,txt+1);
@@ -20,26 +21,20 @@
 CLog ELog;
 //----------------------------------------------------
 
-int CLog::DlgMsg (TMsgDlgType mt, TMsgDlgButtons btn, LPCSTR _Format, ...)
+int CLog::DlgMsg (TMsgDlgType mt, TMsgDlgButtons btn, LPCTSTR _Format, ...)
 {
     in_use = true;
-	char buf[4096];
+	TCHAR buf[4096];
 	va_list l;
 	va_start( l, _Format );
-	vsprintf( buf, _Format, l );
-
-	wchar_t text_wchar[4096];
-
-	size_t outSize;
-
-	mbstowcs_s(&outSize, text_wchar, buf, 4096);
+	wvsprintf( buf, _Format, l );
 
 	int res=0;
 #ifdef _MAX_PLUGIN
 	switch(mt){
-	case mtError:		MessageBox(0, text_wchar,LPCWSTR("Error"),		MB_OK|MB_ICONERROR);		break;
-	case mtInformation: MessageBox(0, text_wchar, LPCWSTR("Information"),	MB_OK|MB_ICONINFORMATION);	break;
-	default:			MessageBox(0, text_wchar, LPCWSTR("Information"),	MB_OK|MB_ICONINFORMATION);	break;
+	case mtError:		MessageBox(0, buf, LPCWSTR("Error"),		    MB_OK|MB_ICONERROR);		break;
+	case mtInformation: MessageBox(0, buf, LPCWSTR("Information"),	MB_OK|MB_ICONINFORMATION);	break;
+	default:			MessageBox(0, buf, LPCWSTR("Information"),	MB_OK|MB_ICONINFORMATION);	break;
 	}
 #endif
 
@@ -51,27 +46,21 @@ int CLog::DlgMsg (TMsgDlgType mt, TMsgDlgButtons btn, LPCSTR _Format, ...)
 }
 
 
-int CLog::DlgMsg (TMsgDlgType mt, LPCSTR _Format, ...)
+int CLog::DlgMsg (TMsgDlgType mt, LPCTSTR _Format, ...)
 {
     in_use = true;
-	char buf[4096];
+	TCHAR buf[4096];
 	va_list l;
-	va_start( l, _Format );
-	vsprintf( buf, _Format, l );
-
-	wchar_t text_wchar[4096];
-
-	size_t outSize;
-
-	mbstowcs_s(&outSize, text_wchar, buf, 4096);
+	va_start(l, _Format);
+	wvsprintf(buf, _Format, l);
 
     int res=0;
 
 #ifdef _MAX_PLUGIN
 	switch(mt){
-	case mtError:		MessageBox(0, text_wchar, LPCWSTR("Error"),		MB_OK|MB_ICONERROR);		break;
-	case mtInformation: MessageBox(0, text_wchar, LPCWSTR("Information"),	MB_OK|MB_ICONINFORMATION);	break;
-	default:			MessageBox(0, text_wchar, LPCWSTR("Information"),	MB_OK|MB_ICONINFORMATION);	break;
+	case mtError:		MessageBox(0, buf, LPCWSTR("Error"),		MB_OK|MB_ICONERROR);		break;
+	case mtInformation: MessageBox(0, buf, LPCWSTR("Information"),	MB_OK|MB_ICONINFORMATION);	break;
+	default:			MessageBox(0, buf, LPCWSTR("Information"),	MB_OK|MB_ICONINFORMATION);	break;
 	}
 #endif
 
@@ -82,32 +71,13 @@ int CLog::DlgMsg (TMsgDlgType mt, LPCSTR _Format, ...)
     return res;
 }
 
-void CLog::Msg(TMsgDlgType mt, LPCSTR _Format, ...)
+void CLog::Msg(TMsgDlgType mt, LPCTSTR _Format, ...)
 {
-	std::locale::global(std::locale(""));
 
-	//string m_buf = StringFromUTF8(_Format, locale);
-
-	//char cstr[m_buf.size() + 1];
-	//strcpy(cstr, m_buf.c_str());	// or pass &s[0]
-
-	//Listener* listener = the_listener;
-
-
-
-	char buf[4096];
-
-	//wchar_t text_wchar[4096];
-
-	//size_t outSize;
-
-	//mbstowcs_s(&outSize, text_wchar, buf, 4096);
-
-	strcpy(buf, "Resume");	// or pass &s[0]
-
-	//va_list l;
-	//va_start(l, buf);
-	//vsprintf(buf, buf, l);
+	TCHAR buf[4096];
+	va_list l;
+	va_start(l, _Format);
+	wvsprintf(buf, _Format, l);
 
 #ifdef _MAX_EXPORT
 	EConsole.print(mt,buf);

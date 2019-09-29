@@ -66,9 +66,6 @@
     <ClCompile Include="Export\EditMeshExportMAX.cpp">
       <Filter>Export Object</Filter>
     </ClCompile>
-    <ClCompile Include="Export\EditObjectExportLWO.cpp">
-      <Filter>Export Object</Filter>
-    </ClCompile>
     <ClCompile Include="Export\EditObjectExportMAX.cpp">
       <Filter>Export Object</Filter>
     </ClCompile>

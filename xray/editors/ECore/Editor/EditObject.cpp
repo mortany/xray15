@@ -23,22 +23,8 @@
 // mimimal bounding box size
 float g_MinBoxSize 	= 0.05f;
 
-#ifdef _EDITOR
-void CSurface::CreateImageData()
-{
-	VERIFY		(0==m_ImageData);
-    m_ImageData			= xr_new<SSimpleImage>();
-	m_ImageData->name	= m_Texture;
-    m_ImageData->layers.push_back	(U32Vec());
-    ImageLib.LoadTextureData		(*m_ImageData->name,m_ImageData->layers.back(),m_ImageData->w,m_ImageData->h);
-}
-void CSurface::RemoveImageData()
-{
-	xr_delete	(m_ImageData);
-}
-#endif
 
-CEditableObject::CEditableObject(LPCSTR name)
+CEditableObject::CEditableObject(LPCTSTR name)
 {
 	m_LibName		= name;
 
@@ -67,9 +53,9 @@ CEditableObject::CEditableObject(LPCSTR name)
 
     m_LODShader		= 0;
     
-    m_CreateName	= "unknown";
+    m_CreateName	= TEXT("unknown");
     m_CreateTime	= 0;
-	m_ModifName		= "unknown";
+	m_ModifName		= TEXT("unknown");
     m_ModifTime		= 0;
 }
 
@@ -84,11 +70,11 @@ void CEditableObject::VerifyMeshNames()
 	int idx=0;
 	string1024 	nm,pref; 
     for(EditMeshIt m_def=m_Meshes.begin();m_def!=m_Meshes.end();m_def++){
-		strcpy	(pref,(*m_def)->m_Name.size()?(*m_def)->m_Name.c_str():"mesh");
+		wcscpy	(pref,(*m_def)->m_Name.size()?(*m_def)->m_Name.c_str():TEXT("mesh"));
         _Trim	(pref);
-		strcpy	(nm,pref);
+		wcscpy	(nm,pref);
 		while (FindMeshByName(nm,*m_def))
-			sprintf(nm,"%s%2d",pref,idx++);
+			wsprintf(nm,TEXT("%s%2d"),pref,idx++);
         (*m_def)->SetName(nm);
     }
 }
@@ -101,10 +87,10 @@ bool CEditableObject::ContainsMesh(const CEditableMesh* m)
     return false;
 }
 
-CEditableMesh* CEditableObject::FindMeshByName	(const char* name, CEditableMesh* Ignore)
+CEditableMesh* CEditableObject::FindMeshByName	(LPCTSTR name, CEditableMesh* Ignore)
 {
     for(EditMeshIt m=m_Meshes.begin();m!=m_Meshes.end();m++)
-        if ((Ignore!=(*m))&&(stricmp((*m)->Name().c_str(),name)==0)) return (*m);
+        if ((Ignore!=(*m))&&(wcsicmp((*m)->Name().c_str(),name)==0)) return (*m);
     return 0;
 }
 
@@ -138,7 +124,7 @@ int CEditableObject::GetFaceCount(){
 	return cnt;
 }
 
-int CEditableObject::GetSurfFaceCount(const char* surf_name){
+int CEditableObject::GetSurfFaceCount(LPCTSTR surf_name){
 	int cnt=0;
     CSurface* surf = FindSurfaceByName(surf_name);
     for(EditMeshIt m = m_Meshes.begin();m!=m_Meshes.end();m++)
@@ -185,20 +171,20 @@ void CEditableObject::TranslateToWorld(const Fmatrix& parent)
 	UpdateBox();
 }
 
-CSurface*	CEditableObject::FindSurfaceByName(const char* surf_name, int* s_id){
+CSurface*	CEditableObject::FindSurfaceByName(LPCTSTR surf_name, int* s_id){
 	for(SurfaceIt s_it=m_Surfaces.begin(); s_it!=m_Surfaces.end(); s_it++)
-    	if (stricmp((*s_it)->_Name(),surf_name)==0){ if (s_id) *s_id=s_it-m_Surfaces.begin(); return *s_it;}
+    	if (wcsicmp((*s_it)->_Name(),surf_name)==0){ if (s_id) *s_id=s_it-m_Surfaces.begin(); return *s_it;}
     return 0;
 }
 
-LPCSTR CEditableObject::GenerateSurfaceName(const char* base_name)
+LPCTSTR CEditableObject::GenerateSurfaceName(LPCTSTR base_name)
 {
 	static string1024 nm;
-	strcpy(nm, base_name);
+	wcscpy(nm, base_name);
 	if (FindSurfaceByName(nm)){
 		DWORD idx=0;
 		do{
-			sprintf(nm,"%s_%d",base_name,idx);
+			wsprintf(nm,TEXT("%s_%d"),base_name,idx);
 			idx++;
 		}while(FindSurfaceByName(nm));
 	}
@@ -232,7 +218,7 @@ void CEditableObject::PrepareOGFDesc(ogf_desc& desc)
     desc.create_time	= m_CreateTime;
     desc.modif_name		= m_ModifName.c_str();
     desc.modif_time		= m_ModifTime;
-    desc.build_name		= strconcat(sizeof(tmp),tmp,"\\\\",Core.CompName,"\\",Core.UserName);
+    desc.build_name		= strconcat(sizeof(tmp),tmp,TEXT("\\\\"),Core.CompName,TEXT("\\"),Core.UserName);
     ctime				(&desc.build_time);
 }
 
@@ -240,11 +226,11 @@ void CEditableObject::SetVersionToCurrent(BOOL bCreate, BOOL bModif)
 {
 	string512			tmp;
 	if (bCreate){
-		m_CreateName	= strconcat(sizeof(tmp),tmp,"\\\\",Core.CompName,"\\",Core.UserName);
+		m_CreateName	= strconcat(sizeof(tmp),tmp, TEXT("\\\\"),Core.CompName, TEXT("\\"),Core.UserName);
 		m_CreateTime	= time(NULL);
 	}
 	if (bModif){
-		m_ModifName		= strconcat(sizeof(tmp),tmp,"\\\\",Core.CompName,"\\",Core.UserName);
+		m_ModifName		= strconcat(sizeof(tmp),tmp, TEXT("\\\\"),Core.CompName, TEXT("\\"),Core.UserName);
 		m_ModifTime		= time(NULL);
 	}
 }
@@ -271,12 +257,12 @@ bool CEditableObject::Validate()
 	bool bRes = true;
     for(SurfaceIt 	s_it=m_Surfaces.begin(); s_it!=m_Surfaces.end(); s_it++)
         if (false==(*s_it)->Validate()){ 
-        	Msg("!Invalid surface found: Object [%s], Surface [%s].",GetName(),(*s_it)->_Name());
+        	Msg(TEXT("!Invalid surface found: Object [%s], Surface [%s]."),GetName(),(*s_it)->_Name());
         	bRes=false;
         }
     for(EditMeshIt m_def=m_Meshes.begin();m_def!=m_Meshes.end();m_def++)
         if (false==(*m_def)->Validate()){ 
-        	Msg("!Invalid mesh found: Object [%s], Mesh [%s].",m_LibName.c_str(),(*m_def)->Name().c_str());
+        	Msg(TEXT("!Invalid mesh found: Object [%s], Mesh [%s]."),m_LibName.c_str(),(*m_def)->Name().c_str());
         	bRes=false;
         }
     return bRes;

@@ -35,7 +35,7 @@ struct st_BoneMotion
 	CEnvelope*	envs			[ctMaxChannel];
 	Flags8		m_Flags;
     			st_BoneMotion()	{name=0; m_Flags.zero(); ZeroMemory(envs,sizeof(CEnvelope*)*ctMaxChannel);}
-    void        SetName(LPCSTR nm)	{	name=nm;	}
+    void        SetName(LPCTSTR nm)	{	name=nm;	}
 };
 // vector по костям
 DEFINE_VECTOR(st_BoneMotion,BoneMotionVec,BoneMotionIt);
@@ -60,8 +60,8 @@ public:
 					CCustomMotion	(CCustomMotion* src);
 	virtual			~CCustomMotion	();
 
-	void			SetName			(const char* n)	{string256 tmp; tmp[0]=0; if(n){strcpy_s(tmp,n); _strlwr(tmp);} name=tmp;}
-	LPCSTR			Name			()				{return name.c_str();}
+	void			SetName			(LPCTSTR n)	{string256 tmp; tmp[0]=0; if(n){wcscpy_s(tmp,n); _wcslwr(tmp);} name=tmp;}
+	LPCTSTR			Name			()				{return name.c_str();}
     int				FrameStart		()				{return iFrameStart;}
     int				FrameEnd		()				{return iFrameEnd;}
     float			FPS				()				{return fFPS;}
@@ -72,8 +72,8 @@ public:
 	virtual void	Save			(IWriter& F);
 	virtual bool	Load			(IReader& F);
 
-	virtual void	SaveMotion		(const char* buf)=0;
-	virtual bool	LoadMotion		(const char* buf)=0;
+	virtual void	SaveMotion		(LPCTSTR buf)=0;
+	virtual bool	LoadMotion		(LPCTSTR buf)=0;
 
 #ifdef _LW_EXPORT
 	CEnvelope*		CreateEnvelope	(LWChannelID chan, LWChannelID* chan_parent=0);
@@ -95,8 +95,8 @@ public:
 	virtual void	Save			(IWriter& F);
 	virtual bool	Load			(IReader& F);
 
-	virtual void	SaveMotion		(const char* buf);
-	virtual bool	LoadMotion		(const char* buf);
+	virtual void	SaveMotion		(LPCTSTR buf);
+	virtual bool	LoadMotion		(LPCTSTR buf);
 
 #ifdef _LW_EXPORT
 	void			ParseObjectMotion(LWItemID object);
@@ -160,8 +160,8 @@ public:
 	virtual void	Save			(IWriter& F);
 	virtual bool	Load			(IReader& F);
 
-	virtual void	SaveMotion		(const char* buf);
-	virtual bool	LoadMotion		(const char* buf);
+	virtual void	SaveMotion		(LPCTSTR buf);
+	virtual bool	LoadMotion		(LPCTSTR buf);
 
     void			SortBonesBySkeleton(BoneVec& bones);
     void			WorldRotate		(int boneId, float h, float p, float b);
@@ -198,7 +198,7 @@ public:
         u16			slot;
         			AnimItem	():slot(u16(-1)){}
         void		set			(shared_str nm, u16 s){name=nm;slot=s;}
-        void		clear		(){set("",u16(-1));}
+        void		clear		(){set(TEXT(""),u16(-1));}
         bool		valid		(){return !!(name.size()&&(slot!=u16(-1)));}
         bool		equal		(const AnimItem& d) const {return name.equal(d.name)&&(slot==d.slot);}
     };

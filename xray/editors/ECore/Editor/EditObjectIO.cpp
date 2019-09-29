@@ -10,40 +10,7 @@
 #include "bone.h"
 #include "motion.h"
 
-#ifdef _EDITOR
- #include "exportskeleton.h"
- #include "exportobjectOGF.h"
- #include "Shader.h"
-
-bool CEditableObject::Load(const char* fname)
-{
-	AnsiString ext=ExtractFileExt(fname);
-    ext=ext.LowerCase();
-    if 	(ext==".lwo")    		return Import_LWO(fname,false);
-    else return LoadObject(fname);
-}
-
-bool CEditableObject::LoadObject(const char* fname)
-{
-	if (FS.exist(fname)){
-        int age			= FS.get_file_age	(fname);		VERIFY3(age>0,"Invalid file age:",fname);
-        IReader* F 		= FS.r_open			(fname); 		R_ASSERT(F);
-        IReader* OBJ 	= F->open_chunk		(EOBJ_CHUNK_OBJECT_BODY);
-        R_ASSERT2		(OBJ,"Corrupted file.");
-        bool bRes 		= Load(*OBJ);
-        OBJ->close();
-        FS.r_close(F);
-        if (bRes){ 
-            m_LoadName 		= fname;
-            m_ObjectVersion = age; 
-        }
-        return bRes;
-    }
-    return false;
-}
-#endif
-
-bool CEditableObject::SaveObject(const char* fname)
+bool CEditableObject::SaveObject(LPCTSTR fname)
 {
 	if (IsModified()){
         // update transform matrix

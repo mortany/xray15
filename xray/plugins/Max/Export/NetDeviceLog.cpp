@@ -90,7 +90,7 @@ void CExportConsole::Clear(){
 	DeleteCriticalSection( &m_CSection );
 }
 
-void CExportConsole::print(TMsgDlgType mt, const char *buf){
+void CExportConsole::print(TMsgDlgType mt, const TCHAR *buf){
 	_ConsoleMsg msg(buf);
 
 	if( m_Messages.size() > 1000 ) m_Messages.pop_front();
@@ -124,10 +124,10 @@ CExportConsole::~CExportConsole(){
 }
 
 //----------------------------------------------------
-void CExportConsole::ProgressStart(float max_val, const char* text){
+void CExportConsole::ProgressStart(float max_val, LPCTSTR text){
 	fMaxVal=max_val;
 	fStatusProgress=0;
-	Msg(text?text:"");
+	Msg(text?text:TEXT(""));
 	ProgressUpdate(0);
 }
 void CExportConsole::ProgressEnd(){

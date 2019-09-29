@@ -194,9 +194,9 @@ public:
 					    CBone			();
 	virtual			    ~CBone			();
 
-	void			    SetName			(const char* p){name		= p; xr_strlwr(name);		}
-	void			    SetParentName	(const char* p){parent_name	= p; xr_strlwr(parent_name);}
-	void			    SetWMap			(const char* p){wmap		= p;}
+	void			    SetName			(LPCTSTR p){name		= p; xr_strlwr(name);		}
+	void			    SetParentName	(LPCTSTR p){parent_name	= p; xr_strlwr(parent_name);}
+	void			    SetWMap			(LPCTSTR p){wmap		= p;}
 	void			    SetRestParams	(float length, const Fvector& offset, const Fvector& rotate){rest_offset.set(offset);rest_rotate.set(rotate);rest_length=length;};
 
 	shared_str		    Name			(){return name;}

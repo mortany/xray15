@@ -65,7 +65,7 @@ typedef TMsgDlgBtn TMsgDlgButtons[mbHelp];
 #include <string>
 #include <codecvt>
 
-#define AnsiString string
+#define AnsiString std::wstring
 DEFINE_VECTOR(AnsiString,AStringVec,AStringIt);
 
 //#include "clsid.h"
@@ -89,67 +89,3 @@ DEFINE_VECTOR(AnsiString,AStringVec,AStringIt);
 #pragma warning (default:4995)
 
 #endif /*_INCDEF_STDAFX_H_*/
-
-static IC LPCSTR StringFromUTF8(const wchar_t* in)
-{
-	std::wstring wstr = in;
-	static std::locale locale("");
-	xr_string result(wstr.size(), '\0');
-	std::use_facet<std::ctype<wchar_t>>(locale).narrow(wstr.data(), wstr.data() + wstr.size(), '?', &result[0]);
-	return result.c_str();
-}
-
-static IC string StringFromUTF8(const char* in)
-{
-	static std::locale locale("");
-	using wcvt = std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>;
-	auto wstr = wcvt{}.from_bytes(in);
-	string result(wstr.size(), '\0');
-	std::use_facet<std::ctype<wchar_t>>(locale).narrow(wstr.data(), wstr.data() + wstr.size(), '?', &result[0]);
-	return result;
-}
-
-static IC string StringFromUTF8(const char* in, const std::locale& locale)
-{
-	using wcvt = std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>;
-	auto wstr = wcvt{}.from_bytes(in);
-	string result(wstr.size(), '\0');
-	std::use_facet<std::ctype<wchar_t>>(locale).narrow(wstr.data(), wstr.data() + wstr.size(), '?', &result[0]);
-	return result;
-}
-
-static IC string StringFromUTF8_convert(const wchar_t* in)
-{
-	std::wstring wstr = in;
-	static std::locale locale("");
-	string result(wstr.size(), '\0');
-	std::use_facet<std::ctype<wchar_t>>(locale).narrow(wstr.data(), wstr.data() + wstr.size(), '?', &result[0]);
-	return result;
-}
-
-static IC xr_string StringToUTF8(const char* in, const std::locale& locale)
-{
-	using wcvt = std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>;
-	std::wstring wstr(xr_strlen(in), L'\0');
-	std::use_facet<std::ctype<wchar_t>>(locale).widen(in, in + xr_strlen(in), &wstr[0]);
-	std::string result = wcvt{}.to_bytes(wstr.data(), wstr.data() + wstr.size());
-	return result.data();
-}
-
-static IC std::string UTF8_to_CP1251(std::string const& utf8)
-{
-	if (!utf8.empty())
-	{
-		int wchlen = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), utf8.size(), NULL, 0);
-		if (wchlen > 0 && wchlen != 0xFFFD)
-		{
-			std::vector<wchar_t> wbuf(wchlen);
-			MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), utf8.size(), &wbuf[0], wchlen);
-			std::vector<char> buf(wchlen);
-			WideCharToMultiByte(1251, 0, &wbuf[0], wchlen, &buf[0], wchlen, 0, 0);
-
-			return std::string(&buf[0], wchlen);
-		}
-	}
-	return std::string();
-}
