@@ -46,7 +46,7 @@ XRCORE_API	xrDebug		Debug;
 static bool	error_after_dialog = false;
 
 extern void BuildStackTrace();
-extern char g_stackTrace[100][4096];
+extern TCHAR g_stackTrace[100][4096];
 extern int	g_stackTraceCount;
 extern bool shared_str_initialized;
 

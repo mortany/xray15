@@ -93,7 +93,7 @@ public:
 	shared_str&			operator=	(shared_str const &rhs)			{	_set(rhs);	return (shared_str&)*this;			}
 	LPCTSTR				operator*	() const						{	return p_?p_->value:0;							}
 	bool				operator!	() const						{	return p_ == 0;									}
-	char				operator[]	(size_t id)						{	return p_->value[id];							}
+	TCHAR				operator[]	(size_t id)						{	return p_->value[id];							}
         LPCTSTR c_str() const { return p_ ? p_->value : 0; }
         LPCTSTR data() const { return p_ ? p_->value : TEXT(""); }
 

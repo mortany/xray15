@@ -28,7 +28,7 @@ LPTSTR _Trim( LPTSTR str )
 	return str;
 }
 
-LPCTSTR _SetPos (LPCTSTR src, u32 pos, char separator )
+LPCTSTR _SetPos (LPCTSTR src, u32 pos, TCHAR separator )
 {
 	LPCTSTR	res			= src;
 	u32		p			= 0;
@@ -40,7 +40,7 @@ LPCTSTR _SetPos (LPCTSTR src, u32 pos, char separator )
 	return		res;
 }
 
-LPCTSTR _CopyVal ( LPCTSTR src, LPTSTR dst, char separator )
+LPCTSTR _CopyVal ( LPCTSTR src, LPTSTR dst, TCHAR separator )
 {
 	LPCTSTR	p;
 	size_t	n;
@@ -51,7 +51,7 @@ LPCTSTR _CopyVal ( LPCTSTR src, LPTSTR dst, char separator )
 	return		dst;
 }
 
-int	_GetItemCount ( LPCTSTR src, char separator )
+int	_GetItemCount ( LPCTSTR src, TCHAR separator )
 {
 	u32		cnt			= 0;
 	if (src&&src[0]){
@@ -69,7 +69,7 @@ int	_GetItemCount ( LPCTSTR src, char separator )
 	return		cnt;
 }
 
-LPTSTR _GetItem ( LPCTSTR src, int index, LPTSTR dst, char separator, LPCTSTR def, bool trim )
+LPTSTR _GetItem ( LPCTSTR src, int index, LPTSTR dst, TCHAR separator, LPCTSTR def, bool trim )
 {
 	LPCTSTR	ptr;
 	ptr			= _SetPos	( src, index, separator );
@@ -79,7 +79,7 @@ LPTSTR _GetItem ( LPCTSTR src, int index, LPTSTR dst, char separator, LPCTSTR de
 	return		dst;
 }
 
-LPTSTR _GetItems ( LPCTSTR src, int idx_start, int idx_end, LPTSTR dst, char separator )
+LPTSTR _GetItems ( LPCTSTR src, int idx_start, int idx_end, LPTSTR dst, TCHAR separator )
 {
 	LPTSTR n = dst;
     int level = 0;
@@ -108,7 +108,7 @@ u32 _ParseItem ( LPTSTR src, int ind, xr_token* token_list )
 	return _ParseItem(dst, token_list);
 }
 
-LPTSTR _ReplaceItems( LPCTSTR src, int idx_start, int idx_end, LPCTSTR new_items, LPTSTR dst, char separator ){
+LPTSTR _ReplaceItems( LPCTSTR src, int idx_start, int idx_end, LPCTSTR new_items, LPTSTR dst, TCHAR separator ){
 	LPTSTR n = dst;
     int level = 0;
     bool bCopy = true;
@@ -128,7 +128,7 @@ LPTSTR _ReplaceItems( LPCTSTR src, int idx_start, int idx_end, LPCTSTR new_items
 	return dst;
 }
 
-LPTSTR _ReplaceItem ( LPCTSTR src, int index, LPCTSTR new_item, LPTSTR dst, char separator ){
+LPTSTR _ReplaceItem ( LPCTSTR src, int index, LPCTSTR new_item, LPTSTR dst, TCHAR separator ){
 	LPTSTR n = dst;
     int level = 0;
     bool bCopy = true;
@@ -148,7 +148,7 @@ LPTSTR _ReplaceItem ( LPCTSTR src, int index, LPCTSTR new_item, LPTSTR dst, char
 	return dst;
 }
 
-LPTSTR _ChangeSymbol ( LPTSTR name, char src, char dest )
+LPTSTR _ChangeSymbol ( LPTSTR name, TCHAR src, TCHAR dest )
 {
     TCHAR						*sTmpName = name;
     while(sTmpName[0] ){
@@ -158,7 +158,7 @@ LPTSTR _ChangeSymbol ( LPTSTR name, char src, char dest )
 	return						name;
 }
 
-xr_string& _ChangeSymbol	( xr_string& name, char src, char dest )
+xr_string& _ChangeSymbol	( xr_string& name, TCHAR src, TCHAR dest )
 {
 	for (xr_string::iterator it=name.begin(); it!=name.end(); it++) 
     	if (*it==src) *it=xr_string::value_type(dest);
@@ -166,7 +166,7 @@ xr_string& _ChangeSymbol	( xr_string& name, char src, char dest )
 }
 
 #ifdef M_BORLAND
-AnsiString& _ReplaceItem 	( LPCTSTR src, int index, LPCTSTR new_item, AnsiString& dst, char separator )
+AnsiString& _ReplaceItem 	( LPCTSTR src, int index, LPCTSTR new_item, AnsiString& dst, TCHAR separator )
 {
 	dst = "";
     int level = 0;
@@ -186,7 +186,7 @@ AnsiString& _ReplaceItem 	( LPCTSTR src, int index, LPCTSTR new_item, AnsiString
 	return dst;
 }
 
-AnsiString& _ReplaceItems ( LPCTSTR src, int idx_start, int idx_end, LPCTSTR new_items, AnsiString& dst, char separator )
+AnsiString& _ReplaceItems ( LPCTSTR src, int idx_start, int idx_end, LPCTSTR new_items, AnsiString& dst, TCHAR separator )
 {
 	dst = "";
     int level = 0;
@@ -211,7 +211,7 @@ AnsiString& _Trim( AnsiString& str )
 	return str=str.Trim();
 }
 
-LPCTSTR _CopyVal ( LPCTSTR src, AnsiString& dst, char separator )
+LPCTSTR _CopyVal ( LPCTSTR src, AnsiString& dst, TCHAR separator )
 {
 	LPCTSTR	p;
 	u32		n;
@@ -222,7 +222,7 @@ LPCTSTR _CopyVal ( LPCTSTR src, AnsiString& dst, char separator )
 	return		dst.c_str();
 }
 
-LPCTSTR _GetItems ( LPCTSTR src, int idx_start, int idx_end, AnsiString& dst, char separator )
+LPCTSTR _GetItems ( LPCTSTR src, int idx_start, int idx_end, AnsiString& dst, TCHAR separator )
 {
 	int level = 0;
 	for (LPCTSTR p=src; *p!=0; p++){
@@ -234,7 +234,7 @@ LPCTSTR _GetItems ( LPCTSTR src, int idx_start, int idx_end, AnsiString& dst, ch
 	return dst.c_str();
 }
 
-LPCTSTR _GetItem ( LPCTSTR src, int index, AnsiString& dst, char separator, LPCTSTR def, bool trim )
+LPCTSTR _GetItem ( LPCTSTR src, int index, AnsiString& dst, TCHAR separator, LPCTSTR def, bool trim )
 {
 	LPCTSTR	ptr;
 	ptr			= _SetPos	( src, index, separator );
@@ -269,7 +269,7 @@ AnsiString _ListToSequence2(const AStringVec& lst)
 	return out;
 }
 
-void _SequenceToList(AStringVec& lst, LPCTSTR in, char separator)
+void _SequenceToList(AStringVec& lst, LPCTSTR in, TCHAR separator)
 {
 	lst.clear();
 	int t_cnt=_GetItemCount(in,separator);
@@ -312,7 +312,7 @@ float StrTimeToFloatTime(LPCTSTR buf, bool _h, bool _m, bool _s, bool _ms)
 }
 #endif
 
-void _SequenceToList(LPSTRVec& lst, LPCTSTR in, char separator)
+void _SequenceToList(LPSTRVec& lst, LPCTSTR in, TCHAR separator)
 {
 	int t_cnt=_GetItemCount(in,separator);
 	string1024 T;
@@ -323,7 +323,7 @@ void _SequenceToList(LPSTRVec& lst, LPCTSTR in, char separator)
 	}
 }
 
-void _SequenceToList(RStringVec& lst, LPCTSTR in, char separator)
+void _SequenceToList(RStringVec& lst, LPCTSTR in, TCHAR separator)
 {
 	lst.clear	();
 	int t_cnt	= _GetItemCount(in,separator);
@@ -335,7 +335,7 @@ void _SequenceToList(RStringVec& lst, LPCTSTR in, char separator)
 	}
 }
 
-void _SequenceToList(SStringVec& lst, LPCTSTR in, char separator)
+void _SequenceToList(SStringVec& lst, LPCTSTR in, TCHAR separator)
 {
 	lst.clear	();
 	int t_cnt	= _GetItemCount(in,separator);
@@ -388,7 +388,7 @@ xr_string& _Trim( xr_string& str )
 	return str;
 }
 
-LPCTSTR _CopyVal ( LPCTSTR src, xr_string& dst, char separator )
+LPCTSTR _CopyVal ( LPCTSTR src, xr_string& dst, TCHAR separator )
 {
 	LPCTSTR		p;
 	ptrdiff_t	n;
@@ -399,7 +399,7 @@ LPCTSTR _CopyVal ( LPCTSTR src, xr_string& dst, char separator )
 	return		dst.c_str();
 }
 
-LPCTSTR _GetItem ( LPCTSTR src, int index, xr_string& dst, char separator, LPCTSTR def, bool trim )
+LPCTSTR _GetItem ( LPCTSTR src, int index, xr_string& dst, TCHAR separator, LPCTSTR def, bool trim )
 {
 	LPCTSTR	ptr;
 	ptr			= _SetPos	( src, index, separator );

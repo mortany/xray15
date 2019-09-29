@@ -1222,10 +1222,10 @@ void InitSymEng ( void )
             converted_str += it;
 
         char* pName = const_cast<char*>(converted_str.c_str());
-        VERIFY ( BSUSymInitialize ( (DWORD)hPID ,
+		/*VERIFY ( BSUSymInitialize ( (DWORD)hPID ,
                                     hPID        ,
                                     pName,
-                                    TRUE         ) ) ;
+                                    TRUE         ) ) ;*/
         g_bSymEngInit = TRUE ;
     }
 }

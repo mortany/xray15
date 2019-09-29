@@ -32,7 +32,7 @@ FS_Path::FS_Path	(LPCTSTR _Root, LPCTSTR _Add, LPCTSTR _DefExt, LPCTSTR _FilterC
 {
 //	VERIFY			(_Root&&_Root[0]);
 	string_path		temp;
-    wcscpy_s		(temp,sizeof(&temp),_Root); 
+    wcscpy_s		(temp,sizeof(temp),_Root); 
     if (_Add) 		wcscat(temp,_Add);
 	if (temp[0] && temp[xr_strlen(temp)-1]!='\\') wcscat(temp,TEXT("\\"));
 	m_Path			= xr_strlwr(xr_strdup(temp));
