@@ -6,18 +6,18 @@
 
 #ifndef __BORLANDC__
 #	ifndef ANONYMOUS_BUILD
-#		define DEBUG_INFO				__FILE__,__LINE__,__FUNCTION__
+#		define DEBUG_INFO				TEXT(__FILE__),__LINE__,TEXT(__FUNCTION__)
 #	else // ANONYMOUS_BUILD
-#		define DEBUG_INFO				"",__LINE__,""
+#		define DEBUG_INFO				TEXT(""),__LINE__,TEXT("")
 #	endif // ANONYMOUS_BUILD
 #else // __BORLANDC__
-#	define DEBUG_INFO					__FILE__,__LINE__,__FILE__
+#	define DEBUG_INFO					TEXT(__FILE__),__LINE__,TEXT(__FILE__)
 #endif // __BORLANDC__
 
 #ifdef ANONYMOUS_BUILD
-	#define _TRE(arg)	""
+	#define _TRE(arg)	TEXT("")
 #else
-	#define _TRE(arg)	arg
+	#define _TRE(arg)	TEXT(arg)
 #endif
 
 
@@ -25,7 +25,7 @@
 
 #	define R_ASSERT(expr)				do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(_TRE(#expr),DEBUG_INFO,ignore_always);} while(0)
 #	define R_ASSERT2(expr,e2)			do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(_TRE(#expr),_TRE(e2),DEBUG_INFO,ignore_always);} while(0)
-#	define R_ASSERT3(expr,e2,e3)		do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(_TRE(#expr),_TRE(e2),_TRE(e3),DEBUG_INFO,ignore_always);} while(0)
+#	define R_ASSERT3(expr,e2,e3)		do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(_TRE(#expr),_TRE(e2),e3,DEBUG_INFO,ignore_always);} while(0)
 #	define R_ASSERT4(expr,e2,e3,e4)		do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(_TRE(#expr),_TRE(e2),_TRE(e3),_TRE(e4),DEBUG_INFO,ignore_always);} while(0)
 #	define R_CHK(expr)					do {static bool ignore_always = false; HRESULT hr = expr; if (!ignore_always && FAILED(hr)) ::Debug.error(hr,_TRE(#expr),DEBUG_INFO,ignore_always);} while(0)
 #	define R_CHK2(expr,e2)				do {static bool ignore_always = false; HRESULT hr = expr; if (!ignore_always && FAILED(hr)) ::Debug.error(hr,_TRE(#expr),_TRE(e2),DEBUG_INFO,ignore_always);} while(0)

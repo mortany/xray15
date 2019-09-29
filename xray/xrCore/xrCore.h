@@ -114,7 +114,7 @@
 	#include <assert.h>
 	#include <utime.h>
 	#define _utimbuf utimbuf
-	#define MODULE_NAME 		"xrCoreB.dll"
+	#define MODULE_NAME 		TEXT("xrCoreB.dll")
 
 	// function redefinition
     #define fabsf(a) fabs(a)
@@ -139,7 +139,7 @@
 #else
 	#define ALIGN(a)		__declspec(align(a))
 	#include <sys\utime.h>
-	#define MODULE_NAME 	"xrCore.dll"
+	#define MODULE_NAME 	TEXT("xrCore.dll")
 #endif
 
 
@@ -212,10 +212,10 @@
 struct XRCORE_API xr_rtoken{
     shared_str	name;
     int	   	id;
-           	xr_rtoken	(LPCSTR _nm, int _id){name=_nm;id=_id;}
+           	xr_rtoken	(LPCTSTR _nm, int _id){name=_nm;id=_id;}
 public:
-    void	rename		(LPCSTR _nm)		{name=_nm;}
-    bool	equal		(LPCSTR _nm)		{return (0==xr_strcmp(*name,_nm));}
+    void	rename		(LPCTSTR _nm)		{name=_nm;}
+    bool	equal		(LPCTSTR _nm)		{return (0==xr_strcmp(*name,_nm));}
 };
 
 #pragma pack (push,1)
@@ -284,7 +284,7 @@ public:
 	string512	Params;
 
 public:
-	void		_initialize	(LPCSTR ApplicationName, LogCallback cb=0, BOOL init_fs=TRUE, LPCSTR fs_fname=0);
+	void		_initialize	(LPCTSTR ApplicationName, LogCallback cb=0, BOOL init_fs=TRUE, LPCTSTR fs_fname=0);
 	void		_destroy	();
 };
 extern XRCORE_API xrCore Core;

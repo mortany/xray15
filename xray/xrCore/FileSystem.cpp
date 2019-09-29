@@ -18,38 +18,38 @@ EFS_Utils::~EFS_Utils()
 {
 }
 
-xr_string	EFS_Utils::ExtractFileName(LPCSTR src)
+xr_string	EFS_Utils::ExtractFileName(LPCTSTR src)
 {
 	string_path name;
-	_splitpath	(src,0,0,name,0);
+	_wsplitpath	(src,0,0,name,0);
     return xr_string(name);
 }
 
-xr_string	EFS_Utils::ExtractFileExt(LPCSTR src)
+xr_string	EFS_Utils::ExtractFileExt(LPCTSTR src)
 {
 	string_path ext;
-	_splitpath	(src,0,0,0,ext);
+	_wsplitpath	(src,0,0,0,ext);
     return xr_string(ext);
 }
 
-xr_string	EFS_Utils::ExtractFilePath(LPCSTR src)
+xr_string	EFS_Utils::ExtractFilePath(LPCTSTR src)
 {
 	string_path drive,dir;
-	_splitpath	(src,drive,dir,0,0);
+	_wsplitpath	(src,drive,dir,0,0);
     return xr_string(drive)+dir;
 }
 
-xr_string	EFS_Utils::ExcludeBasePath(LPCSTR full_path, LPCSTR excl_path)
+xr_string	EFS_Utils::ExcludeBasePath(LPCTSTR full_path, LPCTSTR excl_path)
 {
-    LPCSTR sub		= strstr(full_path,excl_path);
+    LPCTSTR sub		= wcsstr(full_path,excl_path);
 	if (0!=sub) 	return xr_string(sub+xr_strlen(excl_path));
 	else	   		return xr_string(full_path);
 }
 
-xr_string	EFS_Utils::ChangeFileExt(LPCSTR src, LPCSTR ext)
+xr_string	EFS_Utils::ChangeFileExt(TCHAR* src, TCHAR* ext)
 {
 	xr_string	tmp;
-	LPSTR src_ext	= strext(src);
+	LPTSTR src_ext	= strext(src);
     if (src_ext){
 	    size_t		ext_pos	= src_ext-src;
         tmp.assign	(src,0,ext_pos);
@@ -60,32 +60,32 @@ xr_string	EFS_Utils::ChangeFileExt(LPCSTR src, LPCSTR ext)
     return tmp;
 }
 
-xr_string	EFS_Utils::ChangeFileExt(const xr_string& src, LPCSTR ext)
+xr_string	EFS_Utils::ChangeFileExt(const xr_string& src, LPCTSTR ext)
 {
 	return ChangeFileExt(src.c_str(),ext);
 }
 
 //----------------------------------------------------
-LPCSTR MakeFilter(string1024& dest, LPCSTR info, LPCSTR ext)
+LPCTSTR MakeFilter(string1024& dest, LPCTSTR info, LPCTSTR ext)
 {
 	ZeroMemory(dest,sizeof(dest));
     if (ext){
         int icnt=_GetItemCount(ext,';');
-		LPSTR dst=dest;
+		LPTSTR dst=dest;
         if (icnt>1)
 		{
-            strconcat		(sizeof(dest),dst,info," (",ext,")");
+            strconcat		(sizeof(dest),dst,info,TEXT(" ("),ext,TEXT(")"));
             dst				+= (xr_strlen(dst)+1);
-            strcpy_s			(dst, sizeof(dest), ext);
+            wcscpy_s			(dst, sizeof(dest), ext);
             dst				+= (xr_strlen(ext)+1);
         }
         for (int i=0; i<icnt; i++)
 		{
             string64		buf;
             _GetItem		(ext,i,buf,';');
-            strconcat		(sizeof(dest), dst,info," (",buf,")");
+            strconcat		(sizeof(dest), dst,info,TEXT(" ("),buf,TEXT(")"));
             dst				+= (xr_strlen(dst)+1);
-            strcpy_s			(dst, sizeof(dest) - (dst - dest), buf);
+            wcscpy_s			(dst, sizeof(dest) - (dst - dest), buf);
             dst				+= (xr_strlen(buf)+1);
         }
     }
@@ -95,12 +95,12 @@ LPCSTR MakeFilter(string1024& dest, LPCSTR info, LPCSTR ext)
 //------------------------------------------------------------------------------
 // start_flt_ext = -1-all 0..n-indices
 //------------------------------------------------------------------------------
-bool EFS_Utils::GetOpenNameInternal( LPCSTR initial,  LPSTR buffer, int sz_buf, bool bMulti, LPCSTR offset, int start_flt_ext )
+bool EFS_Utils::GetOpenNameInternal( LPCTSTR initial,  LPTSTR buffer, int sz_buf, bool bMulti, LPCTSTR offset, int start_flt_ext )
 {
 	VERIFY				(buffer&&(sz_buf>0));
 	FS_Path& P			= *FS.get_path(initial);
 	string1024 			flt;
-	MakeFilter			(flt,P.m_FilterCaption?P.m_FilterCaption:"",P.m_DefExt);
+	MakeFilter			(flt,P.m_FilterCaption?P.m_FilterCaption:TEXT(""),P.m_DefExt);
 
 	OPENFILENAME 		ofn;
 	Memory.mem_fill		( &ofn, 0, sizeof(ofn) );
@@ -109,13 +109,13 @@ bool EFS_Utils::GetOpenNameInternal( LPCSTR initial,  LPSTR buffer, int sz_buf, 
     {
         string_path		dr;
         if (!(buffer[0]=='\\' && buffer[1]=='\\')){ // if !network
-            _splitpath		(buffer,dr,0,0,0);
+            _wsplitpath		(buffer,dr,0,0,0);
 
             if (0==dr[0])
             {
                 string_path		bb;
             	P._update		(bb, buffer);
-                strcpy_s		(buffer, sz_buf, bb);
+                wcscpy_s		(buffer, sz_buf, bb);
              }
         }
     }
@@ -126,9 +126,9 @@ bool EFS_Utils::GetOpenNameInternal( LPCSTR initial,  LPSTR buffer, int sz_buf, 
 	ofn.nMaxFile 		= sz_buf;
 	ofn.lpstrFilter 	= flt;
 	ofn.nFilterIndex 	= start_flt_ext+2;
-    ofn.lpstrTitle      = "Open a File";
+    ofn.lpstrTitle      = TEXT("Open a File");
     string512 path; 
-	strcpy_s				(path,(offset&&offset[0])?offset:P.m_Path);
+	wcscpy_s				(path,(offset&&offset[0])?offset:P.m_Path);
 	ofn.lpstrInitialDir = path;
 	ofn.Flags =         OFN_PATHMUSTEXIST	|
                         OFN_FILEMUSTEXIST	|
@@ -146,53 +146,53 @@ bool EFS_Utils::GetOpenNameInternal( LPCSTR initial,  LPSTR buffer, int sz_buf, 
 	    switch(err)
         {
         	case FNERR_BUFFERTOOSMALL:
-            	Log("Too many files selected.");
+            	Log(TEXT("Too many files selected."));
             break;
         }
 	}
     if (bRes && bMulti)
     {
-    	Log				("buff=",buffer);
+    	Log				(TEXT("buff=",buffer));
 		int cnt			= _GetItemCount(buffer,0x0);
         if (cnt>1)
         {
 //.            string64  	buf;
 //.            string64  	dir;
 //.			string4096		buf;
-            char 		dir	  [255*255];
-            char 		buf	  [255*255];
-            char 		fns	  [255*255];
+            TCHAR 		dir	  [255*255];
+			TCHAR 		buf	  [255*255];
+			TCHAR 		fns	  [255*255];
 
-            strcpy_s		(dir, buffer);
-            strcpy_s		(fns, dir);
-            strcat		(fns, "\\");
-            strcat		(fns, _GetItem	(buffer,1,buf,0x0));
+            wcscpy_s		(dir, buffer);
+            wcscpy_s		(fns, dir);
+            wcscat		(fns, TEXT("\\"));
+            wcscat		(fns, _GetItem	(buffer,1,buf,0x0));
 
             for (int i=2; i<cnt; i++)
             {
-                strcat	(fns,",");
-                strcat	(fns,dir);
-                strcat	(fns,"\\");
-                strcat	(fns,_GetItem(buffer,i,buf,0x0));
+                wcscat	(fns,TEXT(","));
+                wcscat	(fns,dir);
+                wcscat	(fns,TEXT("\\"));
+				wcscat	(fns,_GetItem(buffer,i,buf,0x0));
             }
-            strcpy_s		(buffer, sz_buf, fns);
+            wcscpy_s		(buffer, sz_buf, fns);
         }
     }
-    strlwr				(buffer);
+    xr_strlwr				(buffer);
     return 				bRes;
 }
 
-bool EFS_Utils::GetSaveName( LPCSTR initial, string_path& buffer, LPCSTR offset, int start_flt_ext )
+bool EFS_Utils::GetSaveName( LPCTSTR initial, string_path& buffer, LPCTSTR offset, int start_flt_ext )
 {
 	FS_Path& P			= *FS.get_path(initial);
 	string1024 flt;
-	MakeFilter(flt,P.m_FilterCaption?P.m_FilterCaption:"",P.m_DefExt);
+	MakeFilter(flt,P.m_FilterCaption?P.m_FilterCaption:TEXT(""),P.m_DefExt);
 	OPENFILENAME ofn;
 	Memory.mem_fill		( &ofn, 0, sizeof(ofn) );
     if (xr_strlen(buffer)){ 
         string_path		dr;
         if (!(buffer[0]=='\\' && buffer[1]=='\\')){ // if !network
-            _splitpath		(buffer,dr,0,0,0);
+            _wsplitpath		(buffer,dr,0,0,0);
             if (0==dr[0])	P._update(buffer,buffer); 
         }
     }
@@ -203,8 +203,8 @@ bool EFS_Utils::GetSaveName( LPCSTR initial, string_path& buffer, LPCSTR offset,
 	ofn.lStructSize 	= sizeof(ofn);
 	ofn.nMaxFile 		= sizeof(buffer);
 	ofn.nFilterIndex 	= start_flt_ext+2;
-    ofn.lpstrTitle      = "Save a File";
-    string512 path; strcpy_s(path,(offset&&offset[0])?offset:P.m_Path);
+    ofn.lpstrTitle      = TEXT("Save a File");
+    string512 path;		wcscpy_s(path,(offset&&offset[0])?offset:P.m_Path);
 	ofn.lpstrInitialDir = path;
 	ofn.Flags 			= OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_NOCHANGEDIR;
     ofn.FlagsEx			= OFN_EX_NOPLACESBAR;
@@ -213,32 +213,32 @@ bool EFS_Utils::GetSaveName( LPCSTR initial, string_path& buffer, LPCSTR offset,
     if (!bRes){
 	    u32 err = CommDlgExtendedError();
 	    switch(err){
-        case FNERR_BUFFERTOOSMALL: 	Log("Too many file selected."); break;
+        case FNERR_BUFFERTOOSMALL: 	Log(TEXT("Too many file selected.")); break;
         }
 	}
-    strlwr(buffer);
+    xr_strlwr(buffer);
 	return bRes;
 }
 //----------------------------------------------------
-LPCSTR EFS_Utils::AppendFolderToName(LPSTR tex_name, int depth, BOOL full_name)
+LPCTSTR EFS_Utils::AppendFolderToName(LPTSTR tex_name, int depth, BOOL full_name)
 {
 	string256 _fn;
-	strcpy(tex_name,AppendFolderToName(tex_name, _fn, depth, full_name));
+	wcscpy(tex_name,AppendFolderToName(tex_name, _fn, depth, full_name));
 	return tex_name;
 }
 
-LPCSTR EFS_Utils::AppendFolderToName(LPCSTR src_name, LPSTR dest_name, int depth, BOOL full_name)
+LPCTSTR EFS_Utils::AppendFolderToName(LPCTSTR src_name, LPTSTR dest_name, int depth, BOOL full_name)
 {
 	shared_str tmp = src_name;
-    LPCSTR s 	= src_name;
-    LPSTR d 	= dest_name;
+    LPCTSTR s 	= src_name;
+    LPTSTR d 	= dest_name;
     int sv_depth= depth;
 	for (; *s&&depth; s++, d++){
 		if (*s=='_'){depth--; *d='\\';}else{*d=*s;}
 	}
 	if (full_name){
 		*d			= 0;
-		if (depth<sv_depth)	strcat(dest_name,*tmp);
+		if (depth<sv_depth)	wcscat(dest_name,*tmp);
 	}else{
 		for (; *s; s++, d++) *d=*s;
 		*d			= 0;
@@ -246,21 +246,21 @@ LPCSTR EFS_Utils::AppendFolderToName(LPCSTR src_name, LPSTR dest_name, int depth
     return dest_name;
 }
 
-LPCSTR EFS_Utils::GenerateName(LPCSTR base_path, LPCSTR base_name, LPCSTR def_ext, LPSTR out_name)
+LPCTSTR EFS_Utils::GenerateName(LPCTSTR base_path, LPCTSTR base_name, LPCTSTR def_ext, LPTSTR out_name)
 {
     int cnt = 0;
 	string_path fn;
     if (base_name)	
 		strconcat		(sizeof(fn), fn, base_path,base_name,def_ext);
 	else 			
-		sprintf_s		(fn, sizeof(fn), "%s%02d%s",base_path,cnt++,def_ext);
+		wprintf_s		(fn, sizeof(fn), "%s%02d%s",base_path,cnt++,def_ext);
 
 	while (FS.exist(fn))
 	    if (base_name)	
-			sprintf_s	(fn, sizeof(fn),"%s%s%02d%s",base_path,base_name,cnt++,def_ext);
+			wprintf_s	(fn, sizeof(fn),"%s%s%02d%s",base_path,base_name,cnt++,def_ext);
         else 			
-			sprintf_s	(fn, sizeof(fn), "%s%02d%s",base_path,cnt++,def_ext);
-    strcpy(out_name,fn);
+			wprintf_s	(fn, sizeof(fn), "%s%02d%s",base_path,cnt++,def_ext);
+    wcscpy(out_name,fn);
 	return out_name;
 }
 

@@ -210,35 +210,6 @@ bool g_initialize_cpu_called = false;
 //------------------------------------------------------------------------------------
 void _initialize_cpu	(void) 
 {
-	Msg("* Detected CPU: %s %s, F%d/M%d/S%d, %.2f mhz, %d-clk 'rdtsc'",
-		CPU::ID.vendor, CPU::ID.brand,
-		CPU::ID.family, CPU::ID.model, CPU::ID.stepping,
-		float(CPU::clk_per_second/u64(1000000)),
-		u32(CPU::clk_overhead)
-		);
-
-//	DUMP_PHASE;
-
-	if (strstr(Core.Params,"-x86"))
-		CPU::ID.clearFeatures();
-
-	string256	features;
-	strcpy_s(features, sizeof(features), "RDTSC");
-	if (CPU::ID.hasMMX()) strcat(features, ", MMX");
-	if (CPU::ID.has3DNOW()) strcat(features, ", 3DNow!");
-	if (CPU::ID.hasSSE()) strcat(features, ", SSE");
-	if (CPU::ID.hasSSE2()) strcat(features, ", SSE2");
-	if (CPU::ID.hasSSE3()) strcat(features, ", SSE3");
-	if (CPU::ID.hasMWAIT()) strcat(features, ", MONITOR/MWAIT");
-	if (CPU::ID.hasSSSE3()) strcat(features, ", SSSE3");
-	if (CPU::ID.hasSSE41()) strcat(features, ", SSE4.1");
-	if (CPU::ID.hasSSE42()) strcat(features, ", SSE4.2");
-	if (CPU::ID.hasSSE4a()) strcat(features, ", SSE4a");
-	if (CPU::ID.hasAVX()) strcat(features, ", AVX");
-	if (CPU::ID.hasAVX2()) strcat(features, ", AVX2");
-	Msg("* CPU features: %s", features);
-	Msg("* CPU threads: %d\n", CPU::ID.threadCount);
-
 	Fidentity.identity		();	// Identity matrix
 	Didentity.identity		();	// Identity matrix
 	pvInitializeStatics		();	// Lookup table for compressed normals
@@ -289,11 +260,11 @@ void _initialize_cpu_thread	()
 #pragma pack(push,8)
 struct THREAD_NAME	{
 	DWORD	dwType;
-	LPCSTR	szName;
+	LPCTSTR	szName;
 	DWORD	dwThreadID;
 	DWORD	dwFlags;
 };
-void	thread_name	(const char* name)
+void	thread_name	(const TCHAR* name)
 {
 	THREAD_NAME		tn;
 	tn.dwType		= 0x1000;
@@ -313,7 +284,7 @@ void	thread_name	(const char* name)
 struct	THREAD_STARTUP
 {
 	thread_t*	entry	;
-	char*		name	;
+	TCHAR*		name	;
 	void*		args	;
 };
 void	__cdecl			thread_entry	(void*	_params )	{
@@ -333,7 +304,7 @@ void	thread_spawn	(thread_t*	entry, const char*	name, unsigned	stack, void* argl
 {
 	THREAD_STARTUP*		startup	= xr_new<THREAD_STARTUP>	();
 	startup->entry		= entry;
-	startup->name		= (char*)name;
+	startup->name		= (TCHAR*)name;
 	startup->args		= arglist;
 	_beginthread		(thread_entry,stack,startup);
 }

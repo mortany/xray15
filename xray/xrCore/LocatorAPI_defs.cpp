@@ -28,13 +28,13 @@ void FS_File::set(xr_string nm, long sz, time_t modif,unsigned attr)
 //////////////////////////////////////////////////////////////////////
 // FS_Path
 //////////////////////////////////////////////////////////////////////
-FS_Path::FS_Path	(LPCSTR _Root, LPCSTR _Add, LPCSTR _DefExt, LPCSTR _FilterCaption, u32 flags)
+FS_Path::FS_Path	(LPCTSTR _Root, LPCTSTR _Add, LPCTSTR _DefExt, LPCTSTR _FilterCaption, u32 flags)
 {
 //	VERIFY			(_Root&&_Root[0]);
 	string_path		temp;
-    strcpy_s		(temp,sizeof(temp),_Root); 
-    if (_Add) 		strcat(temp,_Add);
-	if (temp[0] && temp[xr_strlen(temp)-1]!='\\') strcat(temp,"\\");
+    wcscpy_s		(temp,sizeof(&temp),_Root); 
+    if (_Add) 		wcscat(temp,_Add);
+	if (temp[0] && temp[xr_strlen(temp)-1]!='\\') wcscat(temp,TEXT("\\"));
 	m_Path			= xr_strlwr(xr_strdup(temp));
 	m_DefExt		= _DefExt?xr_strlwr(xr_strdup(_DefExt)):0;
 	m_FilterCaption	= _FilterCaption?xr_strlwr(xr_strdup(_FilterCaption)):0;
@@ -56,7 +56,7 @@ FS_Path::~FS_Path	()
 	xr_free	(m_FilterCaption);
 }
 
-void	FS_Path::_set	(LPCSTR add)
+void	FS_Path::_set	(LPCTSTR add)
 {
 	// m_Add
 	R_ASSERT		(add);
@@ -66,38 +66,38 @@ void	FS_Path::_set	(LPCSTR add)
 	// m_Path
 	string_path		temp;
 	strconcat		(sizeof(temp),temp,m_Root,m_Add);
-	if (temp[xr_strlen(temp)-1]!='\\') strcat(temp,"\\");
+	if (temp[xr_strlen(temp)-1]!='\\') wcscat(temp,TEXT("\\"));
 	xr_free			(m_Path);
 	m_Path			= xr_strlwr(xr_strdup(temp));
 }
 
-void	FS_Path::_set_root	(LPCSTR root)
+void	FS_Path::_set_root	(LPCTSTR root)
 {
 	// m_Root
 //	R_ASSERT		(root);
 	xr_free			(m_Root);
 	m_Root			= xr_strlwr(xr_strdup(root));
-	if (m_Root[0] && m_Root[xr_strlen(m_Root)-1]!='\\') strcat(m_Root,"\\");
+	if (m_Root[0] && m_Root[xr_strlen(m_Root)-1]!='\\') wcscat(m_Root,TEXT("\\"));
 
 	// m_Path
 	string_path		temp;
-	strconcat		(sizeof(temp),temp,m_Root,m_Add ? m_Add : "");
-	if (*temp && temp[xr_strlen(temp)-1]!='\\') strcat(temp,"\\");
+	strconcat		(sizeof(temp),temp,m_Root,m_Add ? m_Add : TEXT(""));
+	if (*temp && temp[xr_strlen(temp)-1]!='\\') wcscat(temp,TEXT("\\"));
 	xr_free			(m_Path);
 	m_Path			= xr_strlwr(xr_strdup(temp));
 }
 
-LPCSTR FS_Path::_update(string_path& dest, LPCSTR src)const
+LPCTSTR FS_Path::_update(string_path& dest, LPCTSTR src)const
 {
 	R_ASSERT			(dest);
     R_ASSERT			(src);
 	string_path			temp;
-	strcpy_s			(temp, sizeof(temp), src);
+	wcscpy_s			(temp, sizeof(temp), src);
 	strconcat			(sizeof(dest), dest, m_Path, temp);
 	return xr_strlwr	(dest);
 }
 /*
-void FS_Path::_update(xr_string& dest, LPCSTR src)const
+void FS_Path::_update(xr_string& dest, LPCTSTR src)const
 {
     R_ASSERT(src);
     dest			= xr_string(m_Path)+src;
@@ -109,10 +109,10 @@ void FS_Path::rescan_path_cb	()
     FS.m_Flags.set(CLocatorAPI::flNeedRescan,TRUE);
 }
 
-bool XRCORE_API PatternMatch(LPCSTR s, LPCSTR mask)
+bool XRCORE_API PatternMatch(LPCTSTR s, LPCTSTR mask)
 {
-	LPCSTR cp=0;
-	LPCSTR mp=0;
+	LPCTSTR cp=0;
+	LPCTSTR mp=0;
 	for (; *s&&*mask!='*'; mask++,s++) if (*mask!=*s&&*mask!='?') return false;
 	for (;;) {
 		if (!*s) { while (*mask=='*') mask++; return !*mask; }

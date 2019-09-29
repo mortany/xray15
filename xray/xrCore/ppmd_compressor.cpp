@@ -43,7 +43,7 @@ void ppmd_initialize		()
 
 	string_path			file_name;
 
-	FS.update_path		(file_name,"$game_config$","mp\\!PPMd.mdl");
+	FS.update_path		(file_name,TEXT("$game_config$"),TEXT("mp\\!PPMd.mdl"));
 	if (FS.exist(file_name)) {
 		IReader			*reader = FS.r_open(file_name);
 		R_ASSERT		(reader);

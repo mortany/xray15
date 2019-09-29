@@ -7,7 +7,7 @@
 #endif // DEBUG
 
 #ifdef PROFILE_CRITICAL_SECTIONS
-	typedef void	(*add_profile_portion_callback)	(LPCSTR id, const u64 &time);
+	typedef void	(*add_profile_portion_callback)	(LPCTSTR id, const u64 &time);
 	void XRCORE_API	set_add_profile_portion			(add_profile_portion_callback callback);
 
 #	define STRINGIZER_HELPER(a)		#a
@@ -35,12 +35,12 @@ public:
 private:
 	void*				pmutex;
 #ifdef PROFILE_CRITICAL_SECTIONS
-	LPCSTR				m_id;
+	LPCTSTR				m_id;
 #endif // PROFILE_CRITICAL_SECTIONS
 
 public:
 #ifdef PROFILE_CRITICAL_SECTIONS
-    xrCriticalSection	(LPCSTR id);
+    xrCriticalSection	(LPCTSTR id);
 #else // PROFILE_CRITICAL_SECTIONS
     xrCriticalSection	();
 #endif // PROFILE_CRITICAL_SECTIONS

@@ -281,11 +281,11 @@ void NET_Packet::r_sdir(Fvector& A)
 	A.mul			(s);
 }
 
-void NET_Packet::r_stringZ( LPSTR S )
+void NET_Packet::r_stringZ( LPTSTR S )
 {
  	if(!inistream)
 	{
-		LPCSTR	data	= LPCSTR(&B.data[r_pos]);
+		LPCTSTR	data	= LPCTSTR(&B.data[r_pos]);
 		size_t	len		= xr_strlen(data);
 		r				(S,(u32)len+1);
 	}else{
@@ -297,7 +297,7 @@ void NET_Packet::r_stringZ( xr_string& dest )
 {
  	if(!inistream)
 	{
-		dest			= LPCSTR(&B.data[r_pos]);
+		dest			= LPCTSTR(&B.data[r_pos]);
 		r_advance		(u32(dest.size()+1));
 	}else{
 		string4096		buff;
@@ -310,7 +310,7 @@ void NET_Packet::r_stringZ(shared_str& dest)
 {
  	if(!inistream)
 	{
-		dest			= LPCSTR(&B.data[r_pos]);
+		dest			= LPCTSTR(&B.data[r_pos]);
 		r_advance		(dest.size()+1);
 	}else{
 		string4096		buff;
@@ -323,7 +323,7 @@ void NET_Packet::skip_stringZ()
 {
 	if (!inistream)
 	{
-		LPCSTR	data	= LPCSTR(&B.data[r_pos]);
+		LPCTSTR	data	= LPCTSTR(&B.data[r_pos]);
 		u32	len		= xr_strlen(data);
 		r_advance		(len + 1);
 	} else {
@@ -346,14 +346,14 @@ void NET_Packet::r_clientID(ClientID& C)
 	C.set			(tmp);
 }
 
-void NET_Packet::r_stringZ_s	(LPSTR string, u32 const size)
+void NET_Packet::r_stringZ_s	(LPTSTR string, u32 const size)
 {
 	if ( inistream ) {
 		inistream->r_string( string, size );
 		return;
 	}
 
-	LPCSTR data		= LPCSTR( B.data + r_pos );
+	LPCTSTR data		= LPCTSTR( B.data + r_pos );
 	u32 length		= xr_strlen( data );
 	R_ASSERT2		( ( length+1 ) <= size, "buffer overrun" );
 	r				( string, length+1 );

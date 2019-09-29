@@ -8,13 +8,13 @@
 #define CFS_CompressMark	(1ul << 31ul)
 #define CFS_HeaderChunkID	(666)
 
-XRCORE_API void VerifyPath	(LPCSTR path);
+XRCORE_API void VerifyPath	(LPCTSTR path);
 
 #ifdef DEBUG
 	XRCORE_API	extern	u32		g_file_mapped_memory;
 	XRCORE_API	extern	u32		g_file_mapped_count;
 	XRCORE_API			void	dump_file_mappings		();
-				extern	void	register_file_mapping	(void *address, const u32 &size, LPCSTR file_name);
+				extern	void	register_file_mapping	(void *address, const u32 &size, LPCTSTR file_name);
 				extern	void	unregister_file_mapping	(void *address, const u32 &size);
 #endif // DEBUG
 
@@ -31,10 +31,7 @@ public:
 	IWriter	()
 	{
 	}
-	virtual	~IWriter	()
-	{
-        R_ASSERT3	(chunk_pos.empty(),"Opened chunk not closed.",*fName);
-	}
+	virtual	~IWriter	() { R_ASSERT3(chunk_pos.empty(), "Opened chunk not closed.", *fName); }
 
 	// kernel
 	virtual void	seek	(u32 pos)						= 0;
@@ -52,11 +49,11 @@ public:
 	IC void			w_s16	(s16 d)					{	w(&d,sizeof(s16));	}
 	IC void			w_s8	(s8 d)					{	w(&d,sizeof(s8));	}
 	IC void			w_float	(float d)				{	w(&d,sizeof(float));}
-	IC void			w_string(const char *p)			{	w(p,(u32)xr_strlen(p));w_u8(13);w_u8(10);	}
-	IC void			w_stringZ(const char *p)		{	w(p,(u32)xr_strlen(p)+1);					}
-	IC void			w_stringZ(const shared_str& p) 	{	w(*p?*p:"",p.size());w_u8(0);		}
-	IC void			w_stringZ(shared_str& p)		{	w(*p?*p:"",p.size());w_u8(0);		}
-	IC void			w_stringZ(const xr_string& p)	{	w(p.c_str()?p.c_str():"",(u32)p.size());w_u8(0);	}
+	IC void			w_string(LPCTSTR p)			{	w(p,(u32)xr_strlen(p));w_u8(13);w_u8(10);	}
+	IC void			w_stringZ(LPCTSTR p)		{	w(p,(u32)xr_strlen(p)+1);					}
+	IC void			w_stringZ(const shared_str& p) 	{	w(*p?*p:TEXT(""),p.size());w_u8(0);		}
+	IC void			w_stringZ(shared_str& p)		{	w(*p?*p:TEXT(""),p.size());w_u8(0);		}
+	IC void			w_stringZ(const xr_string& p)	{	w(p.c_str()?p.c_str():TEXT(""),(u32)p.size());w_u8(0);	}
 	IC void			w_fcolor(const Fcolor &v)		{	w(&v,sizeof(Fcolor));	}
 	IC void			w_fvector4(const Fvector4 &v)	{	w(&v,sizeof(Fvector4));	}
 	IC void			w_fvector3(const Fvector3 &v)	{	w(&v,sizeof(Fvector3));	}
@@ -124,7 +121,7 @@ public:
 #pragma warning(disable:4995)
 	IC void			free		()			{	file_size=0; position=0; mem_size=0; xr_free(data);	}
 #pragma warning(pop)
-	bool			save_to		(LPCSTR fn);
+	bool			save_to		(LPCTSTR fn);
 	virtual	void	flush		()			{ };
 };
 
@@ -213,7 +210,7 @@ public:
 
 	u32 			find_chunk  (u32 ID, BOOL* bCompressed);
 	
-	IC	BOOL		r_chunk		(u32 ID, void *dest)	// чтение XR Chunk'ов (4b-ID,4b-size,??b-data)
+	IC	BOOL		r_chunk		(u32 ID, void *dest)	// С‡С‚РµРЅРёРµ XR Chunk'РѕРІ (4b-ID,4b-size,??b-data)
 	{
 		u32	dwSize = ((implementation_type*)this)->find_chunk(ID);
 		if (dwSize!=0) {
@@ -222,7 +219,7 @@ public:
 		} else return FALSE;
 	}
 	
-	IC	BOOL		r_chunk_safe(u32 ID, void *dest, u32 dest_size)	// чтение XR Chunk'ов (4b-ID,4b-size,??b-data)
+	IC	BOOL		r_chunk_safe(u32 ID, void *dest, u32 dest_size)	// С‡С‚РµРЅРёРµ XR Chunk'РѕРІ (4b-ID,4b-size,??b-data)
 	{
 		u32	dwSize = ((implementation_type*)this)->find_chunk(ID);
 		if (dwSize!=0) {
@@ -238,7 +235,7 @@ private:
 
 class XRCORE_API IReader : public IReaderBase<IReader> {
 protected:
-	char *			data	;
+	TCHAR*			data	;
 	int				Pos		;
 	int				Size	;
 	int				iterpos	;
@@ -253,7 +250,7 @@ public:
 
 	IC				IReader			(void *_data, int _size, int _iterpos=0)
 	{
-		data		= (char *)_data	;
+		data		= (TCHAR*)_data	;
 		Size		= _size			;
 		Pos			= 0				;
 		iterpos		= _iterpos		;
@@ -280,12 +277,12 @@ public:
 public:
 	void			r			(void *p,int cnt);
 
-	void			r_string	(char *dest, u32 tgt_sz);
+	void			r_string	(TCHAR *dest, u32 tgt_sz);
 	void			r_string	(xr_string& dest);
 
 	void			skip_stringZ();
 
-	void			r_stringZ	(char *dest, u32 tgt_sz);
+	void			r_stringZ	(TCHAR *dest, u32 tgt_sz);
 	void			r_stringZ	(shared_str& dest);
 	void			r_stringZ	(xr_string& dest);
 
@@ -293,7 +290,7 @@ public:
 	void			close		();
 
 public:
-	// поиск XR Chunk'ов - возврат - размер или 0
+	// РїРѕРёСЃРє XR Chunk'РѕРІ - РІРѕР·РІСЂР°С‚ - СЂР°Р·РјРµСЂ РёР»Рё 0
 	IReader*		open_chunk	(u32 ID);
 
 	// iterators
@@ -310,7 +307,7 @@ class XRCORE_API CVirtualFileRW : public IReader
 private:
 	void	*hSrcFile, *hSrcMap;
 public:
-			CVirtualFileRW		(const char *cFileName);
+			CVirtualFileRW		(const TCHAR*cFileName);
 	virtual ~CVirtualFileRW		();
 };
 

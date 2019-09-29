@@ -26,12 +26,12 @@ XRCORE_API void log_vminfo	()
 {
 	size_t  w_free, w_reserved, w_committed;
 	vminfo	(&w_free, &w_reserved, &w_committed);
-	Msg		(
+	/*Msg		(
 		"* [win32]: free[%d K], reserved[%d K], committed[%d K]",
 		w_free/1024,
 		w_reserved/1024,
 		w_committed/1024
-	);
+	);*/
 }
 
 int heap_walk (
@@ -109,7 +109,7 @@ nextBlock:
 
 u32	mem_usage_impl	(HANDLE heap_handle, u32* pBlocksUsed, u32* pBlocksFree)
 {
-	static bool no_memory_usage = !!strstr( GetCommandLine(), "-no_memory_usage");
+	static bool no_memory_usage = !!wcsstr( GetCommandLine(), TEXT("-no_memory_usage"));
 	if ( no_memory_usage )
 		return		0;
 
@@ -138,21 +138,21 @@ u32	mem_usage_impl	(HANDLE heap_handle, u32* pBlocksUsed, u32* pBlocksFree)
 		break;
 	case _HEAPBADPTR:
 #ifndef MASTER_GOLD
-		FATAL			("bad pointer to heap");
+		FATAL			(TEXT("bad pointer to heap"));
 #else // #ifndef MASTER_GOLD
 		Msg				("! bad pointer to heap");
 #endif // #ifndef MASTER_GOLD
 		break;
 	case _HEAPBADBEGIN:
 #ifndef MASTER_GOLD
-		FATAL			("bad start of heap");
+		FATAL			(TEXT("bad start of heap"));
 #else // #ifndef MASTER_GOLD
 		Msg				("! bad start of heap");
 #endif // #ifndef MASTER_GOLD
 		break;
 	case _HEAPBADNODE:
 #ifndef MASTER_GOLD
-		FATAL			("bad node in heap");
+		FATAL			(TEXT("bad node in heap"));
 #else // #ifndef MASTER_GOLD
 		Msg				("! bad node in heap");
 #endif // #ifndef MASTER_GOLD

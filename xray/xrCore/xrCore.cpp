@@ -15,7 +15,7 @@
 
 XRCORE_API		xrCore	Core;
 XRCORE_API		u32		build_id;
-XRCORE_API		LPCSTR	build_date;
+XRCORE_API		LPCTSTR	build_date;
 
 namespace CPU
 {
@@ -24,13 +24,18 @@ namespace CPU
 
 static u32	init_counter	= 0;
 
-extern char g_application_path[256];
+extern TCHAR g_application_path[256];
 
 //. extern xr_vector<shared_str>*	LogFile;
 
-void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname)
+void xrCore::_initialize	(LPCTSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCTSTR fs_fname)
 {
-	strcpy_s					(ApplicationName,_ApplicationName);
+	#ifdef UNICODE
+    wcscpy_s(ApplicationName, _ApplicationName);
+	#else
+    strcpy_s(ApplicationName, _ApplicationName);
+	#endif
+
 	if (0==init_counter) {
 #ifdef XRCORE_STATIC	
 		_clear87	();
@@ -42,17 +47,37 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		// Init COM so we can use CoCreateInstance
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
-		strcpy_s			(Params,sizeof(Params),GetCommandLine());
-		_strlwr_s			(Params,sizeof(Params));
+		#ifdef UNICODE
+                wcscpy_s(Params, sizeof(Params), GetCommandLine());
+                _wcslwr_s(Params, sizeof(Params));
+		#else
+                strcpy_s(Params, sizeof(Params), GetCommandLine());
+                _strlwr_s(Params, sizeof(Params));
+		#endif
+
 
 		string_path		fn,dr,di;
 
 		// application path
         GetModuleFileName(GetModuleHandle(MODULE_NAME),fn,sizeof(fn));
-        _splitpath		(fn,dr,di,0,0);
-        strconcat		(sizeof(ApplicationPath),ApplicationPath,dr,di);
+		#ifdef UNICODE
+        _wsplitpath(fn, dr, di, 0, 0);
+		#else
+        _splitpath(fn, dr, di, 0, 0);
+		#endif
+
+ 
+        strconcat(sizeof(ApplicationPath), ApplicationPath, dr, di);
+ 
+
+
 #ifndef _EDITOR
-		strcpy_s		(g_application_path,sizeof(g_application_path),ApplicationPath);
+		#ifdef UNICODE
+        wcscpy_s(g_application_path, sizeof(g_application_path), ApplicationPath);
+		#else
+        strcpy_s(g_application_path, sizeof(g_application_path), ApplicationPath);
+		#endif
+
 #endif
 
 #ifdef _EDITOR
@@ -77,8 +102,11 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		// Mathematics & PSI detection
 		CPU::Detect			();
 		
-		Memory._initialize	(strstr(Params,"-mem_debug") ? TRUE : FALSE);
-
+		#ifdef UNICODE
+                Memory._initialize(wcsstr(Params, TEXT("-mem_debug")) ? TRUE : FALSE);
+		#else
+                Memory._initialize(strstr(Params, TEXT("-mem_debug")) ? TRUE : FALSE);
+		#endif
 		DUMP_PHASE;
 
 		InitLog				();
@@ -95,10 +123,27 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 	}
 	if (init_fs){
 		u32 flags			= 0;
-		if (0!=strstr(Params,"-build"))	 flags |= CLocatorAPI::flBuildCopy;
-		if (0!=strstr(Params,"-ebuild")) flags |= CLocatorAPI::flBuildCopy|CLocatorAPI::flEBuildCopy;
+		#ifdef UNICODE 
+		            if (0 != wcsstr(Params, TEXT("-build")))
+                    flags |= CLocatorAPI::flBuildCopy;
+                if (0 != wcsstr(Params, TEXT("-ebuild")))
+                    flags |= CLocatorAPI::flBuildCopy | CLocatorAPI::flEBuildCopy;
+		#else
+                if (0 != strstr(Params, TEXT("-build")))
+                    flags |= CLocatorAPI::flBuildCopy;
+                if (0 != strstr(Params, TEXT("-ebuild")))
+                    flags |= CLocatorAPI::flBuildCopy | CLocatorAPI::flEBuildCopy;
+		#endif
+
 #ifdef DEBUG
-		if (strstr(Params,"-cache"))  flags |= CLocatorAPI::flCacheFiles;
+				#ifdef UNICODE
+                if (wcsstr(Params, TEXT("-cache")))
+                    flags |= CLocatorAPI::flCacheFiles;
+				#else
+                if (strstr(Params, TEXT("-cache")))
+                    flags |= CLocatorAPI::flCacheFiles;
+				#endif
+
 		else flags &= ~CLocatorAPI::flCacheFiles;
 #endif // DEBUG
 #ifdef _EDITOR // for EDITORS - no cache
@@ -108,11 +153,11 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 
 #ifndef	_EDITOR
 	#ifndef ELocatorAPIH
-		if (0!=strstr(Params,"-file_activity"))	 flags |= CLocatorAPI::flDumpFileActivity;
+		if (0!=wcsstr(Params,TEXT("-file_activity")))	 flags |= CLocatorAPI::flDumpFileActivity;
 	#endif
 #endif
 		FS._initialize		(flags,0,fs_fname);
-		Msg					("'%s' build %d, %s\n","xrCore",build_id, build_date);
+		Msg					(TEXT("'%s' build %d, %s\n","xrCore"),build_id, build_date);
 		EFS._initialize		();
 #ifdef DEBUG
     #ifndef	_EDITOR

@@ -41,7 +41,7 @@ public:
 	}
 	IC	void	Dump			() const
 	{
-		Msg("* Elapsed time (sec): %f",GetElapsed_sec());
+		//Msg("* Elapsed time (sec): %f",GetElapsed_sec());
 	}
 };
 
@@ -126,7 +126,7 @@ public:
 
 	IC	void			Dump			() const
 	{
-		Msg				("* Elapsed time (sec): %f",GetElapsed_sec());
+		//Msg				("* Elapsed time (sec): %f",GetElapsed_sec());
 	}
 };
 

@@ -9,9 +9,9 @@ void set_add_profile_portion	(add_profile_portion_callback callback)
 
 struct profiler {
 	u64						m_time;
-	LPCSTR					m_timer_id;
+	LPCTSTR					m_timer_id;
 
-	IC	profiler::profiler	(LPCSTR timer_id)
+	IC	profiler::profiler	(LPCTSTR timer_id)
 	{
 		if (!add_profile_portion)
 			return;
@@ -32,7 +32,7 @@ struct profiler {
 #endif // PROFILE_CRITICAL_SECTIONS
 
 #ifdef PROFILE_CRITICAL_SECTIONS
-xrCriticalSection::xrCriticalSection	(LPCSTR id) : m_id(id)
+xrCriticalSection::xrCriticalSection	(LPCTSTR id) : m_id(id)
 #else // PROFILE_CRITICAL_SECTIONS
 xrCriticalSection::xrCriticalSection	()
 #endif // PROFILE_CRITICAL_SECTIONS

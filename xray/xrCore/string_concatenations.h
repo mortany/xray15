@@ -3,31 +3,31 @@
 
 #ifndef _EDITOR
 
-LPSTR	XRCORE_API				strconcat				( int dest_sz, char* dest, const char* S1, const char* S2);
-LPSTR	XRCORE_API				strconcat				( int dest_sz, char* dest, const char* S1, const char* S2, const char* S3);
-LPSTR	XRCORE_API				strconcat				( int dest_sz, char* dest, const char* S1, const char* S2, const char* S3, const char* S4);
-LPSTR	XRCORE_API				strconcat				( int dest_sz, char* dest, const char* S1, const char* S2, const char* S3, const char* S4, const char* S5);
-LPSTR	XRCORE_API				strconcat				( int dest_sz, char* dest, const char* S1, const char* S2, const char* S3, const char* S4, const char* S5, const char* S6);
+LPTSTR	XRCORE_API				strconcat				( int dest_sz, TCHAR* dest, LPCTSTR S1, LPCTSTR S2);
+LPTSTR	XRCORE_API				strconcat				( int dest_sz, TCHAR* dest, LPCTSTR S1, LPCTSTR S2, LPCTSTR S3);
+LPTSTR	XRCORE_API				strconcat				( int dest_sz, TCHAR* dest, LPCTSTR S1, LPCTSTR S2, LPCTSTR S3, LPCTSTR S4);
+LPTSTR	XRCORE_API				strconcat				( int dest_sz, TCHAR* dest, LPCTSTR S1, LPCTSTR S2, LPCTSTR S3, LPCTSTR S4, LPCTSTR S5);
+LPTSTR	XRCORE_API				strconcat				( int dest_sz, TCHAR* dest, LPCTSTR S1, LPCTSTR S2, LPCTSTR S3, LPCTSTR S4, LPCTSTR S5, LPCTSTR S6);
 
 #else // _EDITOR
 // obsolete: should be deleted as soon borland work correctly with new strconcats
-IC char*						strconcat				( int dest_sz,  char* dest, const char* S1, const char* S2)
+IC TCHAR*						strconcat				( int dest_sz,  TCHAR* dest, LPCTSTR S1, LPCTSTR S2)
 {	return strcat(strcpy(dest,S1),S2); }
 
 // dest = S1+S2+S3
-IC char*						strconcat				( int dest_sz,  char* dest, const char* S1, const char* S2, const char* S3)
+IC TCHAR*						strconcat				( int dest_sz,  TCHAR* dest, LPCTSTR S1, LPCTSTR S2, LPCTSTR S3)
 {	return strcat(strcat(strcpy(dest,S1),S2),S3); }
 
 // dest = S1+S2+S3+S4
-IC char*						strconcat				( int dest_sz,  char* dest, const char* S1, const char* S2, const char* S3, const char* S4)
+IC TCHAR*						strconcat				( int dest_sz,  TCHAR* dest, LPCTSTR S1, LPCTSTR S2, LPCTSTR S3, LPCTSTR S4)
 {	return strcat(strcat(strcat(strcpy(dest,S1),S2),S3),S4); }
 
 // dest = S1+S2+S3+S4+S5
-IC char*						strconcat				( int dest_sz,  char* dest, const char* S1, const char* S2, const char* S3, const char* S4, const char* S5)
+IC TCHAR*						strconcat				( int dest_sz,  TCHAR* dest, LPCTSTR S1, LPCTSTR S2, LPCTSTR S3, LPCTSTR S4, LPCTSTR S5)
 {	return strcat(strcat(strcat(strcat(strcpy(dest,S1),S2),S3),S4),S5); }
 
 // dest = S1+S2+S3+S4+S5+S6
-IC char*						strconcat				( int dest_sz,  char* dest, const char* S1, const char* S2, const char* S3, const char* S4, const char* S5, const char* S6)
+IC TCHAR*						strconcat				( int dest_sz,  TCHAR* dest, LPCTSTR S1, LPCTSTR S2, LPCTSTR S3, LPCTSTR S4, LPCTSTR S5, LPCTSTR S6)
 {	return strcat(strcat(strcat(strcat(strcat(strcpy(dest,S1),S2),S3),S4),S5),S6); }
 
 #endif
@@ -44,7 +44,7 @@ IC char*						strconcat				( int dest_sz,  char* dest, const char* S1, const cha
 	xray::core::detail::string_tupples	STRCONCAT_tupples_unique_identifier(__VA_ARGS__); \
 	u32 STRCONCAT_buffer_size = STRCONCAT_tupples_unique_identifier.size(); \
 	xray::core::detail::check_stack_overflow(STRCONCAT_buffer_size); \
-	(dest) = (LPSTR)_alloca(STRCONCAT_buffer_size); \
+	(dest) = (LPTSTR)_alloca(STRCONCAT_buffer_size); \
 	STRCONCAT_tupples_unique_identifier.concat	(dest); \
 	} while (0)
 
@@ -53,7 +53,7 @@ IC char*						strconcat				( int dest_sz,  char* dest, const char* S1, const cha
 #define STRCONCAT(dest, ...) \
 	do { \
 	xray::core::detail::string_tupples	STRCONCAT_tupples_unique_identifier(__VA_ARGS__); \
-	(dest)		       = (LPSTR)_alloca(STRCONCAT_tupples_unique_identifier.size()); \
+	(dest)		       = (LPTSTR)_alloca(STRCONCAT_tupples_unique_identifier.size()); \
 	STRCONCAT_tupples_unique_identifier.concat	(dest); \
 	} while (0)
 

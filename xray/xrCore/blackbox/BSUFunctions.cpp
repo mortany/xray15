@@ -6,11 +6,13 @@ Copyright (c) 1997-2000 John Robbins -- All rights reserved.
 #include "stdafx_.h"
 #include "BugslayerUtil.h"
 #include "Internal.h"
-
+#include <string>
+#include <locale>
+#include <codecvt>
 // The Win95 version of GetModuleBaseName.
 static DWORD __stdcall Win95GetModuleBaseName ( HANDLE  hProcess   ,
                                                 HMODULE hModule    ,
-                                                LPSTR   lpBaseName ,
+                                                LPTSTR   lpBaseName ,
                                                 DWORD   nSize       ) ;
 
 /*//////////////////////////////////////////////////////////////////////
@@ -31,17 +33,14 @@ DWORD __stdcall BSUGetModuleBaseName ( HANDLE  hProcess   ,
                                        lpBaseName   ,
                                        nSize         ) ) ;
     }
-    return ( Win95GetModuleBaseName ( hProcess     ,
-                                      hModule      ,
-                                      lpBaseName   ,
-                                      nSize         ) ) ;
 
+    return (Win95GetModuleBaseName(hProcess, hModule, lpBaseName, nSize));	
 }
 
 static DWORD __stdcall
             Win95GetModuleBaseName ( HANDLE  /*hProcess*/  ,
                                      HMODULE hModule       ,
-                                     LPSTR   lpBaseName    ,
+                                     LPTSTR   lpBaseName    ,
                                      DWORD   nSize          )
 {
     ASSERT ( FALSE == IsBadWritePtr ( lpBaseName , nSize ) ) ;
@@ -53,7 +52,7 @@ static DWORD __stdcall
     }
 
     // This could blow the stack...
-    char szBuff[ MAX_PATH + 1 ] ;
+    TCHAR szBuff[ MAX_PATH + 1 ] ;
     DWORD dwRet = GetModuleFileName ( hModule , szBuff , MAX_PATH ) ;
     ASSERT ( 0 != dwRet ) ;
     if ( 0 == dwRet )
@@ -62,7 +61,13 @@ static DWORD __stdcall
     }
 
     // Find the last '\' mark.
-    char * pStart = strrchr ( szBuff , '\\' ) ;
+ 
+	#ifdef UNICODE
+    TCHAR* pStart = wcschr(szBuff, TEXT('\\'));
+	#else
+    TCHAR* pStart = strrchr(szBuff, TEXT('\\'));
+	#endif
+
     int iMin ;
     if ( NULL != pStart )
     {
@@ -82,23 +87,26 @@ static DWORD __stdcall
         lstrcpyn ( lpBaseName , szBuff , iMin ) ;
     }
     // Always NULL terminate.
-    lpBaseName[ iMin ] = '\0' ;
+    lpBaseName[ iMin ] = TEXT('\0') ;
     return ( (DWORD)(iMin - 1) ) ;
 }
 
 DWORD  __stdcall
         BSUSymInitialize ( DWORD  dwPID          ,
                            HANDLE hProcess       ,
-                           PSTR   UserSearchPath ,
+                           PTSTR   UserSearchPath ,
                            BOOL   fInvadeProcess  )
 {
     // If this is any flavor of NT or fInvadeProcess is FALSE, just call
     // SymInitialize itself
     if ( ( TRUE == IsNT ( ) ) || ( FALSE == fInvadeProcess ) )
     {
-        return ( ::SymInitialize ( hProcess       ,
-                                   UserSearchPath ,
-                                   fInvadeProcess  ) ) ;
+		#ifdef DEBUG
+        return (::SymInitialize(hProcess, UserSearchPath, fInvadeProcess));
+		#else
+        return (::SymInitializeW(hProcess, UserSearchPath, fInvadeProcess));
+		#endif
+
     }
     else
     {
@@ -106,7 +114,7 @@ DWORD  __stdcall
 
         // The first step is to initialize the symbol engine.  If it
         // fails, there is not much I can do.
-        BOOL bSymInit = ::SymInitialize ( hProcess       ,
+        BOOL bSymInit = ::SymInitializeW ( hProcess       ,
                                           UserSearchPath ,
                                           fInvadeProcess  ) ;
         ASSERT ( FALSE != bSymInit ) ;
@@ -174,9 +182,20 @@ DWORD  __stdcall
 
             // For whatever reason, SymLoadModule can return zero, but
             // it still loads the modules.  Sheez.
+			#ifdef UNICODE
+            std::wstring string_to_convert = szModName;
+
+            // setup converter
+            using convert_type = std::codecvt_utf8<wchar_t>;
+            std::wstring_convert<convert_type, wchar_t> converter;
+
+            // use converter (.to_bytes: wstr->str, .from_bytes: str->wstr)
+            std::string converted_str = converter.to_bytes(string_to_convert);
+
+
             if ( FALSE == SymLoadModule ( hProcess               ,
                                           hFile                  ,
-                                          szModName              ,
+                                          converted_str.c_str(),
                                           NULL                   ,
                                          (DWORD)paMods[ uiCurr ] ,
                                           0                       ) )
@@ -194,6 +213,24 @@ DWORD  __stdcall
                     return ( FALSE ) ;
                 }
             }
+
+			#else
+            if (FALSE == SymLoadModule(hProcess, hFile, szModName, NULL, (DWORD)paMods[uiCurr], 0)) {
+                // Check the last error value.  If it is zero, then all
+                // I can assume is that it worked.
+                DWORD dwLastErr = GetLastError();
+                ASSERT(ERROR_SUCCESS == dwLastErr);
+                if (ERROR_SUCCESS != dwLastErr) {
+                    // Clean up the symbol engine and leave.
+                    VERIFY(::SymCleanup(hProcess));
+                    // Free the memory that I allocated earlier.
+                    delete[] paMods;
+                    return (FALSE);
+                }
+            }
+			#endif
+
+
         }
         delete [] paMods ;
     }

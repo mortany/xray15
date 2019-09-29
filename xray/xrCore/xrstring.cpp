@@ -19,7 +19,7 @@ struct str_container_impl
 		ZeroMemory(buffer, sizeof(buffer));
 	}
 
-	str_value*       find   (str_value* value, const char* str)
+	str_value*       find   (str_value* value, const TCHAR* str)
 	{
 		str_value* candidate = buffer[ value->dwCRC % buffer_size ];
 		while ( candidate )
@@ -75,8 +75,8 @@ struct str_container_impl
 			{
 				u32			crc		= crc32	(value->value, value->dwLength);
 				string32	crc_str;
-				R_ASSERT3	(crc==value->dwCRC, "CorePanic: read-only memory corruption (shared_strings)", itoa(value->dwCRC,crc_str,16));
-				R_ASSERT3	(value->dwLength == xr_strlen(value->value), "CorePanic: read-only memory corruption (shared_strings, internal structures)", value->value);
+				//R_ASSERT3	(crc==value->dwCRC, TEXT("CorePanic: read-only memory corruption (shared_strings)"), itoa(value->dwCRC,crc_str,16));
+				//R_ASSERT3	(value->dwLength == xr_strlen(value->value), "CorePanic: read-only memory corruption (shared_strings, internal structures)", value->value);
 				value = value->next;
 			}
 		}
@@ -118,15 +118,12 @@ str_container::str_container ()
 	impl = xr_new<str_container_impl>();
 }
 
-str_value*	str_container::dock		(str_c value)
+str_value*	str_container::dock		(LPCTSTR value)
 {
 	if (0==value)				return 0;
 
 	cs.Enter					();
 
-#ifdef DEBUG_MEMORY_MANAGER
-	Memory.stat_strdock			++	;
-#endif // DEBUG_MEMORY_MANAGER
 
 	str_value*	result			= 0	;
 
@@ -145,15 +142,9 @@ str_value*	str_container::dock		(str_c value)
 	// search
 	result						= impl->find	(sv, value);
 	
-#ifdef DEBUG
-	bool is_leaked_string = !xr_strcmp(value, "enter leaked string here");
-#endif //DEBUG
 
 	// it may be the case, string is not found or has "non-exact" match
 	if (0==result 
-#ifdef DEBUG
-		|| is_leaked_string
-#endif //DEBUG
 		) {
 
 		result					= (str_value*)Memory.mem_alloc(HEADER+s_len_with_zero

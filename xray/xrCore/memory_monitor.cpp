@@ -9,8 +9,8 @@
 
 // constants
 STATIC const u32				buffer_size = 512*1024;
-STATIC LPCSTR					output_folder = "c:/memory_monitor_stats/";
-STATIC LPCSTR					output_extension = ".bin";
+STATIC LPCTSTR					output_folder = "c:/memory_monitor_stats/";
+STATIC LPCTSTR					output_extension = ".bin";
 
 // for internal use only
 STATIC bool						detaching = false;
@@ -73,7 +73,7 @@ STATIC void initialize					()
 }
 }
 
-void memory_monitor::monitor_alloc		(const void *allocation_address, const u32 &allocation_size, LPCSTR allocation_description)
+void memory_monitor::monitor_alloc		(const void *allocation_address, const u32 &allocation_size, LPCTSTR allocation_description)
 {
 	if (!use_monitor())
 		return;

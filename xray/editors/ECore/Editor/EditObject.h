@@ -41,7 +41,8 @@ class ECORE_API CSurface
 {
     u32				m_GameMtlID;
     ref_shader		m_Shader;
-	enum ERTFlags{
+	enum ERTFlags 
+	{ 
         rtValidShader	= (1<<0),
 	};
 public:
@@ -88,24 +89,24 @@ public:
     {
     	return (0!=xr_strlen(m_Texture))&&(0!=xr_strlen(m_ShaderName));
     }
-    IC LPCSTR		_Name			()const {return *m_Name;}
-    IC LPCSTR		_ShaderName		()const {return *m_ShaderName;}
-    IC LPCSTR		_GameMtlName	()const {return *m_GameMtlName;}
-    IC LPCSTR		_ShaderXRLCName	()const {return *m_ShaderXRLCName;}
-    IC LPCSTR		_Texture		()const {return *m_Texture;}
-    IC LPCSTR		_VMap			()const {return *m_VMap;}
+    IC LPCTSTR		_Name			()const {return *m_Name;}
+    IC LPCTSTR		_ShaderName		()const {return *m_ShaderName;}
+    IC LPCTSTR		_GameMtlName	()const {return *m_GameMtlName;}
+    IC LPCTSTR		_ShaderXRLCName	()const {return *m_ShaderXRLCName;}
+    IC LPCTSTR		_Texture		()const {return *m_Texture;}
+    IC LPCTSTR		_VMap			()const {return *m_VMap;}
     IC u32			_FVF			()const {return m_dwFVF;}
-    IC void			SetName			(LPCSTR name){m_Name=name;}
-	IC void			SetShader		(LPCSTR name)
+    IC void			SetName			(LPCTSTR name){m_Name=name;}
+	IC void			SetShader		(LPCTSTR name)
 	{
 		R_ASSERT2(name&&name[0],"Empty shader name."); 
 		m_ShaderName=name; 
 	}
-    IC void 		SetShaderXRLC	(LPCSTR name){m_ShaderXRLCName=name;}
-    IC void			SetGameMtl		(LPCSTR name){m_GameMtlName=name;}
+    IC void 		SetShaderXRLC	(LPCTSTR name){m_ShaderXRLCName=name;}
+    IC void			SetGameMtl		(LPCTSTR name){m_GameMtlName=name;}
     IC void			SetFVF			(u32 fvf){m_dwFVF=fvf;}
-    IC void			SetTexture		(LPCSTR name){string512 buf; strcpy_s(buf,name); if(strext(buf)) *strext(buf)=0; m_Texture=buf;}
-    IC void			SetVMap			(LPCSTR name){m_VMap=name;}
+    IC void			SetTexture		(LPCTSTR name){string512 buf; strcpy_s(buf,name); if(strext(buf)) *strext(buf)=0; m_Texture=buf;}
+    IC void			SetVMap			(LPCTSTR name){m_VMap=name;}
 };
 
 DEFINE_VECTOR	(CSurface*,SurfaceVec,SurfaceIt);
@@ -209,10 +210,10 @@ public:
 	AnsiString		m_LibName;
 public:
     // constructor/destructor methods
-					CEditableObject			(LPCSTR name);
+					CEditableObject			(LPCTSTR name);
 	virtual 		~CEditableObject		();
 
-    LPCSTR			GetName					(){ return m_LibName.c_str();}
+    LPCTSTR			GetName					(){ return m_LibName.c_str();}
 
 	void			SetVersionToCurrent		(BOOL bCreate, BOOL bModif);
 
@@ -231,7 +232,7 @@ public:
 
     // LOD
 	xr_string		GetLODTextureName		();
-    LPCSTR			GetLODShaderName		(){return LOD_SHADER_NAME;}
+    LPCTSTR			GetLODShaderName		(){return LOD_SHADER_NAME;}
     void			GetLODFrame				(int frame, Fvector p[4], Fvector2 t[4], const Fmatrix* parent=0);
 
     // skeleton
@@ -247,7 +248,7 @@ public:
     IC int			BoneCount				()	{return m_Bones.size();}
     shared_str		BoneNameByID			(int id);
     int				GetRootBoneID			();
-    int				PartIDByName			(LPCSTR name);
+    int				PartIDByName			(LPCTSTR name);
     IC CBone*		GetBone					(u32 idx){VERIFY(idx<m_Bones.size()); return m_Bones[idx];}
     void			GetBoneWorldTransform	(u32 bone_idx, float t, CSMotion* motion, Fmatrix& matrix);
     IC SMotionIt	FirstSMotion			()	{return m_SMotions.begin();}
@@ -255,7 +256,7 @@ public:
 	SMotionVec&		SMotions				()	{return m_SMotions;}
     IC int			SMotionCount 			()	{return m_SMotions.size();}
     IC bool			IsAnimated	 			()	{return SMotionCount() || m_SMotionRefs.size();}
-//.    IC LPCSTR		SMotionRefs				()	{return *m_SMotionRefs; }
+//.    IC LPCTSTR		SMotionRefs				()	{return *m_SMotionRefs; }
     IC void			SkeletonPlay 			()	{m_SMParam.Play();}
     IC void			SkeletonStop 			()	{m_SMParam.Stop();}
     IC void			SkeletonPause 			(bool val)	{m_SMParam.Pause(val);}
@@ -265,7 +266,7 @@ public:
 
 	IC xr_string&	GetClassScript			()	{return m_ClassScript;}
     IC const Fbox&	GetBox					() 	{return m_Box;}
-    IC LPCSTR		GetLODs					()	{return m_LODs.c_str();}
+    IC LPCTSTR		GetLODs					()	{return m_LODs.c_str();}
 
     // animation
     IC bool			IsSkeleton				()	{return !!m_Bones.size();}
@@ -289,7 +290,7 @@ public:
 	void 			GetFaceWorld			(const Fmatrix& parent, CEditableMesh* M, int idx, Fvector* verts);
     int 			GetFaceCount			();
 	int 			GetVertexCount			();
-    int 			GetSurfFaceCount		(LPCSTR surf_name);
+    int 			GetSurfFaceCount		(LPCTSTR surf_name);
 
     // render methods
 	void 			Render					(const Fmatrix& parent, int priority, bool strictB2F);
@@ -314,34 +315,34 @@ public:
     // clone/copy methods
     void			RemoveMesh				(CEditableMesh* mesh);
 
-    bool			RemoveSMotion			(LPCSTR name);
-    bool			RenameSMotion			(LPCSTR old_name, LPCSTR new_name);
-    bool			AppendSMotion			(LPCSTR fname, SMotionVec* inserted=0);
+    bool			RemoveSMotion			(LPCTSTR name);
+    bool			RenameSMotion			(LPCTSTR old_name, LPCTSTR new_name);
+    bool			AppendSMotion			(LPCTSTR fname, SMotionVec* inserted=0);
     void			ClearSMotions			();
-    bool			SaveSMotions			(LPCSTR fname);
+    bool			SaveSMotions			(LPCTSTR fname);
 
     // load/save methods
 	//void 			LoadMeshDef				(FSChunkDef *chunk);
 	bool 			Reload					();
-	bool 			Load					(LPCSTR fname);
-	bool 			LoadObject				(LPCSTR fname);
-	bool 			SaveObject				(LPCSTR fname);
+	bool 			Load					(LPCTSTR fname);
+	bool 			LoadObject				(LPCTSTR fname);
+	bool 			SaveObject				(LPCTSTR fname);
   	bool 			Load					(IReader&);
 	void 			Save					(IWriter&);
-	bool			Import_LWO				(LPCSTR fname, bool bNeedOptimize);
+	bool			Import_LWO				(LPCTSTR fname, bool bNeedOptimize);
 
     // contains methods
-    CEditableMesh* 	FindMeshByName			(LPCSTR name, CEditableMesh* Ignore=0);
+    CEditableMesh* 	FindMeshByName			(LPCTSTR name, CEditableMesh* Ignore=0);
     void			VerifyMeshNames			();
     bool 			ContainsMesh			(const CEditableMesh* m);
-	CSurface*		FindSurfaceByName		(LPCSTR surf_name, int* s_id=0);
-    int				FindBoneByNameIdx		(LPCSTR name);
-    BoneIt			FindBoneByNameIt		(LPCSTR name);
-    CBone*			FindBoneByName			(LPCSTR name);
+	CSurface*		FindSurfaceByName		(LPCTSTR surf_name, int* s_id=0);
+    int				FindBoneByNameIdx		(LPCTSTR name);
+    BoneIt			FindBoneByNameIt		(LPCTSTR name);
+    CBone*			FindBoneByName			(LPCTSTR name);
     int				GetSelectedBones		(BoneVec& sel_bones);
-    u16				GetBoneIndexByWMap		(LPCSTR wm_name);
-    CSMotion* 		FindSMotionByName		(LPCSTR name, const CSMotion* Ignore=0);
-    void			GenerateSMotionName		(char* buffer, LPCSTR start_name, const CSMotion* M);
+    u16				GetBoneIndexByWMap		(LPCTSTR wm_name);
+    CSMotion* 		FindSMotionByName		(LPCTSTR name, const CSMotion* Ignore=0);
+    void			GenerateSMotionName		(char* buffer, LPCTSTR start_name, const CSMotion* M);
     bool			GenerateBoneShape		(bool bSelOnly);
 
     // device dependent routine
@@ -359,14 +360,14 @@ public:
     bool			PrepareRigidOGF			(IWriter& F, bool gen_tb, CEditableMesh* mesh);
 	// ogf
     bool			PrepareOGF				(IWriter& F, u8 infl, bool gen_tb, CEditableMesh* mesh);
-	bool			ExportOGF				(LPCSTR fname, u8 skl_infl);
+	bool			ExportOGF				(LPCTSTR fname, u8 skl_infl);
     // omf
     bool			PrepareOMF				(IWriter& F);
-	bool			ExportOMF				(LPCSTR fname);
+	bool			ExportOMF				(LPCTSTR fname);
     // obj
-    bool			ExportOBJ				(LPCSTR name);
+    bool			ExportOBJ				(LPCTSTR name);
 
-	LPCSTR			GenerateSurfaceName		(LPCSTR base_name);
+	LPCTSTR			GenerateSurfaceName		(LPCTSTR base_name);
 #ifdef _MAX_EXPORT
 	BOOL			ExtractTexName			(Texmap *src, LPSTR dest);
 	BOOL			ParseStdMaterial		(StdMat* src, CSurface* dest);
@@ -375,7 +376,7 @@ public:
 	CSurface*		CreateSurface			(Mtl* M, u32 mat_id);
 	bool			ImportMAXSkeleton		(CExporter* exporter);
 #endif
-	bool			ExportLWO				(LPCSTR fname);
+	bool			ExportLWO				(LPCTSTR fname);
 
     bool			Validate				();
 };

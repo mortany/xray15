@@ -15,7 +15,9 @@ CONDITIONAL COMPILATION :
 #include "stdafx_.h"
 #include "BugslayerUtil.h"
 #include "CrashHandler.h"
-
+#include <string>
+#include <locale>
+#include <codecvt>
 // The project internal header file
 //#include "Internal.h"
 
@@ -49,8 +51,8 @@ static TCHAR g_szBuff [ BUFF_SIZE ] ;
 static BYTE g_stSymbol [ SYM_BUFF_SIZE ] ;
 
 // The static source file and line number structure
-static IMAGEHLP_LINE g_stLine ;
 
+static IMAGEHLP_LINE g_stLine;
 // The stack frame used in walking the stack
 static STACKFRAME g_stFrame ;
 
@@ -275,9 +277,9 @@ LONG __stdcall CrashHandlerExceptionFilter (EXCEPTION_POINTERS* pExPtrs)
     if ( EXCEPTION_STACK_OVERFLOW ==
                               pExPtrs->ExceptionRecord->ExceptionCode )
     {
-        OutputDebugString ( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" ) ;
-        OutputDebugString ( "EXCEPTION_STACK_OVERFLOW occurred\n" ) ;
-        OutputDebugString ( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" ) ;
+        OutputDebugString ( TEXT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n") ) ;
+        OutputDebugString ( TEXT("EXCEPTION_STACK_OVERFLOW occurred\n") ) ;
+        OutputDebugString ( TEXT("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n") ) ;
     }
 
     __try
@@ -448,31 +450,44 @@ LPCTSTR __stdcall GetFaultReason ( EXCEPTION_POINTERS * pExPtrs )
         ASSERT ( iCurr < ( BUFF_SIZE - 200 ) ) ;
 
         // Start looking up the exception address.
-        PIMAGEHLP_SYMBOL pSym = (PIMAGEHLP_SYMBOL)&g_stSymbol ;
+ 
+ 
+        PIMAGEHLP_SYMBOL pSym = (PIMAGEHLP_SYMBOL)&g_stSymbol;
+ 
         FillMemory ( pSym , SYM_BUFF_SIZE, NULL ) ;
         pSym->SizeOfStruct = sizeof ( IMAGEHLP_SYMBOL ) ;
         pSym->MaxNameLength = SYM_BUFF_SIZE - sizeof ( IMAGEHLP_SYMBOL);
 
         DWORD_PTR dwpDisp ;
+
         if ( TRUE ==
               SymGetSymFromAddr ( (HANDLE)GetCurrentProcessId ( )     ,
                                   (DWORD)pExPtrs->ExceptionRecord->
                                                      ExceptionAddress ,
                                   &dwpDisp,
                                   pSym                                ))
+			 
         {
             iCurr += wsprintf ( g_szBuff + iCurr , _T ( ", " ) ) ;
 
             // Copy no more of the symbol information than there's
             // room for.
-            dwTemp = lstrlen ( pSym->Name ) ;
+
+			std::string string_to_convert = pSym->Name;
+            std::wstring converted_str;
+			for (char it : string_to_convert)
+				 converted_str += it;
+
+            LPCWSTR pName = converted_str.c_str();
+
+            dwTemp = lstrlen ( pName ) ;
             // Make sure there's enough room for the longest symbol
             // and the displacement.
             if ( (int)dwTemp > ( ( BUFF_SIZE - iCurr) -
                                  ( MAX_SYM_SIZE + 50 )  ) )
             {
                 lstrcpyn ( g_szBuff + iCurr      ,
-                           pSym->Name            ,
+                           pName            ,
                            BUFF_SIZE - iCurr - 1  ) ;
                 // Gotta leave now
                 szRet = g_szBuff ;
@@ -484,14 +499,14 @@ LPCTSTR __stdcall GetFaultReason ( EXCEPTION_POINTERS * pExPtrs )
                 {
                     iCurr += wsprintf ( g_szBuff + iCurr          ,
                                         _T ( "%s()+%04d byte(s)" ),
-                                        pSym->Name                ,
+                                        pName                ,
 										dwpDisp) ;
                 }
                 else
                 {
                     iCurr += wsprintf ( g_szBuff + iCurr ,
                                         _T ( "%s " )     ,
-                                        pSym->Name        ) ;
+                                        pName        ) ;
                 }
             }
         }
@@ -523,12 +538,17 @@ LPCTSTR __stdcall GetFaultReason ( EXCEPTION_POINTERS * pExPtrs )
 
             // Copy no more of the source file and line number
             // information than there's room for.
-            dwTemp = lstrlen ( g_stLine.FileName ) ;
+            std::string buffer = g_stLine.FileName;
+            std::wstring output_str;
+            for (char it : buffer)
+                output_str += it;
+            LPCWSTR pName = output_str.c_str();
+            dwTemp = lstrlen ( pName ) ;
             if ( (int)dwTemp > ( BUFF_SIZE - iCurr -
                                  MAX_PATH - 50       ) )
             {
                 lstrcpyn ( g_szBuff + iCurr      ,
-                           g_stLine.FileName     ,
+                           pName     ,
                            BUFF_SIZE - iCurr - 1  ) ;
                 // Gotta leave now
                 szRet = g_szBuff ;
@@ -782,15 +802,22 @@ LPCTSTR __stdcall
                                       &dwpDisp,
                                       pSym                            ))
             {
+                std::string string_to_convert = pSym->Name;
+                std::wstring converted_str;
+                for (char it : string_to_convert)
+                    converted_str += it;
+
+                LPCWSTR pName = converted_str.c_str();
+
                 iCurr += wsprintf ( g_szBuff + iCurr , _T ( ", " ) ) ;
 
                 // Copy no more symbol information than there's room for.
-                dwTemp = lstrlen ( pSym->Name ) ;
+                dwTemp = lstrlen ( pName ) ;
                 if ( dwTemp > (DWORD)( BUFF_SIZE - iCurr -
                                      ( MAX_SYM_SIZE + 50 ) ) )
                 {
                     lstrcpyn ( g_szBuff + iCurr      ,
-                               pSym->Name            ,
+                               pName            ,
                                BUFF_SIZE - iCurr - 1  ) ;
                     // Gotta leave now
                     szRet = g_szBuff ;
@@ -843,12 +870,18 @@ LPCTSTR __stdcall
 
                 // Copy no more of the source file and line number
                 // information than there's room for.
-                dwTemp = lstrlen ( g_stLine.FileName ) ;
+                std::string buffer = g_stLine.FileName;
+                std::wstring output_str;
+                for (char it : buffer)
+                    output_str += it;
+                LPCWSTR pName = output_str.c_str();
+
+                dwTemp = lstrlen ( pName ) ;
                 if ( dwTemp > (DWORD)( BUFF_SIZE - iCurr -
                                        ( MAX_PATH + 50     ) ) )
                 {
                     lstrcpyn ( g_szBuff + iCurr      ,
-                               g_stLine.FileName     ,
+                               pName     ,
                                BUFF_SIZE - iCurr - 1  ) ;
                     // Gotta leave now
                     szRet = g_szBuff ;
@@ -1165,7 +1198,7 @@ BOOL InternalSymGetLineFromAddr ( IN  HANDLE          hProcess        ,
 #endif
 }
 
-char g_application_path[256];
+TCHAR g_application_path[256];
 
 // Initializes the symbol engine if needed
 void InitSymEng ( void )
@@ -1183,9 +1216,15 @@ void InitSymEng ( void )
         // Force the invade process flag no matter what operating system
         // I'm on.
         HANDLE hPID = (HANDLE)GetCurrentProcessId ( ) ;
+        std::wstring string_to_convert = g_application_path;
+        std::string converted_str;
+        for (char it : string_to_convert)
+            converted_str += it;
+
+        char* pName = const_cast<char*>(converted_str.c_str());
         VERIFY ( BSUSymInitialize ( (DWORD)hPID ,
                                     hPID        ,
-                                    g_application_path,
+                                    pName,
                                     TRUE         ) ) ;
         g_bSymEngInit = TRUE ;
     }

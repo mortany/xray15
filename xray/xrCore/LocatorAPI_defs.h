@@ -21,18 +21,18 @@ public:
     	flNeedRescan= (1<<2),
     };
 public:
-	LPSTR		m_Path;
-	LPSTR		m_Root;
-	LPSTR		m_Add;
-	LPSTR		m_DefExt;
-	LPSTR		m_FilterCaption;
+	LPTSTR		m_Path;
+	LPTSTR		m_Root;
+	LPTSTR		m_Add;
+	LPTSTR		m_DefExt;
+	LPTSTR		m_FilterCaption;
     Flags32		m_Flags;
 public:
-				FS_Path		(LPCSTR _Root, LPCSTR _Add, LPCSTR _DefExt=0, LPCSTR _FilterString=0, u32 flags=0);
+				FS_Path		(LPCTSTR _Root, LPCTSTR _Add, LPCTSTR _DefExt=0, LPCTSTR _FilterString=0, u32 flags=0);
 				~FS_Path	();
-	LPCSTR		_update		(string_path& dest, LPCSTR src) const;
-	void		_set		(LPCSTR add);
-	void		_set_root	(LPCSTR root);
+	LPCTSTR		_update		(string_path& dest, LPCTSTR src) const;
+	void		_set		(LPCTSTR add);
+	void		_set_root	(LPCTSTR root);
 
     void __stdcall rescan_path_cb	();
 };
@@ -43,8 +43,8 @@ public:
 	};
 #	define _FINDDATA_T	std::_finddata_t
 #else
-	struct 				_finddata64i32_t;
-#	define _FINDDATA_T	_finddata64i32_t
+	struct 				_wfinddata64i32_t;
+#	define _FINDDATA_T	_wfinddata64i32_t
 #endif
 
 struct XRCORE_API FS_File{
@@ -67,6 +67,6 @@ public:
 };
 DEFINE_SET		(FS_File,FS_FileSet,FS_FileSetIt);
 
-extern bool	XRCORE_API PatternMatch(LPCSTR s, LPCSTR mask);
+extern bool	XRCORE_API PatternMatch(LPCTSTR s, LPCTSTR mask);
 
 #endif //LocatorAPI_defsH

@@ -106,7 +106,9 @@ namespace std
 };
 
 // string(char)
-typedef		std::basic_string<char, std::char_traits<char>, xalloc<char> >	xr_string;
+//typedef		std::basic_string<char, std::char_traits<char>, xalloc<char> >	xr_string;
+typedef		std::basic_string<TCHAR, std::char_traits<TCHAR>, xalloc<TCHAR> >	xr_string;
+
 
 // vector
 template	<typename T, typename allocator = xalloc<T> >
@@ -216,11 +218,11 @@ template	<typename K, class V, class P=std::less<K>, typename allocator = xalloc
 
 template	<class _Ty1, class _Ty2> inline	std::pair<_Ty1, _Ty2>		mk_pair		(_Ty1 _Val1, _Ty2 _Val2)	{	return (std::pair<_Ty1, _Ty2>(_Val1, _Val2));	}
 
-struct pred_str		: public std::binary_function<char*, char*, bool>	{	
-	IC bool operator()(const char* x, const char* y) const				{	return xr_strcmp(x,y)<0;	}
+struct pred_str		: public std::binary_function<TCHAR*, TCHAR*, bool>	{
+	IC bool operator()(const TCHAR* x, const TCHAR* y) const				{	return xr_strcmp(x,y)<0;	}
 };
-struct pred_stri	: public std::binary_function<char*, char*, bool>	{	
-	IC bool operator()(const char* x, const char* y) const				{	return stricmp(x,y)<0;	}
+struct pred_stri	: public std::binary_function<TCHAR*, TCHAR*, bool>	{
+	IC bool operator()(const TCHAR* x, const TCHAR* y) const				{	return wcsicmp(x,y)<0;	}
 };
 
 // STL extensions
@@ -255,8 +257,8 @@ DEFINE_VECTOR(Fvector,FvectorVec,FvectorIt);
 DEFINE_VECTOR(Fvector*,LPFvectorVec,LPFvectorIt);
 DEFINE_VECTOR(Fcolor,FcolorVec,FcolorIt);
 DEFINE_VECTOR(Fcolor*,LPFcolorVec,LPFcolorIt);
-DEFINE_VECTOR(LPSTR,LPSTRVec,LPSTRIt);
-DEFINE_VECTOR(LPCSTR,LPCSTRVec,LPCSTRIt);
+DEFINE_VECTOR(LPTSTR,LPSTRVec,LPSTRIt);
+DEFINE_VECTOR(LPCTSTR,LPCTSTRVec,LPCTSTRIt);
 DEFINE_VECTOR(string64,string64Vec,string64It);
 DEFINE_VECTOR(xr_string,SStringVec,SStringVecIt);
 

@@ -64,7 +64,7 @@ public:
 	u32					mem_counter_get	()			{ return stat_counter;	}
 
 #ifdef DEBUG_MEMORY_NAME
-	void				mem_statistic	(LPCSTR fn);
+	void				mem_statistic	(LPCTSTR fn);
 	void*				mem_alloc		(size_t	size				, const char* _name);
 	void*				mem_realloc		(void*	p, size_t size		, const char* _name);
 #else // DEBUG_MEMORY_NAME
@@ -113,7 +113,7 @@ extern XRCORE_API	xrMemory	Memory;
 	IC void*	xr_realloc	(void* P, size_t size)	{	return Memory.mem_realloc(P,size);				}
 #endif // DEBUG_MEMORY_NAME
 
-XRCORE_API	char* 	xr_strdup	(const char* string);
+XRCORE_API	TCHAR* 	xr_strdup	(LPCTSTR string);
 
 #ifdef DEBUG_MEMORY_NAME
 // Global new/delete override

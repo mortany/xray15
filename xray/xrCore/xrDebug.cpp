@@ -28,8 +28,8 @@
 XRCORE_API	xrDebug		Debug;
 
 // Dialog support
-static const char * dlgExpr		= NULL;
-static const char * dlgFile		= NULL;
+static LPCTSTR  dlgExpr		= NULL;
+static LPCTSTR  dlgFile		= NULL;
 static char			dlgLine		[16];
 
 static INT_PTR CALLBACK DialogProc	( HWND hw, UINT msg, WPARAM wp, LPARAM lp )
@@ -68,7 +68,7 @@ static INT_PTR CALLBACK DialogProc	( HWND hw, UINT msg, WPARAM wp, LPARAM lp )
 	return TRUE;
 }
 
-void xrDebug::backend(const char* reason, const char* expression, const char *argument0, const char *argument1, const char* file, int line, const char *function, bool &ignore_always)
+void xrDebug::backend(LPCTSTR reason, LPCTSTR expression, LPCTSTR argument0, LPCTSTR argument1, LPCTSTR file, int line, LPCTSTR function, bool &ignore_always)
 {
 	static	xrCriticalSection	CS;
 
@@ -113,9 +113,9 @@ void xrDebug::backend(const char* reason, const char* expression, const char *ar
 	CS.Leave			();
 }
 
-LPCSTR xrDebug::error2string	(long code)
+LPCTSTR xrDebug::error2string	(long code)
 {
-	LPCSTR				result	= 0;
+	LPCTSTR				result	= 0;
 	static	string1024	desc_storage;
 
 #ifdef _M_AMD64
@@ -130,37 +130,37 @@ LPCSTR xrDebug::error2string	(long code)
 	return		result	;
 }
 
-void xrDebug::error		(long hr, const char* expr, const char *file, int line, const char *function, bool &ignore_always)
+void xrDebug::error		(long hr, LPCTSTR expr, LPCTSTR file, int line, LPCTSTR function, bool &ignore_always)
 {
 	backend		(error2string(hr),expr,0,0,file,line,function,ignore_always);
 }
 
-void xrDebug::error		(long hr, const char* expr, const char *e2, const char *file, int line, const char *function, bool &ignore_always)
+void xrDebug::error		(long hr, LPCTSTR expr, LPCTSTR e2, LPCTSTR file, int line, LPCTSTR function, bool &ignore_always)
 {
 	backend		(error2string(hr),expr,e2,0,file,line,function,ignore_always);
 }
 
-void xrDebug::fail		(const char *e1, const char *file, int line, const char *function, bool &ignore_always)
+void xrDebug::fail		(LPCTSTR e1, LPCTSTR file, int line, LPCTSTR function, bool &ignore_always)
 {
 	backend		("assertion failed",e1,0,0,file,line,function,ignore_always);
 }
 
-void xrDebug::fail		(const char *e1, const char *e2, const char *file, int line, const char *function, bool &ignore_always)
+void xrDebug::fail		(LPCTSTR e1, LPCTSTR e2, LPCTSTR file, int line, LPCTSTR function, bool &ignore_always)
 {
 	backend		(e1,e2,0,0,file,line,function,ignore_always);
 }
 
-void xrDebug::fail		(const char *e1, const char *e2, const char *e3, const char *file, int line, const char *function, bool &ignore_always)
+void xrDebug::fail		(LPCTSTR e1, LPCTSTR e2, LPCTSTR e3, LPCTSTR file, int line, LPCTSTR function, bool &ignore_always)
 {
 	backend		(e1,e2,e3,0,file,line,function,ignore_always);
 }
 
-void xrDebug::fail		(const char *e1, const char *e2, const char *e3, const char *e4, const char *file, int line, const char *function, bool &ignore_always)
+void xrDebug::fail		(LPCTSTR e1, LPCTSTR e2, LPCTSTR e3, LPCTSTR e4, LPCTSTR file, int line, LPCTSTR function, bool &ignore_always)
 {
 	backend		(e1,e2,e3,e4,file,line,function,ignore_always);
 }
 
-void __cdecl xrDebug::fatal(const char *file, int line, const char *function, const char* F,...)
+void __cdecl xrDebug::fatal(LPCTSTR file, int line, LPCTSTR function, LPCTSTR F,...)
 {
 	string1024	buffer;
 

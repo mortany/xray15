@@ -14,7 +14,7 @@ int								xr_strcmp				( const char* S1, const char* S2 )
 }
 #endif
 
-char*							timestamp				(string64& dest)
+TCHAR*	timestamp				(string64& dest)
 {
 	string64	temp;
 
@@ -26,16 +26,18 @@ char*							timestamp				(string64& dest)
 	u32			it;
 
 	// date
-	_strdate	( temp );
+	_wstrdate	( temp );
 	for (it=0; it<xr_strlen(temp); it++)
 		if ('/'==temp[it]) temp[it]='-';
-	strconcat	(sizeof(dest), dest, temp, "_" );
+	strconcat	(sizeof(dest), dest, temp, TEXT("_") );
 
 	// time
-	_strtime	( temp );
+	_wstrtime	( temp );
+	
 	for (it=0; it<xr_strlen(temp); it++)
 		if (':'==temp[it]) temp[it]='-';
-	strcat		( dest, temp);
+	wcscat( dest, temp);
+	
 	return dest;
 }
 

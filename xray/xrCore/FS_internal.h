@@ -8,31 +8,31 @@
 #include <sys\stat.h>
 #include <share.h>
 
-void*			FileDownload	(LPCSTR fn, u32* pdwSize=NULL);
-void			FileCompress	(const char *fn, const char* sign, void* data, u32 size);
-void * 			FileDecompress	(const char *fn, const char* sign, u32* size=NULL);
+void*			FileDownload	(LPCTSTR fn, u32* pdwSize=NULL);
+void			FileCompress	(const TCHAR*fn, const TCHAR* sign, void* data, u32 size);
+void * 			FileDecompress	(const TCHAR* fn, const TCHAR* sign, u32* size=NULL);
 
 class CFileWriter : public IWriter
 {
 private:
 	FILE*			hf;
 public:
-	CFileWriter		(const char *name, bool exclusive)
+	CFileWriter		(LPCTSTR name, bool exclusive)
 	{
 		R_ASSERT	(name && name[0]);
 		fName		= name;
 		VerifyPath	(*fName);
         if (exclusive){
-    		int handle	= _sopen(*fName,_O_WRONLY|_O_TRUNC|_O_CREAT|_O_BINARY,SH_DENYWR);
+    		int handle	= _wsopen(*fName,_O_WRONLY|_O_TRUNC|_O_CREAT|_O_BINARY,SH_DENYWR);
 #ifdef _EDITOR
     		if (handle==-1)
     			Msg	("!Can't create file: '%s'. Error: '%s'.",*fName,_sys_errlist[errno]);
 #endif
     		hf		= _fdopen(handle,"wb");
         }else{
-			hf			= fopen(*fName,"wb");
+			hf			= _wfopen(*fName,TEXT("wb"));
 			if (hf==0)
-				Msg		("!Can't write file: '%s'. Error: '%s'.",*fName,_sys_errlist[errno]);
+				Msg		(TEXT("!Can't write file: '%s'. Error: '%s'."),*fName,_sys_errlist[errno]);
 		}
 	}
 
@@ -57,11 +57,11 @@ public:
 			int req_size = count;
 			for (; req_size>mb_sz; req_size-=mb_sz, ptr+=mb_sz){
 				size_t W = fwrite(ptr,mb_sz,1,hf);
-				R_ASSERT3(W==1,"Can't write mem block to file. Disk maybe full.",_sys_errlist[errno]);
+				//R_ASSERT3(W==1,"Can't write mem block to file. Disk maybe full.",_sys_errlist[errno]);
 			}
 			if (req_size)	{
 				size_t W = fwrite(ptr,req_size,1,hf); 
-				R_ASSERT3(W==1,"Can't write mem block to file. Disk maybe full.",_sys_errlist[errno]);
+				//R_ASSERT3(W==1,"Can't write mem block to file. Disk maybe full.",_sys_errlist[errno]);
 			}
 		}
     };
@@ -88,13 +88,13 @@ public:
 class CFileReader : public IReader
 {
 public:
-				CFileReader(const char *name);
+				CFileReader(const TCHAR*name);
 	virtual		~CFileReader();
 };
 class CCompressedReader : public IReader
 {
 public:
-				CCompressedReader(const char *name, const char *sign);
+				CCompressedReader(const TCHAR* name, const TCHAR* sign);
 	virtual		~CCompressedReader();
 };
 class CVirtualFileReader : public IReader
@@ -102,7 +102,7 @@ class CVirtualFileReader : public IReader
 private:
    void			*hSrcFile, *hSrcMap;
 public:
-				CVirtualFileReader(const char *cFileName);
+				CVirtualFileReader(const TCHAR*cFileName);
 	virtual		~CVirtualFileReader();
 };
 

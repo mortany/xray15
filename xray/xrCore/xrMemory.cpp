@@ -74,7 +74,7 @@ void	xrMemory::_initialize	(BOOL bDebug)
 	}
 
 #ifndef M_BORLAND
-	if (!strstr(Core.Params,"-pure_alloc")) {
+	if (!wcsstr(Core.Params,TEXT("-pure_alloc"))) {
 		// initialize POOLs
 		u32	element		= mem_pools_ebase;
 		u32 sector		= mem_pools_ebase*1024;
@@ -141,14 +141,14 @@ void	xrMemory::mem_compact	()
 	HeapCompact						(GetProcessHeap(),0);
 	if (g_pStringContainer)			g_pStringContainer->clean		();
 	if (g_pSharedMemoryContainer)	g_pSharedMemoryContainer->clean	();
-	if (strstr(Core.Params,"-swap_on_compact"))
+	if (wcsstr(Core.Params,TEXT("-swap_on_compact")))
 		SetProcessWorkingSetSize	(GetCurrentProcess(),size_t(-1),size_t(-1));
 }
 
 #ifdef DEBUG_MEMORY_MANAGER
 ICF	u8*		acc_header			(void* P)	{	u8*		_P		= (u8*)P;	return	_P-1;	}
 ICF	u32		get_header			(void* P)	{	return	(u32)*acc_header(P);				}
-void	xrMemory::mem_statistic	(LPCSTR fn)
+void	xrMemory::mem_statistic	(LPCTSTR fn)
 {
 	if (!debug_mode)	return	;
 	mem_compact				()	;
@@ -212,7 +212,7 @@ void	xrMemory::mem_statistic	(LPCSTR fn)
 
 	/*
 	mem_compact				();
-	LPCSTR					fn	= "$memstat$.tmp";
+	LPCTSTR					fn	= "$memstat$.tmp";
 	xr_map<u32,u32>			stats;
 
 	if (g_pStringContainer)			Msg	("memstat: shared_str: economy: %d bytes",g_pStringContainer->stat_economy());
@@ -256,11 +256,11 @@ void	xrMemory::mem_statistic	(LPCSTR fn)
 #endif // DEBUG_MEMORY_MANAGER
 
 // xr_strdup
-char*			xr_strdup		(const char* string)
+TCHAR*			xr_strdup		(LPCTSTR string)
 {	
 	VERIFY	(string);
 	u32		len			= u32(xr_strlen(string))+1	;
-	char *	memory		= (char*)	Memory.mem_alloc( len
+	TCHAR *	memory		= (TCHAR*)	Memory.mem_alloc( len
 #ifdef DEBUG_MEMORY_NAME
 		, "strdup"
 #endif // DEBUG_MEMORY_NAME

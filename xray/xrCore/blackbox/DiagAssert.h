@@ -85,14 +85,14 @@ RETURNS         :
 ----------------------------------------------------------------------*/
 BOOL  __stdcall
     DiagAssertA ( DWORD     dwOverrideOpts  ,
-                  LPCSTR    szMsg           ,
-                  LPCSTR    szFile          ,
+                  LPCTSTR    szMsg           ,
+                  LPCTSTR    szFile          ,
                   DWORD     dwLine           ) ;
 
 BOOL  __stdcall
     DiagAssertW ( DWORD     dwOverrideOpts  ,
                   LPCWSTR   szMsg           ,
-                  LPCSTR    szFile          ,
+                  LPCTSTR    szFile          ,
                   DWORD     dwLine           ) ;
 
 #ifdef UNICODE
@@ -118,7 +118,7 @@ RETURNS         :
 BOOL  __stdcall
     DiagAssertVB ( DWORD   dwOverrideOpts  ,
                    BOOL    bAllowHalts     ,
-                   LPCSTR  szMsg            ) ;
+                   LPCTSTR  szMsg            ) ;
 
 
 /*----------------------------------------------------------------------
@@ -149,7 +149,7 @@ RETURNS         :
     None.
 ----------------------------------------------------------------------*/
 void 
-    DiagOutputA ( LPCSTR szFmt , ... ) ;
+    DiagOutputA ( LPCTSTR szFmt , ... ) ;
 
 void 
     DiagOutputW ( LPCWSTR szFmt , ... ) ;
@@ -171,7 +171,7 @@ RETURNS         :
     None.
 ----------------------------------------------------------------------*/
 void  __stdcall
-    DiagOutputVB ( LPCSTR szMsg ) ;
+    DiagOutputVB ( LPCTSTR szMsg ) ;
 
 /*//////////////////////////////////////////////////////////////////////
                                UNDEFINES

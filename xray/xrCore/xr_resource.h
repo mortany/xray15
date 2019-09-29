@@ -23,7 +23,7 @@ class	XRCORE_API	xr_resource_named	:	public xr_resource_flagged	{
 public:
 	shared_str		cName;
 
-	const char *	set_name			( const char * name)	
+	LPCTSTR	set_name			(LPCTSTR name)	
 	{
 		cName		= name;
 		return		*cName;

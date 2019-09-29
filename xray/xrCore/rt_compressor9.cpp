@@ -30,7 +30,7 @@ rtc9_initialize()
 	
 	string_path     file_name;
 
-	FS.update_path( file_name, "$game_config$","mp\\lzo-dict.bin" );
+	FS.update_path( file_name, TEXT("$game_config$"),TEXT("mp\\lzo-dict.bin") );
 
 	if( FS.exist(file_name)) 
 	{
@@ -44,11 +44,11 @@ rtc9_initialize()
 		reader->r( _LZO_Dictionary, _LZO_DictionarySize );
 		FS.r_close( reader );
 
-        Msg( "using LZO-dictionary \"%s\"", file_name );
+        Msg( TEXT("using LZO-dictionary \"%s\""), file_name );
 	}
 	else
 	{
-	    Msg( "\"%s\" not found", file_name );
+	    Msg( TEXT("\"%s\" not found"), file_name );
 	}
 
 	initialized = true;

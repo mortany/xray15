@@ -68,7 +68,7 @@ void DoStackTrace ( LPTSTR szString  ,
 
 // The function that does the real assertions.
 BOOL __stdcall RealAssert  ( DWORD  dwOverrideOpts  ,
-                             LPCSTR szMsg           ,
+                             LPCTSTR szMsg           ,
                              BOOL   bAllowHalts      ) ;
 
 /*//////////////////////////////////////////////////////////////////////
@@ -105,8 +105,8 @@ BOOL  __stdcall
 
 BOOL  __stdcall
     DiagAssertA ( DWORD  dwOverrideOpts ,
-                  LPCSTR szMsg          ,
-                  LPCSTR szFile         ,
+                  LPCTSTR szMsg          ,
+                  LPCTSTR szFile         ,
                   DWORD  dwLine          )
 {
     // First, save off the last error value.
@@ -131,7 +131,7 @@ BOOL  __stdcall
 BOOL  __stdcall
     DiagAssertW ( DWORD     dwOverrideOpts  ,
                   LPCWSTR   szMsg           ,
-                  LPCSTR    szFile          ,
+                  LPCTSTR    szFile          ,
                   DWORD     dwLine           )
 {
     // First, save off the last error value.
@@ -156,7 +156,7 @@ BOOL  __stdcall
 BOOL  __stdcall
     DiagAssertVB ( DWORD   dwOverrideOpts  ,
                    BOOL    bAllowHalts     ,
-                   LPCSTR  szMsg            )
+                   LPCTSTR  szMsg            )
 {
     return ( RealAssert ( dwOverrideOpts , szMsg , bAllowHalts ) ) ;
 }
@@ -167,17 +167,17 @@ BOOL  __stdcall
 
 // The code that does the real assertion work.
 BOOL __stdcall RealAssert  ( DWORD  dwOverrideOpts  ,
-                             LPCSTR szMsg           ,
+                             LPCTSTR szMsg           ,
                              BOOL   bAllowHalts      )
 {
     // The buffer used for the final message text.
     static char  szBuff [ DIAGASSERT_BUFFSIZE ] ;
     // The current position in szBuff ;
-    LPSTR  pCurrPos = szBuff ;
+    LPTSTR  pCurrPos = szBuff ;
     // The module name.
     char   szModName[ MAX_PATH + 1 ] ;
     // The decoded message from FormatMessage
-    LPSTR  szFmtMsg = NULL ;
+    LPTSTR  szFmtMsg = NULL ;
     // The options.
     DWORD  dwOpts = dwOverrideOpts ;
     // The last error value.  (Which is preserved across the call).
@@ -201,7 +201,7 @@ BOOL __stdcall RealAssert  ( DWORD  dwOverrideOpts  ,
                                    *loop                              ,
                                    dwLastErr                          ,
                                    0                                  ,
-                                   (LPSTR)&szFmtMsg                   ,
+                                   (LPTSTR)&szFmtMsg                   ,
                                    0                                  ,
                                    NULL                               ))
         {
@@ -218,13 +218,13 @@ BOOL __stdcall RealAssert  ( DWORD  dwOverrideOpts  ,
                          NULL                                ,
                          dwLastErr                           ,
                          0                                   ,
-                         (LPSTR)&szFmtMsg                    ,
+                         (LPTSTR)&szFmtMsg                    ,
                          0                                   ,
                          NULL                                 ) ;
     }
 
     // Make sure the message got translated into something.
-    LPSTR szRealLastErr ;
+    LPTSTR szRealLastErr ;
     if ( NULL != szFmtMsg )
     {
         szRealLastErr = szFmtMsg ;
@@ -340,7 +340,7 @@ HANDLE  __stdcall
 }
 
 void 
-    DiagOutputA ( LPCSTR szFmt , ... )
+    DiagOutputA ( LPCTSTR szFmt , ... )
 {
     // Never corrupt the last error value.
     DWORD dwLastError = GetLastError ( ) ;
@@ -402,7 +402,7 @@ void
 }
 
 void  __stdcall
-    DiagOutputVB ( LPCSTR szMsg )
+    DiagOutputVB ( LPCTSTR szMsg )
 {
     DiagOutputA ( szMsg ) ;
 }

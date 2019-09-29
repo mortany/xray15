@@ -8,11 +8,11 @@
 #include "stdafx.h"
 #include "os_clipboard.h"
 
-void os_clipboard::copy_to_clipboard	( LPCSTR buf )
+void os_clipboard::copy_to_clipboard	( LPCTSTR buf )
 {
 	if ( !OpenClipboard(0) )
 		return;
-	u32 handle_size = ( xr_strlen(buf) + 1 ) * sizeof(char);
+	u32 handle_size = ( xr_strlen(buf) + 1 ) * sizeof(TCHAR);
 	HGLOBAL handle = GlobalAlloc( GHND, handle_size );
 	if ( !handle )
 	{
@@ -20,15 +20,15 @@ void os_clipboard::copy_to_clipboard	( LPCSTR buf )
 		return;
 	}
 
-	char* memory			= (char*)GlobalLock( handle );
-	strcpy_s				( memory, handle_size, buf );
+	TCHAR* memory			= (TCHAR*)GlobalLock( handle );
+	wcscpy_s				( memory, handle_size, buf );
 	GlobalUnlock			( handle );
 	EmptyClipboard			();
 	SetClipboardData		( CF_TEXT, handle );
 	CloseClipboard			();
 }
 
-void os_clipboard::paste_from_clipboard	( LPSTR buffer, u32 const& buffer_size )
+void os_clipboard::paste_from_clipboard	( LPTSTR buffer, u32 const& buffer_size )
 {
 	VERIFY					(buffer);
 	VERIFY					(buffer_size > 0);
@@ -40,13 +40,13 @@ void os_clipboard::paste_from_clipboard	( LPSTR buffer, u32 const& buffer_size )
 	if ( !hmem )
 		return;
 
-	LPCSTR clipdata			= (LPCSTR)GlobalLock( hmem );
-	strncpy					( buffer, clipdata, buffer_size );
+	LPCTSTR clipdata			= (LPCTSTR)GlobalLock( hmem );
+	wcsncpy					( buffer, clipdata, buffer_size );
 	buffer[buffer_size]		= 0;
-	for ( u32 i = 0; i < strlen( buffer ); ++i )
+	for ( u32 i = 0; i < wcslen( buffer ); ++i )
 	{
 		char c = buffer[i];
-		if ( ( (isprint(c) == 0) && (c != char(-1)) ) || c == '\t' || c == '\n' )// "ÿ" = -1
+		if ( ( (isprint(c) == 0) && (c != char(-1)) ) || c == '\t' || c == '\n' )// "Ñ" = -1
 		{
 			buffer[i]		= ' ';
 		}
@@ -56,7 +56,7 @@ void os_clipboard::paste_from_clipboard	( LPSTR buffer, u32 const& buffer_size )
 	CloseClipboard			();
 }
 
-void os_clipboard::update_clipboard		( LPCSTR string )
+void os_clipboard::update_clipboard		( LPCTSTR string )
 {
 	if ( !OpenClipboard(0) )
 		return;
@@ -68,19 +68,19 @@ void os_clipboard::update_clipboard		( LPCSTR string )
 		return;
 	}
 
-	LPSTR	memory			= (LPSTR)GlobalLock(handle);
-	int		memory_length	= (int)strlen(memory);
-	int		string_length	= (int)strlen(string);
-	int		buffer_size		= (memory_length + string_length + 1) * sizeof(char);
+	LPTSTR	memory			= (LPTSTR)GlobalLock(handle);
+	int		memory_length	= (int)wcslen(memory);
+	int		string_length	= (int)wcslen(string);
+	int		buffer_size		= (memory_length + string_length + 1) * sizeof(TCHAR);
 #ifndef _EDITOR
-	LPSTR	buffer			= (LPSTR)_alloca( buffer_size );
+	LPTSTR	buffer			= (LPTSTR)_alloca( buffer_size );
 #else // #ifndef _EDITOR
-	LPSTR	buffer			= (LPSTR)xr_alloc<char>( buffer_size );
+	LPTSTR	buffer			= (LPTSTR)xr_alloc<char>( buffer_size );
 #endif // #ifndef _EDITOR
-	strcpy_s				(buffer, buffer_size, memory);
+	wcscpy_s				(buffer, buffer_size, memory);
 	GlobalUnlock			(handle);
 
-	strcat					(buffer, string);
+	wcscat					(buffer, string);
 	CloseClipboard			();
 	copy_to_clipboard		(buffer);
 #ifdef _EDITOR
