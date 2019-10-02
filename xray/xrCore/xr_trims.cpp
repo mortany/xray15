@@ -312,7 +312,7 @@ float StrTimeToFloatTime(LPCTSTR buf, bool _h, bool _m, bool _s, bool _ms)
 }
 #endif
 
-void _SequenceToList(LPSTRVec& lst, LPCTSTR in, TCHAR separator)
+void _SequenceToList(LPCTSTRVec& lst, LPCTSTR in, TCHAR separator)
 {
 	int t_cnt=_GetItemCount(in,separator);
 	string1024 T;

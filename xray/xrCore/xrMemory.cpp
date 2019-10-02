@@ -265,7 +265,7 @@ TCHAR*			xr_strdup		(LPCTSTR string)
 		, "strdup"
 #endif // DEBUG_MEMORY_NAME
 	);
-	CopyMemory		(memory,string,len);
+	CopyMemoryW(memory,string,len);
 	return	memory;
 }
 

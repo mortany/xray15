@@ -28,11 +28,12 @@ int CLog::DlgMsg (TMsgDlgType mt, TMsgDlgButtons btn, LPCTSTR _Format, ...)
 	va_list l;
 	va_start( l, _Format );
 	wvsprintf( buf, _Format, l );
+	va_end(l);
 
 	int res=0;
 #ifdef _MAX_PLUGIN
 	switch(mt){
-	case mtError:		MessageBox(0, buf, LPCWSTR("Error"),		    MB_OK|MB_ICONERROR);		break;
+	case mtError:		MessageBox(0, buf, LPCWSTR("Error 1"),		MB_OK|MB_ICONERROR);		break;
 	case mtInformation: MessageBox(0, buf, LPCWSTR("Information"),	MB_OK|MB_ICONINFORMATION);	break;
 	default:			MessageBox(0, buf, LPCWSTR("Information"),	MB_OK|MB_ICONINFORMATION);	break;
 	}
@@ -53,12 +54,13 @@ int CLog::DlgMsg (TMsgDlgType mt, LPCTSTR _Format, ...)
 	va_list l;
 	va_start(l, _Format);
 	wvsprintf(buf, _Format, l);
+	va_end(l);
 
     int res=0;
 
 #ifdef _MAX_PLUGIN
 	switch(mt){
-	case mtError:		MessageBox(0, buf, LPCWSTR("Error"),		MB_OK|MB_ICONERROR);		break;
+	case mtError:		MessageBox(0, buf, LPCWSTR("Error 1"),		MB_OK|MB_ICONERROR);		break;
 	case mtInformation: MessageBox(0, buf, LPCWSTR("Information"),	MB_OK|MB_ICONINFORMATION);	break;
 	default:			MessageBox(0, buf, LPCWSTR("Information"),	MB_OK|MB_ICONINFORMATION);	break;
 	}
@@ -78,6 +80,7 @@ void CLog::Msg(TMsgDlgType mt, LPCTSTR _Format, ...)
 	va_list l;
 	va_start(l, _Format);
 	wvsprintf(buf, _Format, l);
+	va_end(l);
 
 #ifdef _MAX_EXPORT
 	EConsole.print(mt,buf);

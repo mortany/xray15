@@ -65,6 +65,14 @@ void LogStackTrace	(LPCTSTR header)
 
 void xrDebug::gather_info		(LPCTSTR expression, LPCTSTR description, LPCTSTR argument0, LPCTSTR argument1, LPCTSTR file, int line, LPCTSTR function, LPTSTR assertion_info)
 {
+
+	Log(TEXT("Expression :   "), expression);
+	Log(TEXT("File       :   "), file);
+	Log(TEXT("At line    :   "), std::to_wstring(line).c_str());
+	Log(TEXT("In func    :   "), function);
+
+	return;
+
 	LPTSTR				buffer = assertion_info;
 	LPCTSTR				endline = TEXT("\n");
 	LPCTSTR				prefix = TEXT("[error]");
@@ -162,7 +170,7 @@ void xrDebug::backend	(LPCTSTR expression, LPCTSTR description, LPCTSTR argument
 
 	error_after_dialog	= true;
 
-	string4096			assertion_info;
+	TCHAR				assertion_info[4096];
 
 	gather_info			(expression, description, argument0, argument1, file, line, function, assertion_info);
 
@@ -182,8 +190,14 @@ void xrDebug::backend	(LPCTSTR expression, LPCTSTR description, LPCTSTR argument
 
 	FlushLog();
 
+
+	//Msg(TEXT("Error:"), assertion_info);
+
 #ifdef XRCORE_STATIC
-	MessageBox			(NULL,assertion_info,TEXT("X-Ray error"),MB_OK|MB_ICONERROR|MB_SYSTEMMODAL);
+	//MessageBox			(NULL,assertion_info,TEXT("X-Ray error"),MB_OK|MB_ICONERROR|MB_SYSTEMMODAL);
+
+
+
 #else
 	HWND wnd = GetActiveWindow();
 	if (wnd == NULL)
@@ -307,13 +321,13 @@ void __cdecl xrDebug::fatal(LPCTSTR file, int line, LPCTSTR function, LPCTSTR  F
 	string1024	buffer;
 
 	va_list		p;
-	//va_start	(p,F);
-	//vwprintf	(buffer,F,p);
-	//va_end		(p);
+	va_start	(p,F);
+	_vswprintf	(buffer,F,p);
+	va_end		(p);
 
-	//bool		ignore_always = true;
+	bool		ignore_always = true;
 
-	//backend		(TEXT("fatal error","<no expression>"),buffer,0,file,line,function,ignore_always);
+	backend		(TEXT("fatal error"), TEXT("<no expression>"),buffer,0,file,line,function,ignore_always);
 }
 
 int out_of_memory_handler	(size_t size)

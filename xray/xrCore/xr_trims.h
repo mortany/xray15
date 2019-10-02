@@ -31,7 +31,7 @@ XRCORE_API u32		    	_ParseItem				( LPCTSTR src, xr_token* token_list );
 XRCORE_API u32		    	_ParseItem				( LPTSTR src, int ind, xr_token* token_list );
 XRCORE_API LPTSTR 	    	_ReplaceItem 			( LPCTSTR src, int index, LPCTSTR new_item, LPTSTR dst, TCHAR separator );
 XRCORE_API LPTSTR 	    	_ReplaceItems 			( LPCTSTR src, int idx_start, int idx_end, LPCTSTR new_items, LPTSTR dst, TCHAR separator );
-XRCORE_API void 	    	_SequenceToList			( LPSTRVec& lst, LPCTSTR in, TCHAR separator=',' );
+XRCORE_API void 	    	_SequenceToList			( LPCTSTRVec& lst, LPCTSTR in, TCHAR separator=',' );
 XRCORE_API void 			_SequenceToList			( RStringVec& lst, LPCTSTR in, TCHAR separator=',' );
 XRCORE_API void 			_SequenceToList			( SStringVec& lst, LPCTSTR in, TCHAR separator=',' );
 

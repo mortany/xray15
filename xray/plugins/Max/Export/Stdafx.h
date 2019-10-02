@@ -55,6 +55,8 @@ using std::string;
 
 #include <d3d9types.h>
 
+#pragma comment	(lib,"xrCoreStatic.lib")
+
 #define ENGINE_API
 #define ECORE_API
 

@@ -158,7 +158,7 @@ public:
                                                      
     bool						path_exist			(LPCTSTR path);
     FS_Path*					get_path			(LPCTSTR path);
-    FS_Path*					append_path			(LPCTSTR path_alias, LPCTSTR root, LPCTSTR add, BOOL recursive);
+    FS_Path*					append_path			(TCHAR* path_alias, LPCTSTR root, LPCTSTR add, BOOL recursive);
     LPCTSTR						update_path			(string_path& dest, LPCTSTR initial, LPCTSTR src);
 
 	int							file_list			(FS_FileSet& dest, LPCTSTR path, u32 flags=FS_ListFiles, LPCTSTR mask=0);

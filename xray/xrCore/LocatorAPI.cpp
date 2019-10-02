@@ -83,7 +83,7 @@ void _check_open_file(const shared_str& _fname)
 {
 	xr_vector<_open_file>::iterator it	= std::find_if(g_open_files.begin(), g_open_files.end(), eq_fname_check(_fname) );
 	if(it!=g_open_files.end())
-		Log(TEXT("file opened at least twice", _fname.c_str()));
+		Log(TEXT("file opened at least twice"), _fname.c_str());
 }
 
 _open_file& find_free_item(const shared_str& _fname)
@@ -170,7 +170,7 @@ XRCORE_API void _dump_open_files(int mode)
 		}
 	}
 	if(bShow)
-		Log(TEXT("----total count=",g_open_files.size()));
+		Log(TEXT("----total count="),g_open_files.size());
 }
 
 CLocatorAPI::CLocatorAPI()
@@ -706,31 +706,6 @@ void CLocatorAPI::_initialize	(u32 flags, LPCTSTR target_folder, LPCTSTR fs_name
 	}else
 	{
 	IReader			*pFSltx = setup_fs_ltx(fs_name);
-/*
-		LPCTSTR fs_ltx	= (fs_name&&fs_name[0])?fs_name:FSLTX;
-		F				= r_open(fs_ltx); 
-		if (!F&&m_Flags.is(flScanAppRoot))
-			F			= r_open("$app_root$",fs_ltx); 
-
-		if (!F)
-		{
-			string_path tmpAppPath = "";
-			wcscpy_s(tmpAppPath,sizeof(tmpAppPath), Core.ApplicationPath);
-			if (xr_strlen(tmpAppPath))
-			{
-				tmpAppPath[xr_strlen(tmpAppPath)-1] = 0;
-				if (strrchr(tmpAppPath, '\\'))
-					*(strrchr(tmpAppPath, '\\')+1) = 0;
-
-				FS_Path* pFSRoot		= FS.get_path("$fs_root$");
-				pFSRoot->_set_root		(tmpAppPath);
-				rescan_path				(pFSRoot->m_Path, pFSRoot->m_Flags.is(FS_Path::flRecurse));				
-			}
-			F				= r_open("$fs_root$",fs_ltx); 
-		}
-
-		Log				("using fs-ltx",fs_ltx);
-*/
 		// append all pathes    
 		string_path		id, root, add, def, capt;
 		LPCTSTR			lp_add, lp_def, lp_capt;
@@ -1361,7 +1336,7 @@ CLocatorAPI::files_it CLocatorAPI::file_find_it(LPCTSTR fname)
 
 	file			desc_f;
 	string_path		file_name;
-	VERIFY			(xr_strlen(fname)*sizeof(char) < sizeof(file_name));
+	VERIFY			(xr_strlen(fname)*sizeof(TCHAR) < sizeof(file_name));
 	wcscpy_s		(file_name,sizeof(file_name),fname);
 	desc_f.name		= file_name;
 //	desc_f.name		= xr_strlwr(xr_strdup(fname));

@@ -15,15 +15,15 @@ BOOL CExporter::ExportMotion(INode* pNode, LPCTSTR fname)
 {
 	m_Style				= eExportMotion;
 	ScanBones			(pNode);
-	int i				= U.ip->GetSelNodeCount(); 
-	while (i--)			ScanMesh(U.ip->GetSelNode(i));
+	int i				= U.ipanel->GetSelNodeCount();
+	while (i--)			ScanMesh(U.ipanel->GetSelNode(i));
 	if (!Capture())		return FALSE;
 	if (m_bHasError)	return FALSE;
 
 	int iFPS			= GetFrameRate();
 	int iTPF			= GetTicksPerFrame();
-	int iStartTick		= U.ip->GetAnimRange().Start();
-	int iEndTick		= U.ip->GetAnimRange().End();
+	int iStartTick		= U.ipanel->GetAnimRange().Start();
+	int iEndTick		= U.ipanel->GetAnimRange().End();
 
 	// build motion
 	CSMotion* MOT		= xr_new<CSMotion>();

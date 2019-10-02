@@ -45,8 +45,8 @@ void os_clipboard::paste_from_clipboard	( LPTSTR buffer, u32 const& buffer_size 
 	buffer[buffer_size]		= 0;
 	for ( u32 i = 0; i < wcslen( buffer ); ++i )
 	{
-		char c = buffer[i];
-		if ( ( (isprint(c) == 0) && (c != char(-1)) ) || c == '\t' || c == '\n' )// "я" = -1
+		TCHAR c = buffer[i];
+		if ( ( (isprint(c) == 0) && (c != TCHAR(-1)) ) || c == '\t' || c == '\n' )// "я" = -1
 		{
 			buffer[i]		= ' ';
 		}

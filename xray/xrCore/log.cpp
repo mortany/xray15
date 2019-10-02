@@ -88,7 +88,7 @@ void Log				(const TCHAR *s)
 void __cdecl Msg		( const TCHAR *format, ...)
 {
 	va_list		mark;
-	string2048	buf;
+	string4096  buf;
 	va_start	(mark, format );
 	int sz		= _vsnwprintf(buf, sizeof(buf)-1, format, mark ); buf[sizeof(buf)-1]=0;
     va_end		(mark);
@@ -184,7 +184,7 @@ void InitLog()
 
 void CreateLog			(BOOL nl)
 {
-    no_log				= nl;
+	no_log = false;//nl;
 	strconcat			(sizeof(log_file_name),log_file_name,Core.ApplicationName,TEXT("_"),Core.UserName,TEXT(".log"));
 	if (FS.path_exist(TEXT("$logs$")))
 		FS.update_path	(logFName,TEXT("$logs$"),log_file_name);

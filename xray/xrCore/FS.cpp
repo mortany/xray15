@@ -83,7 +83,7 @@ void VerifyPath(LPCTSTR path)
 	for(int i=0;path[i];i++){
 		if( path[i]!='\\' || i==0 )
 			continue;
-		CopyMemory( tmp, path, i );
+		CopyMemoryW( tmp, path, i );
 		tmp[i] = 0;
         _wmkdir(tmp);
 	}
@@ -132,29 +132,12 @@ bool file_handle_internal	(LPCTSTR file_name, u32 &size, int &file_handle)
 
 void *FileDownload		(LPCTSTR file_name, const int &file_handle, u32 &file_size)
 {
-	void				*buffer = Memory.mem_alloc	(
-		file_size
-#ifdef DEBUG_MEMORY_NAME
-		,"FILE in memory"
-#endif // DEBUG_MEMORY_NAME
-	);
+	void				*buffer = Memory.mem_alloc(file_size);
 
-	int					r_bytes	= _read(file_handle,buffer,file_size);
-	R_ASSERT3			(
-//		!file_size ||
-//		(r_bytes && (file_size >= (u32)r_bytes)),
-		file_size == (u32)r_bytes,
-		"can't read from file : ",
-		file_name
-	);
+	int					r_bytes	= read(file_handle,buffer,file_size);
+	R_ASSERT3			(file_size == (u32)r_bytes,	"can't read from file : ",file_name	);
 
-//	file_size			= r_bytes;
-
-	R_ASSERT3			(
-		!_close(file_handle),
-		"can't close file : ",
-		file_name
-	);
+	R_ASSERT3(!_close(file_handle),"can't close file : ",file_name);
 
 	return				(buffer);
 }
@@ -175,35 +158,35 @@ typedef TCHAR MARK[9];
 IC void mk_mark(MARK& M, const TCHAR* S)
 {	wcsncpy(M,S,8); }
 
-void  FileCompress	(const TCHAR *fn, const TCHAR * sign, void* data, u32 size)
-{
-	MARK M; mk_mark(M,sign);
+//void  FileCompress	(const TCHAR *fn, const TCHAR * sign, void* data, u32 size)
+//{
+//	MARK M; mk_mark(M,sign);
+//
+//	int H	= _wopen(fn,O_BINARY|O_CREAT|O_WRONLY|O_TRUNC,S_IREAD|S_IWRITE);
+//	//R_ASSERT2(H>0,fn);
+//	_write	(H,&M,8);
+//	_writeLZ(H,data,size);
+//	_close	(H);
+//}
 
-	int H	= _wopen(fn,O_BINARY|O_CREAT|O_WRONLY|O_TRUNC,S_IREAD|S_IWRITE);
-	//R_ASSERT2(H>0,fn);
-	_write	(H,&M,8);
-	_writeLZ(H,data,size);
-	_close	(H);
-}
-
-void*  FileDecompress	(const TCHAR*fn, const TCHAR* sign, u32* size)
-{
-	MARK M,F; mk_mark(M,sign);
-
-	int	H = _wopen	(fn,O_BINARY|O_RDONLY);
-	//R_ASSERT2(H>0,fn);
-	_read	(H,&F,8);
-	if (wcsncmp(M,F,8)!=0)		{
-		F[8]=0;		Msg(TEXT("FATAL: signatures doesn't match, file(%s) / requested(%s)"),F,sign);
-	}
-    //R_ASSERT(strncmp(M,F,8)==0);
-
-	void* ptr = 0; u32 SZ;
-	SZ = _readLZ (H, ptr, filelength(H)-8);
-	_close	(H);
-	if (size) *size = SZ;
-	return ptr;
-}
+//void*  FileDecompress	(const char*fn, const char* sign, u32* size)
+//{
+//	MARK M,F; mk_mark(M,sign);
+//
+//	int	H = _wopen	(fn,O_BINARY|O_RDONLY);
+//	//R_ASSERT2(H>0,fn);
+//	_read	(H,&F,8);
+//	if (wcsncmp(M,F,8)!=0)		{
+//		F[8]=0;		Msg(TEXT("FATAL: signatures doesn't match, file(%s) / requested(%s)"),F,sign);
+//	}
+//    //R_ASSERT(strncmp(M,F,8)==0);
+//
+//	void* ptr = 0; u32 SZ;
+//	SZ = _readLZ (H, ptr, filelength(H)-8);
+//	_close	(H);
+//	if (size) *size = SZ;
+//	return ptr;
+//}
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -230,7 +213,7 @@ void CMemoryWriter::w	(const void* ptr, u32 count)
 #endif // DEBUG_MEMORY_NAME
 			);
 	}
-	CopyMemory	(data+position,ptr,count);
+	CopyMemoryW(data+position,ptr,count);
 	position		+=count;
 	if (position>file_size) file_size=position;
 }
@@ -304,13 +287,13 @@ void 	IWriter::w_sdir	(const Fvector& D)
 	w_dir	(C);
 	w_float (mag);
 }
-void	IWriter::w_printf(const char* format, ...)
+void	IWriter::w_printf(const TCHAR* format, ...)
 {
 	va_list mark;
-	char buf[1024];
+	TCHAR buf[1024];
 
 	va_start( mark , format );
-		vsprintf_s( buf , format , mark );
+		vswprintf_s( buf , format , mark );
 	va_end( mark );
 
 	w		( buf, xr_strlen(buf) );
@@ -388,24 +371,16 @@ IReader*	IReader::open_chunk_iterator	(u32& ID, IReader* _prev)
 
 void	IReader::r	(void *p,int cnt)
 {
-	VERIFY			(Pos+cnt<=Size);
-	CopyMemory		(p,pointer(),cnt);
-	advance			(cnt);
-#ifdef DEBUG
-	BOOL	bShow		= FALSE		;
-	if (dynamic_cast<CFileReader*>(this))			bShow = TRUE;
-	if (dynamic_cast<CVirtualFileReader*>(this))	bShow = TRUE;
-	if (bShow)			{
-  		FS.dwOpenCounter	++		;
-	}
-#endif
+	VERIFY(Pos+cnt<=Size);
+	CopyMemoryW(p,pointer(),cnt);
+	advance(cnt);
 };
 
-IC BOOL			is_term		(char a) { return (a==13)||(a==10); };
+IC BOOL			is_term		(TCHAR a) { return (a==13)||(a==10); };
 IC u32	IReader::advance_term_string()
 {
 	u32 sz		= 0;
-	char *src 	= (char *) data;
+	TCHAR*src 	= (TCHAR*) data;
 	while (!eof()) {
         Pos++;
         sz++;
@@ -418,9 +393,22 @@ IC u32	IReader::advance_term_string()
 	}
     return sz;
 }
-void	IReader::r_string	(TCHAR*dest, u32 tgt_sz)
+
+#include <codecvt>
+
+// Convert an UTF8 string to a wide Unicode String
+TCHAR * wstring_convert_from_char(const char* str)
 {
-	TCHAR*src 	= (TCHAR*) data+Pos;
+	std::wstring_convert<std::codecvt_utf16<wchar_t>, wchar_t> converter;
+
+	std::wstring result = converter.from_bytes(str);
+
+	return (TCHAR *)result.c_str();
+}
+
+void	IReader::r_string	(char* dest, u32 tgt_sz)
+{
+	char* src = (char *)(data + Pos);
 	u32 sz 		= advance_term_string();
     R_ASSERT2(sz<(tgt_sz-1),"Dest string less than needed.");
 	R_ASSERT	(!IsBadReadPtr((void*)src,sz));
@@ -428,20 +416,23 @@ void	IReader::r_string	(TCHAR*dest, u32 tgt_sz)
 #ifdef _EDITOR
 	CopyMemory	 (dest,src,sz);
 #else
-    wcsncpy_s	(dest,tgt_sz, src,sz);
+    strncpy_s	(dest,tgt_sz, src,sz);
 #endif
     dest[sz]	= 0;
 }
 void	IReader::r_string	(xr_string& dest)
 {
-	TCHAR*src 	= (TCHAR*) data+Pos;
+	char*src 	= (char*) data+Pos;
 	u32 sz 		= advance_term_string();
-    dest.assign	(src,sz);
+
+	TCHAR* buf = wstring_convert_from_char(src);
+
+    dest.assign	(buf,sz);
 }
-void	IReader::r_stringZ	(TCHAR *dest, u32 tgt_sz)
+void	IReader::r_stringZ	(char*dest, u32 tgt_sz)
 {
-	TCHAR*src 	= (TCHAR*) data;
-	u32 sz 		= xr_strlen(src);
+	char*src 	= (char*) data;
+	u32 sz 		= strlen(src);
     R_ASSERT2(sz<tgt_sz,"Dest string less than needed.");
 	while ((src[Pos]!=0) && (!eof())) *dest++ = src[Pos++];
 	*dest		=	0;
@@ -460,7 +451,7 @@ void	IReader::r_stringZ	(xr_string& dest)
 
 void	IReader::skip_stringZ	()
 {
-	char *src = (char *) data;
+	TCHAR *src = (TCHAR *) data;
 	while ((src[Pos]!=0) && (!eof())) Pos++;
 	Pos		++;
 };
@@ -481,20 +472,21 @@ CPackReader::~CPackReader()
 };
 //---------------------------------------------------
 // file stream
-CFileReader::CFileReader(const TCHAR*name)
+CFileReader::CFileReader(const char*name)
 {
-    data	= (TCHAR*)FileDownload(name,(u32 *)&Size);
+
+    data	= (char*)FileDownload(wstring_convert_from_char(name),(u32 *)&Size);
     Pos		= 0;
 };
 CFileReader::~CFileReader()
 {	xr_free(data);	};
 //---------------------------------------------------
 // compressed stream
-CCompressedReader::CCompressedReader(const TCHAR *name, const TCHAR *sign)
-{
-    data	= (TCHAR*)FileDecompress(name,sign,(u32*)&Size);
-    Pos		= 0;
-}
+//CCompressedReader::CCompressedReader(const char *name, const TCHAR *sign)
+//{
+//    data	= (char*)FileDecompress(name,sign,(u32*)&Size);
+//    Pos		= 0;
+//}
 CCompressedReader::~CCompressedReader()
 {	xr_free(data);	};
 
@@ -510,7 +502,7 @@ CVirtualFileRW::CVirtualFileRW(const TCHAR* cFileName)
 	hSrcMap			= CreateFileMapping (hSrcFile, 0, PAGE_READWRITE, 0, 0, 0);
 	//R_ASSERT3		(hSrcMap!=INVALID_HANDLE_VALUE,cFileName,Debug.error2string(GetLastError()));
 
-	data			= (TCHAR*)MapViewOfFile (hSrcMap, FILE_MAP_ALL_ACCESS, 0, 0, 0);
+	data			= (char*)MapViewOfFile (hSrcMap, FILE_MAP_ALL_ACCESS, 0, 0, 0);
 	//R_ASSERT3		(data,cFileName,Debug.error2string(GetLastError()));
 
 #ifdef DEBUG
@@ -540,7 +532,7 @@ CVirtualFileReader::CVirtualFileReader(const TCHAR* cFileName)
 	hSrcMap			= CreateFileMapping (hSrcFile, 0, PAGE_READONLY, 0, 0, 0);
 	//R_ASSERT3		(hSrcMap!=INVALID_HANDLE_VALUE,cFileName,Debug.error2string(GetLastError()));
 
-	data			= (TCHAR*)MapViewOfFile (hSrcMap, FILE_MAP_READ, 0, 0, 0);
+	data			= (char*)MapViewOfFile (hSrcMap, FILE_MAP_READ, 0, 0, 0);
 	//R_ASSERT3		(data,cFileName,Debug.error2string(GetLastError()));
 
 #ifdef DEBUG

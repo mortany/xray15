@@ -31,7 +31,7 @@ public:
 	IWriter	()
 	{
 	}
-	virtual	~IWriter	() { R_ASSERT3(chunk_pos.empty(), "Opened chunk not closed.", *fName); }
+	virtual	~IWriter	() { /*R_ASSERT3(chunk_pos.empty(), "Opened chunk not closed.", *fName);*/ }
 
 	// kernel
 	virtual void	seek	(u32 pos)						= 0;
@@ -79,7 +79,7 @@ public:
 	IC void 		w_angle8	(float a)		    {	w_float_q8	(angle_normalize(a),0,PI_MUL_2);}
 	IC void 		w_dir		(const Fvector& D) 	{	w_u16(pvCompress(D));	}
 	void 			w_sdir		(const Fvector& D);
-	void	__cdecl	w_printf	(const char* format, ...);
+	void	__cdecl	w_printf	(const TCHAR* format, ...);
 
 	// generalized chunking
 	u32				align		();
@@ -235,7 +235,7 @@ private:
 
 class XRCORE_API IReader : public IReaderBase<IReader> {
 protected:
-	TCHAR*			data	;
+	char*			data	;
 	int				Pos		;
 	int				Size	;
 	int				iterpos	;
@@ -250,7 +250,7 @@ public:
 
 	IC				IReader			(void *_data, int _size, int _iterpos=0)
 	{
-		data		= (TCHAR*)_data	;
+		data		= (char*)_data	;
 		Size		= _size			;
 		Pos			= 0				;
 		iterpos		= _iterpos		;
@@ -277,12 +277,12 @@ public:
 public:
 	void			r			(void *p,int cnt);
 
-	void			r_string	(TCHAR *dest, u32 tgt_sz);
+	void			r_string	(char *dest, u32 tgt_sz);
 	void			r_string	(xr_string& dest);
 
 	void			skip_stringZ();
 
-	void			r_stringZ	(TCHAR *dest, u32 tgt_sz);
+	void			r_stringZ	(char *dest, u32 tgt_sz);
 	void			r_stringZ	(shared_str& dest);
 	void			r_stringZ	(xr_string& dest);
 

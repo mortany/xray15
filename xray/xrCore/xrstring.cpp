@@ -89,7 +89,7 @@ struct str_container_impl
 			str_value* value = buffer[i];
 			while ( value )
 			{
-				fprintf	(f,"ref[%4d]-len[%3d]-crc[%8X] : %s\n",value->dwReference,value->dwLength,value->dwCRC,value->value);
+				fwprintf	(f,TEXT("ref[%4d]-len[%3d]-crc[%8X] : %s\n"),value->dwReference,value->dwLength,value->dwCRC,value->value);
 				value = value->next;
 			}
 		}
@@ -133,7 +133,7 @@ str_value*	str_container::dock		(LPCTSTR value)
 	VERIFY	(HEADER+s_len_with_zero < 4096);
 
 	// setup find structure
-	char	header[sizeof(str_value)];
+	TCHAR						header[sizeof(str_value)];
 	str_value*	sv				= (str_value*)header;
 	sv->dwReference				= 0;
 	sv->dwLength				= s_len;
@@ -165,7 +165,7 @@ str_value*	str_container::dock		(LPCTSTR value)
 		result->dwReference		= 0;
 		result->dwLength		= sv->dwLength;
 		result->dwCRC			= sv->dwCRC;
-		CopyMemory				(result->value,value,s_len_with_zero);
+		CopyMemoryW				(result->value,value,s_len_with_zero);
 
 		impl->insert (result);
 	}
@@ -260,7 +260,7 @@ str_value*	str_container::dock		(str_c value)
 	VERIFY	(HEADER+s_len_with_zero < 4096);
 
 	// setup find structure
-	char	header[sizeof(str_value)];
+	TCHAR	header[sizeof(str_value)];
 	str_value*	sv				= (str_value*)header;
 	sv->dwReference				= 0;
 	sv->dwLength				= s_len;

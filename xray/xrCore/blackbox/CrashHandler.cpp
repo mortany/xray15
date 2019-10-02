@@ -52,7 +52,7 @@ static BYTE g_stSymbol [ SYM_BUFF_SIZE ] ;
 
 // The static source file and line number structure
 
-static IMAGEHLP_LINE g_stLine;
+static IMAGEHLP_LINEW64 g_stLine;
 // The stack frame used in walking the stack
 static STACKFRAME g_stFrame ;
 
@@ -78,7 +78,7 @@ LPCTSTR __stdcall
 BOOL InternalSymGetLineFromAddr ( IN  HANDLE          hProcess        ,
                                   IN  DWORD           dwAddr          ,
                                   OUT PDWORD          pdwDisplacement ,
-                                  OUT PIMAGEHLP_LINE  Line            );
+                                  OUT PIMAGEHLP_LINEW64  Line            );
 
 // Initializes the symbol engine if needed
 void InitSymEng ( void ) ;
@@ -538,11 +538,7 @@ LPCTSTR __stdcall GetFaultReason ( EXCEPTION_POINTERS * pExPtrs )
 
             // Copy no more of the source file and line number
             // information than there's room for.
-            std::string buffer = g_stLine.FileName;
-            std::wstring output_str;
-            for (char it : buffer)
-                output_str += it;
-            LPCWSTR pName = output_str.c_str();
+            LPCWSTR pName = g_stLine.FileName;
             dwTemp = lstrlen ( pName ) ;
             if ( (int)dwTemp > ( BUFF_SIZE - iCurr -
                                  MAX_PATH - 50       ) )
@@ -870,11 +866,7 @@ LPCTSTR __stdcall
 
                 // Copy no more of the source file and line number
                 // information than there's room for.
-                std::string buffer = g_stLine.FileName;
-                std::wstring output_str;
-                for (char it : buffer)
-                    output_str += it;
-                LPCWSTR pName = output_str.c_str();
+                LPCWSTR pName = g_stLine.FileName;
 
                 dwTemp = lstrlen ( pName ) ;
                 if ( dwTemp > (DWORD)( BUFF_SIZE - iCurr -
@@ -1159,7 +1151,7 @@ LPCTSTR ConvertSimpleException ( DWORD dwExcept )
 BOOL InternalSymGetLineFromAddr ( IN  HANDLE          hProcess        ,
                                   IN  DWORD           dwAddr          ,
                                   OUT PDWORD          pdwDisplacement ,
-                                  OUT PIMAGEHLP_LINE  Line            )
+                                  OUT PIMAGEHLP_LINEW64  Line            )
 {
 #ifdef WORK_AROUND_SRCLINE_BUG
 
@@ -1191,7 +1183,7 @@ BOOL InternalSymGetLineFromAddr ( IN  HANDLE          hProcess        ,
     return ( TRUE ) ;
 
 #else  // WORK_AROUND_SRCLINE_BUG
-    return ( SymGetLineFromAddr ( hProcess         ,
+    return ( SymGetLineFromAddrW64 ( hProcess         ,
                                   dwAddr           ,
                                   pdwDisplacement  ,
                                   Line              ) ) ;
@@ -1216,16 +1208,16 @@ void InitSymEng ( void )
         // Force the invade process flag no matter what operating system
         // I'm on.
         HANDLE hPID = (HANDLE)GetCurrentProcessId ( ) ;
-        std::wstring string_to_convert = g_application_path;
-        std::string converted_str;
-        for (char it : string_to_convert)
-            converted_str += it;
+        //std::wstring string_to_convert = g_application_path;
+        //std::string converted_str;
+        //for (char it : string_to_convert)
+            //converted_str += it;
 
-        char* pName = const_cast<char*>(converted_str.c_str());
-		/*VERIFY ( BSUSymInitialize ( (DWORD)hPID ,
+        //char* pName = const_cast<char*>(converted_str.c_str());
+		VERIFY ( BSUSymInitialize ( (DWORD)hPID ,
                                     hPID        ,
-                                    pName,
-                                    TRUE         ) ) ;*/
+									g_application_path,
+                                    TRUE         ) ) ;
         g_bSymEngInit = TRUE ;
     }
 }

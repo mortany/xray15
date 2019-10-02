@@ -45,22 +45,22 @@ USE_BUGSLAYERUTIL - If defined, the class will have another
 // structure.
 
 // The IMAGEHLP_MODULE wrapper class
-struct CImageHlp_Module : public IMAGEHLP_MODULE
+struct CImageHlp_Module : public IMAGEHLP_MODULEW64
 {
     CImageHlp_Module ( )
     {
-        FillMemory ( this , sizeof ( IMAGEHLP_MODULE ), NULL ) ;
-        SizeOfStruct = sizeof ( IMAGEHLP_MODULE ) ;
+        FillMemory ( this , sizeof (IMAGEHLP_MODULEW64), NULL ) ;
+        SizeOfStruct = sizeof (IMAGEHLP_MODULEW64) ;
     }
 } ;
 
 // The IMAGEHLP_LINE wrapper class
-struct CImageHlp_Line : public IMAGEHLP_LINE
+struct CImageHlp_Line : public IMAGEHLP_LINEW64
 {
     CImageHlp_Line ( )
     {
-        FillMemory ( this , sizeof ( IMAGEHLP_LINE ) , NULL ) ;
-        SizeOfStruct = sizeof ( IMAGEHLP_LINE ) ;
+        FillMemory ( this , sizeof ( IMAGEHLP_LINEW64 ) , NULL ) ;
+        SizeOfStruct = sizeof ( IMAGEHLP_LINEW64 ) ;
     }
 } ;
 
@@ -232,18 +232,21 @@ public      :
                                          UserContext           ) ) ;
     }
 
-    BOOL SymLoadModule ( IN  HANDLE hFile       ,
-                         IN  PSTR   ImageName   ,
-                         IN  PSTR   ModuleName  ,
+    BOOL SymLoadModuleExW( IN  HANDLE hFile       ,
+                         IN  LPCTSTR   ImageName   ,
+                         IN  LPCTSTR   ModuleName  ,
                          IN  DWORD  BaseOfDll   ,
-                         IN  DWORD  SizeOfDll    )
+                         IN  DWORD  SizeOfDll   ,
+						 IN  PMODLOAD_DATA data, IN  DWORD  FLAG)
     {
-        return ( ::SymLoadModule ( m_hProcess   ,
+        return ( ::SymLoadModuleExW ( m_hProcess   ,
                                    hFile        ,
                                    ImageName    ,
                                    ModuleName   ,
                                    BaseOfDll    ,
-                                   SizeOfDll     ) ) ;
+                                   SizeOfDll    ,
+								   NULL,NULL
+												) ) ;
     }
 
     BOOL EnumerateLoadedModules ( IN PENUMLOADED_MODULES_CALLBACK
@@ -260,14 +263,16 @@ public      :
         return ( ::SymUnloadModule ( m_hProcess , BaseOfDll ) ) ;
     }
 
-    BOOL SymGetModuleInfo ( IN  DWORD            dwAddr     ,
-                            OUT PIMAGEHLP_MODULE ModuleInfo  )
+	// Not needed because DiagAssert excluded
+    BOOL SymGetModuleInfoW ( IN  DWORD            dwAddr     ,
+                            OUT PIMAGEHLP_MODULEW ModuleInfo  )
     {
-        return ( ::SymGetModuleInfo ( m_hProcess    ,
+        return ( ::SymGetModuleInfoW ( m_hProcess    ,
                                       dwAddr        ,
                                       ModuleInfo     ) ) ;
     }
 
+	// Not needed because DiagAssert excluded
     DWORD SymGetModuleBase ( IN DWORD dwAddr )
     {
         return ( ::SymGetModuleBase ( m_hProcess , dwAddr ) ) ;
@@ -293,6 +298,7 @@ public      :
                              OUT PDWORD_PTR          pdwDisplacement ,
                              OUT PIMAGEHLP_SYMBOL    Symbol           )
     {
+
         return ( ::SymGetSymFromAddr ( m_hProcess       ,
                                        dwAddr           ,
                                        pdwDisplacement  ,
@@ -307,14 +313,14 @@ public      :
                                        Symbol      ) ) ;
     }
 
-    BOOL SymGetSymNext ( IN OUT PIMAGEHLP_SYMBOL Symbol )
+    BOOL SymGetSymNext ( IN OUT PIMAGEHLP_SYMBOLW Symbol )
     {
-        return ( ::SymGetSymNext ( m_hProcess , Symbol ) ) ;
+        return ( ::SymGetSymNextW ( m_hProcess , Symbol ) ) ;
     }
 
-    BOOL SymGetSymPrev ( IN OUT PIMAGEHLP_SYMBOL Symbol )
+    BOOL SymGetSymPrev ( IN OUT PIMAGEHLP_SYMBOLW Symbol )
     {
-        return ( ::SymGetSymPrev ( m_hProcess , Symbol ) ) ;
+        return ( ::SymGetSymPrevW ( m_hProcess , Symbol ) ) ;
     }
 
 /*----------------------------------------------------------------------
@@ -324,7 +330,7 @@ public      :
 
     BOOL SymGetLineFromAddr ( IN  DWORD          dwAddr          ,
                               OUT PDWORD         pdwDisplacement ,
-                              OUT PIMAGEHLP_LINE Line             )
+                              OUT PIMAGEHLP_LINEW64 Line             )
     {
 
 #ifdef DO_NOT_WORK_AROUND_SRCLINE_BUG
@@ -340,7 +346,7 @@ public      :
         // a zero displacement. I’ll walk backward 100 bytes to
         // find the line and return the proper displacement.
         DWORD dwTempDis = 0 ;
-        while ( FALSE == ::SymGetLineFromAddr ( m_hProcess          ,
+        while ( FALSE == ::SymGetLineFromAddrW ( m_hProcess          ,
                                                 dwAddr - dwTempDis  ,
                                                 pdwDisplacement     ,
                                                 Line                 ) )
@@ -362,13 +368,13 @@ public      :
 #endif // DO_NOT_WORK_AROUND_SRCLINE_BUG
     }
 
-    BOOL SymGetLineFromName ( IN     PCSTR          ModuleName      ,
-                              IN     PCSTR          FileName        ,
+    BOOL SymGetLineFromName ( IN     LPCTSTR          ModuleName      ,
+                              IN     LPCTSTR          FileName        ,
                               IN     DWORD          dwLineNumber    ,
                               OUT    PLONG          plDisplacement  ,
-                              IN OUT PIMAGEHLP_LINE Line             )
+                              IN OUT PIMAGEHLP_LINEW64 Line             )
     {
-        return ( ::SymGetLineFromName ( m_hProcess       ,
+        return ( ::SymGetLineFromNameW64 ( m_hProcess       ,
                                         ModuleName       ,
                                         FileName         ,
                                         dwLineNumber     ,
@@ -386,12 +392,12 @@ public      :
         return ( ::SymGetLinePrev ( m_hProcess , Line ) ) ;
     }
 
-    BOOL SymMatchFileName ( IN  PCSTR   FileName        ,
-                            IN  PCSTR   Match           ,
-                            OUT PSTR * FileNameStop    ,
-                            OUT PSTR * MatchStop        )
+    BOOL SymMatchFileName ( IN  LPTSTR   FileName        ,
+                            IN  LPTSTR   Match           ,
+                            OUT LPTSTR* FileNameStop    ,
+                            OUT LPTSTR* MatchStop        )
     {
-        return ( ::SymMatchFileName ( FileName       ,
+        return ( ::SymMatchFileNameW ( FileName       ,
                                       Match          ,
                                       FileNameStop   ,
                                       MatchStop       ) ) ;
@@ -407,17 +413,17 @@ public      :
         return ( ::SymFunctionTableAccess ( m_hProcess , AddrBase ) ) ;
     }
 
-    BOOL SymGetSearchPath ( OUT PSTR SearchPath        ,
+    BOOL SymGetSearchPath ( OUT LPTSTR SearchPath        ,
                             IN  DWORD SearchPathLength   )
     {
-        return ( ::SymGetSearchPath ( m_hProcess       ,
+        return ( ::SymGetSearchPathW ( m_hProcess       ,
                                       SearchPath       ,
                                       SearchPathLength  ) ) ;
     }
 
-    BOOL SymSetSearchPath ( IN PCSTR SearchPath )
+    BOOL SymSetSearchPath ( IN LPTSTR SearchPath )
     {
-        return ( ::SymSetSearchPath ( m_hProcess , SearchPath ) ) ;
+        return ( ::SymSetSearchPathW ( m_hProcess , SearchPath ) ) ;
     }
 
     BOOL SymRegisterCallback ( IN PSYMBOL_REGISTERED_CALLBACK

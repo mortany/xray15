@@ -70,7 +70,7 @@ void CEditableObject::VerifyMeshNames()
 	int idx=0;
 	string1024 	nm,pref; 
     for(EditMeshIt m_def=m_Meshes.begin();m_def!=m_Meshes.end();m_def++){
-		wcscpy	(pref,(*m_def)->m_Name.size()?(*m_def)->m_Name.c_str():TEXT("mesh"));
+		wcscpy_s	(pref,(*m_def)->m_Name.size()?(*m_def)->m_Name.c_str():TEXT("mesh"));
         _Trim	(pref);
 		wcscpy	(nm,pref);
 		while (FindMeshByName(nm,*m_def))
@@ -90,7 +90,7 @@ bool CEditableObject::ContainsMesh(const CEditableMesh* m)
 CEditableMesh* CEditableObject::FindMeshByName	(LPCTSTR name, CEditableMesh* Ignore)
 {
     for(EditMeshIt m=m_Meshes.begin();m!=m_Meshes.end();m++)
-        if ((Ignore!=(*m))&&(wcsicmp((*m)->Name().c_str(),name)==0)) return (*m);
+        if ((Ignore!=(*m))&&(_wcsicmp((*m)->Name().c_str(),name)==0)) return (*m);
     return 0;
 }
 
@@ -173,14 +173,14 @@ void CEditableObject::TranslateToWorld(const Fmatrix& parent)
 
 CSurface*	CEditableObject::FindSurfaceByName(LPCTSTR surf_name, int* s_id){
 	for(SurfaceIt s_it=m_Surfaces.begin(); s_it!=m_Surfaces.end(); s_it++)
-    	if (wcsicmp((*s_it)->_Name(),surf_name)==0){ if (s_id) *s_id=s_it-m_Surfaces.begin(); return *s_it;}
+    	if (_wcsicmp((*s_it)->_Name(),surf_name)==0){ if (s_id) *s_id=s_it-m_Surfaces.begin(); return *s_it;}
     return 0;
 }
 
 LPCTSTR CEditableObject::GenerateSurfaceName(LPCTSTR base_name)
 {
 	static string1024 nm;
-	wcscpy(nm, base_name);
+	wcscpy_s(nm, base_name);
 	if (FindSurfaceByName(nm)){
 		DWORD idx=0;
 		do{

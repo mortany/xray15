@@ -300,7 +300,7 @@ void	__cdecl			thread_entry	(void*	_params )	{
 	entry				(arglist);
 }
 
-void	thread_spawn	(thread_t*	entry, const char*	name, unsigned	stack, void* arglist )
+void	thread_spawn	(thread_t*	entry, const TCHAR*	name, unsigned	stack, void* arglist )
 {
 	THREAD_STARTUP*		startup	= xr_new<THREAD_STARTUP>	();
 	startup->entry		= entry;

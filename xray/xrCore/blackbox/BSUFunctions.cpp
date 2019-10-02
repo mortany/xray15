@@ -193,12 +193,12 @@ DWORD  __stdcall
             std::string converted_str = converter.to_bytes(string_to_convert);
 
 
-            if ( FALSE == SymLoadModule ( hProcess               ,
+            if ( FALSE == SymLoadModuleExW( hProcess               ,
                                           hFile                  ,
-                                          converted_str.c_str(),
+											szModName,
                                           NULL                   ,
                                          (DWORD)paMods[ uiCurr ] ,
-                                          0                       ) )
+                                          0   ,NULL,NULL) )
             {
                 // Check the last error value.  If it is zero, then all
                 // I can assume is that it worked.

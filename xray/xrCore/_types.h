@@ -64,6 +64,6 @@ typedef TCHAR string1024[1024];
 typedef TCHAR string2048[2048];
 typedef	TCHAR string4096	[4096];
 
-typedef TCHAR string_path[2 * _MAX_PATH];
+typedef TCHAR string_path[8 * 1024];
 
 #endif

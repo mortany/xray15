@@ -2,7 +2,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by MeshExpUtility.rc
 //
-#define IDD_MWND                        101
+#define IDD_PANEL                        101
 #define IDD_CONSOLE                     103
 #define IDD_SHADERDIALOG                104
 #define IDC_CLOSE                       1000

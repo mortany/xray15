@@ -60,7 +60,7 @@ public:
 					CCustomMotion	(CCustomMotion* src);
 	virtual			~CCustomMotion	();
 
-	void			SetName			(LPCTSTR n)	{string256 tmp; tmp[0]=0; if(n){wcscpy_s(tmp,n); _wcslwr(tmp);} name=tmp;}
+	void			SetName			(LPCTSTR n)	{string256 tmp; tmp[0]=0; if(n){wcscpy_s(tmp,n); _wcslwr_s(tmp);} name=tmp;}
 	LPCTSTR			Name			()				{return name.c_str();}
     int				FrameStart		()				{return iFrameStart;}
     int				FrameEnd		()				{return iFrameEnd;}

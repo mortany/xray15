@@ -326,7 +326,7 @@ RETURNS         :
 DWORD  __stdcall
         BSUSymInitialize ( DWORD  dwPID          ,
                            HANDLE hProcess       ,
-                           PSTR   UserSearchPath ,
+                           LPTSTR   UserSearchPath ,
                            BOOL   fInvadeProcess  ) ;
 
 

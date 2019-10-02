@@ -51,7 +51,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, ULONG fdwReason, LPVOID /*lpvReserved*/)
 {
 	if (fdwReason == DLL_PROCESS_ATTACH)
 	{
-		MaxSDK::Util::UseLanguagePackLocale();
+		//MaxSDK::Util::UseLanguagePackLocale();
 		// Hang on to this DLL's instance handle.
 		hInstance = hinstDLL;
 		DisableThreadLibraryCalls(hInstance);
@@ -67,18 +67,12 @@ __declspec(dllexport) int LibInitialize(void)
 		controlsInit = TRUE;
 		Core._initialize(TEXT("S.T.A.L.K.E.R.Plugin"), ELogCallback, FALSE);
 		FS._initialize(CLocatorAPI::flScanAppRoot, NULL, TEXT("xray_path.ltx"));
-		//FPU::m64r(); // нужно чтобы макс не сбрасывал контрольки в 0
-		//InitCustomControls(hInstance);
-		//InitCommonControls();
-		Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+		FPU::m64r(); // нужно чтобы макс не сбрасывал контрольки в 0
+		InitCommonControls();
+		//Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 		ELog.Msg(mtInformation, TEXT("S.T.A.L.K.E.R. Object Export (ver. %d.%02d))", EXPORTER_VERSION, EXPORTER_BUILD));
 		ELog.Msg(mtInformation, TEXT("-------------------------------------------------------"));
 	}
-	//Core._initialize("S.T.A.L.K.E.R.Plugin", ELogCallback, FALSE);
-	//FS._initialize(CLocatorAPI::flScanAppRoot, NULL, "xray_path.ltx");
-	//FPU::m64r(); // нужно чтобы макс не сбрасывал контрольки в 0
-	//InitCommonControls();
-	//Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 	return TRUE;
 }
 

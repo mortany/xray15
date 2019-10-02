@@ -90,7 +90,7 @@ public:
 	};
 	IC void	w		( const void* p, u32 count )
 	{
-		R_ASSERT	(inistream==NULL || w_allow);
+		//R_ASSERT	(inistream==NULL || w_allow);
 		VERIFY		(p && count);
 		VERIFY		(B.count + count < NET_PacketSizeLimit);
 		CopyMemory(&B.data[B.count],p,count);
@@ -169,7 +169,7 @@ public:
 	{
 		position	= w_tell();
 		w_u8		(0);
-		INI_ASSERT	(w_chunk_open8)
+		//INI_ASSERT	(w_chunk_open8)
 	}
 	
 	IC void w_chunk_close8		(u32 position)
@@ -178,14 +178,14 @@ public:
 		VERIFY		(size<256	);
 		u8			_size = (u8)size;
 		w_seek		(position,&_size,sizeof(_size));
-		INI_ASSERT	(w_chunk_close8)
+		//INI_ASSERT	(w_chunk_close8)
 	}
 
 	IC void	w_chunk_open16		(u32& position)
 	{
 		position	= w_tell	();
 		w_u16		(0);
-		INI_ASSERT	(w_chunk_open16)
+		//INI_ASSERT	(w_chunk_open16)
 	}
 
 	IC void w_chunk_close16		(u32 position)
@@ -194,7 +194,7 @@ public:
 		VERIFY		(size < 65536);
 		u16			_size = (u16)size;
 		w_seek		(position,&_size,sizeof(_size));
-		INI_ASSERT	(w_chunk_close16)
+		//INI_ASSERT	(w_chunk_close16)
 	}
 
 	// reading
@@ -205,7 +205,7 @@ public:
 
 	IC void		r				( void* p, u32 count)
 	{
-		R_ASSERT	(inistream==NULL);
+		//R_ASSERT	(inistream==NULL);
 		VERIFY		(p && count);
 		CopyMemory	(p,&B.data[r_pos],count);
 		r_pos		+= count;

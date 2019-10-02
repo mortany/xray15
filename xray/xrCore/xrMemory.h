@@ -34,7 +34,7 @@ public:
 	struct				mdbg {
 		void*			_p;
 		size_t 			_size;
-		const char*		_name;
+		const TCHAR*		_name;
 		u32				_dummy;
 	};
 public:
@@ -54,7 +54,7 @@ public:
 	u32					stat_calls;
 	s32					stat_counter;
 public:
-	void				dbg_register	(void* _p,	size_t _size, const char* _name);
+	void				dbg_register	(void* _p,	size_t _size, const TCHAR* _name);
 	void				dbg_unregister	(void* _p);
 	void				dbg_check		();
 
@@ -85,6 +85,7 @@ extern XRCORE_API	xrMemory	Memory;
 #undef	FillMemory
 #define ZeroMemory(a,b)		Memory.mem_fill(a,0,b)
 #define CopyMemory(a,b,c)	memcpy(a,b,c)			//. CopyMemory(a,b,c)
+#define CopyMemoryW(a,b,c)	memcpy(a, b, c*sizeof(wchar_t))			//. CopyMemory(a,b,c)
 #define FillMemory(a,b,c)	Memory.mem_fill(a,c,b)
 
 // delete

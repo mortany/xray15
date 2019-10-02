@@ -152,16 +152,19 @@ IC s64 _abs(s64 x) { return (x >= 0) ? x : s64(-x); }
 IC s64 _min(s64 x, s64 y) { return y + ((x - y) & ((x - y) >> (sizeof(s64) * 8 - 1))); };
 IC s64 _max(s64 x, s64 y) { return x - ((x - y) & ((x - y) >> (sizeof(s64) * 8 - 1))); };
 
-IC u32 xr_strlen(const char* S);
+//IC u32 xr_strlen(const char* S);
+IC u32 xr_strlen(const WCHAR* S);
 
 // string management
 
 // return pointer to ".ext"
 IC TCHAR* strext(TCHAR* S) { return (TCHAR*)wcsrchr(S, '.'); }
 
-IC u32 xr_strlen(const char* S) { return (u32)strlen(S); }
+//IC u32 xr_strlen(const char* S) { return (u32)strlen(S); }
 
 IC u32 xr_strlen(const WCHAR* string) { return static_cast<u32>(wcslen(string)); }
+
+//IC u32 xr_strlen(const char* string) { return static_cast<u32>(strlen(string)); }
 
 IC TCHAR* xr_strlwr(TCHAR* S) 
 {

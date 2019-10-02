@@ -56,7 +56,7 @@ typedef				void	thread_t				( void * );
 extern XRCORE_API	void	thread_name				(const TCHAR* name);
 extern XRCORE_API	void	thread_spawn			(
 	thread_t*	entry,
-	const char*	name,
+	const TCHAR*	name,
 	unsigned	stack,
 	void*		arglist 
 	);

@@ -419,7 +419,7 @@ BOOL MeshExpUtility::SaveAsSkin(LPCTSTR fname)
 	Log				(TEXT("-------------------------------------------------------" ));
 
 	INode			*pRootNode;
-	pRootNode		= ip->GetRootNode();
+	pRootNode		= ipanel->GetRootNode();
 	R_ASSERT		(pRootNode);
 
 	// export
@@ -439,7 +439,7 @@ BOOL MeshExpUtility::SaveSkinKeys(LPCTSTR fname){
 	Log				(TEXT("-------------------------------------------------------" ));
 
 	INode			*pRootNode;
-	pRootNode		= ip->GetRootNode();
+	pRootNode		= ipanel->GetRootNode();
 	R_ASSERT		(pRootNode);
 
 	// export

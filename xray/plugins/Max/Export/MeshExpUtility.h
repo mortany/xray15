@@ -31,7 +31,7 @@ class MeshExpUtility : public UtilityObj {
 public:
 
 	IUtil		*iu;
-	Interface	*ip;
+	Interface	*ipanel;
 
 	HWND		hPanel;
 	HWND		hItemList;
@@ -55,13 +55,13 @@ public:
 				MeshExpUtility	();
 	virtual		~MeshExpUtility	();
 
-	void		BeginEditParams	(Interface *ip,IUtil *iu);
-	void		EndEditParams	(Interface *ip,IUtil *iu);
-	void		SelectionSetChanged(Interface *ip,IUtil *iu);
-	void		DeleteThis		() {}
+	virtual void BeginEditParams(Interface* ip, IUtil* iu) override;
+	virtual void EndEditParams(Interface* ip, IUtil* iu) override;
+	virtual void SelectionSetChanged(Interface *ip,IUtil *iu) override;
+	virtual void DeleteThis() override {}
 
-	void		Init			(HWND hWnd);
-	void		Destroy			(HWND hWnd);
+	virtual void		Init			(HWND hWnd);
+	virtual void		Destroy			(HWND hWnd);
 	void		ExportObject	();
 	void		ExportSkin		();
 	void		ExportSkinKeys	();

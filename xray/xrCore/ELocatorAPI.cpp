@@ -46,6 +46,8 @@ void CLocatorAPI::_initialize	(u32 flags, LPCTSTR target_folder, LPCTSTR fs_fnam
 
 	// append application path
 
+	Log(TEXT("Try to open file:"), fs_fname);
+
 	if (m_Flags.is(flScanAppRoot)){
 		append_path		(TEXT("$app_root$"),Core.ApplicationPath,0,FALSE);
     }
@@ -54,19 +56,30 @@ void CLocatorAPI::_initialize	(u32 flags, LPCTSTR target_folder, LPCTSTR fs_fnam
 	}else{
 		IReader* F		= r_open((fs_fname&&fs_fname[0])?fs_fname:FSLTX); 
 		if (!F&&m_Flags.is(flScanAppRoot))
-			F			= r_open(TEXT("$app_root$"),(fs_fname&&fs_fname[0])?fs_fname:FSLTX); 
+			F			= r_open(TEXT("$app_root$"),(fs_fname&&fs_fname[0])?fs_fname:FSLTX);
 		R_ASSERT3		(F,"Can't open file:", (fs_fname&&fs_fname[0])?fs_fname:FSLTX);
+
+		if (!F)
+			F = r_open(Core.ApplicationPath, (fs_fname && fs_fname[0]) ? fs_fname : FSLTX);
+
 		// append all pathes    
-		string_path		buf;
+		string_path			buf;
 		string_path		id, temp, root, add, def, capt;
 		LPCTSTR			lp_add, lp_def, lp_capt;
 		string16		b_v;
-		while(!F->eof()){
+		while(!F->eof())
+		{
 			F->r_string	(buf,sizeof(buf));
 			_GetItem(buf,0,id,'=');
 			if (id[0]==';') continue;
 			_GetItem(buf,1,temp,'=');
 			int cnt		= _GetItemCount(temp,_delimiter);  R_ASSERT(cnt>=3);
+
+			if (!(cnt >= 3))
+			{
+				Log(TEXT("Error in parsing path:"), buf);
+			}
+
 			u32 fl		= 0;
 			_GetItem	(temp,0,b_v,_delimiter);	if (CInifile::IsBOOL(b_v)) fl |= FS_Path::flRecurse;
 			_GetItem	(temp,1,b_v,_delimiter);	if (CInifile::IsBOOL(b_v)) fl |= FS_Path::flNotif;
@@ -267,8 +280,14 @@ IReader* CLocatorAPI::r_open	(LPCTSTR path, LPCTSTR _fname)
 	string_path		fname;
 	wcscpy			(fname,_fname);
 	xr_strlwr		(fname);
-	if (path&&path[0]) update_path(fname,path,fname);
-
+	if (path && path[0])
+	{
+		update_path(fname, path, fname);
+	}
+	else
+	{
+		Log(TEXT("IReader : can't parsing path "), path);
+	}
 	// Search entry
     FS_File			desc;
     if (!file_find(fname,desc)) return NULL;
@@ -276,6 +295,9 @@ IReader* CLocatorAPI::r_open	(LPCTSTR path, LPCTSTR _fname)
 	dwOpenCounter	++;
 
 	LPCTSTR	source_name 	= &fname[0];
+
+	Log(TEXT("IReader : try open file "), fname);
+	Log(TEXT("IReader : path "), path);
 
     // open file
     if (desc.size<256*1024)	R = xr_new<CFileReader>			(fname);
@@ -447,7 +469,7 @@ int	CLocatorAPI::file_length(LPCTSTR src)
 
 BOOL CLocatorAPI::path_exist(LPCTSTR path)
 {
-    PathPairIt P 			= pathes.find(path); 
+    PathPairIt P 			= pathes.find((TCHAR*)path);
     return					(P!=pathes.end());
 }
 
@@ -455,21 +477,24 @@ FS_Path* CLocatorAPI::append_path(LPCTSTR path_alias, LPCTSTR root, LPCTSTR add,
 {
 	VERIFY			(root/*&&root[0]*/);
 	VERIFY			(false==path_exist(path_alias));
-	FS_Path* P		= xr_new<FS_Path>(root,add,LPCTSTR(0),LPCTSTR(0),0);
-	pathes.insert	(mk_pair(xr_strdup(path_alias),P));
+	FS_Path* P		= xr_new<FS_Path>(xr_strdup(root),add,LPCTSTR(0),LPCTSTR(0),0);
+
+	TCHAR* buff = xr_strdup(path_alias);
+
+	pathes.insert	(mk_pair(buff,P));
 	return P;
 }
 
 FS_Path* CLocatorAPI::get_path(LPCTSTR path)
 {
-    PathPairIt P 			= pathes.find(path); 
+    PathPairIt P 			= pathes.find((TCHAR*)path); 
     //R_ASSERT2(P!=pathes.end(),path);
     return P->second;
 }
 
 LPCTSTR CLocatorAPI::update_path(string_path& dest, LPCTSTR initial, LPCTSTR src)
 {
-    return get_path(initial)->_update(dest,src);
+	if(get_path(initial)) return get_path(initial)->_update(dest, src);
 }
 /*
 void CLocatorAPI::update_path(xr_string& dest, LPCTSTR initial, LPCTSTR src)

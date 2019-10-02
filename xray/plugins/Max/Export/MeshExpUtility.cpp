@@ -11,7 +11,7 @@
 //-------------------------------------------------------------------
 //  Dialog Handler for Utility
 
-static INT_PTR CALLBACK DefaultDlgProc(
+INT_PTR CALLBACK MeshExpUtility::DlgProc(
 		HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg) {
@@ -53,7 +53,7 @@ static INT_PTR CALLBACK DefaultDlgProc(
 //-------------------------------------------------------------------
 //     Utility implimentations
 
-MeshExpUtility::MeshExpUtility() :iu(nullptr), ip(nullptr), hPanel(nullptr)
+MeshExpUtility::MeshExpUtility() :iu(nullptr), ipanel(nullptr), hPanel(nullptr)
 {
 	m_ObjectFlipFaces			= false;
 	m_SkinFlipFaces				= false;
@@ -70,11 +70,11 @@ static const TCHAR _className[] = _T("S.T.A.L.K.E.R. Export");
 void MeshExpUtility::BeginEditParams(Interface *ip,IUtil *iu) 
 {
 	this->iu = iu;
-	this->ip = ip;
+	this->ipanel = ip;
 	EConsole.Init( hInstance, 0 );
 
 
-	hPanel = ip->AddRollupPage(hInstance, MAKEINTRESOURCE(IDD_MWND), DefaultDlgProc, _className, 0);
+	hPanel = ip->AddRollupPage(hInstance, MAKEINTRESOURCE(IDD_PANEL), DlgProc, _className, 0);
 }
 	
 void MeshExpUtility::EndEditParams(Interface *ip,IUtil *iu) 
@@ -86,7 +86,7 @@ void MeshExpUtility::EndEditParams(Interface *ip,IUtil *iu)
 	EConsole.Clear();
 	
 	this->iu = 0;
-	this->ip = 0;
+	this->ipanel = 0;
 	ip->DeleteRollupPage(hPanel);
 	hPanel = 0;
 }
@@ -121,11 +121,9 @@ void MeshExpUtility::RefreshExportList(){
 	m_Items.clear();
 	ExportItem item;
 
-	if (!ip) return;
-
-	int i = ip->GetSelNodeCount();
+	int i = ipanel->GetSelNodeCount();
 	while( i-- ){
-		item.pNode = ip->GetSelNode(i);
+		item.pNode = ipanel->GetSelNode(i);
 		m_Items.push_back( item );
 	}
 }

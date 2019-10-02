@@ -11,8 +11,8 @@ BOOL CExporter::ExportSkin(INode* pNode, LPCTSTR fname)
 	m_Style				= eExportSkin;
 //	ScanBones			(pNode);
 
-	int i				= U.ip->GetSelNodeCount(); 
-	while (i--)			ScanMesh(U.ip->GetSelNode(i));
+	int i				= U.ipanel->GetSelNodeCount();
+	while (i--)			ScanMesh(U.ipanel->GetSelNode(i));
 
 	if (!Capture())		return FALSE;
 	if (m_bHasError)	return FALSE;

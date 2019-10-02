@@ -113,12 +113,12 @@ __declspec(noinline)
     BuildStackTrace();
 
     if (header) {
-        OutputDebugString(header);
-        OutputDebugString(TEXT(":\r\n"));
+		OutputDebugStringW(header);
+		OutputDebugStringW(TEXT(":\r\n"));
     }
 
     for (int i = 2; i < g_stackTraceCount; ++i) {
-        OutputDebugString(g_stackTrace[i]);
-        OutputDebugString(TEXT("\r\n"));
+        OutputDebugStringW(g_stackTrace[i]);
+		OutputDebugStringW(TEXT("\r\n"));
     }
 }
