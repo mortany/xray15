@@ -57,7 +57,7 @@ public:
 	IC void			w_u8	(u8 d)				{	write(&d,sizeof(u8));		}
 	IC void			w_string(const char *p)
 	{
-    	write(p,xr_strlen(p));
+    	write(p,strlen(p));
 		w_u8(13);
 		w_u8(10);
     }

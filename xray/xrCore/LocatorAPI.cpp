@@ -1456,7 +1456,7 @@ bool CLocatorAPI::path_exist(LPCTSTR path)
     return					(P!=pathes.end());
 }
 
-FS_Path* CLocatorAPI::append_path(LPCTSTR path_alias, LPCTSTR root, LPCTSTR add, BOOL recursive)
+FS_Path* CLocatorAPI::append_path(TCHAR * path_alias, LPCTSTR root, LPCTSTR add, BOOL recursive)
 {
 	VERIFY			(root/**&&root[0]/**/);
 	VERIFY			(false==path_exist(path_alias));

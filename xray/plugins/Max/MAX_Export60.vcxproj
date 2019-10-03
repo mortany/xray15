@@ -123,6 +123,7 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetExt>.dlu</TargetExt>
     <TargetName>xray_export</TargetName>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\x64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
     <OutDir>..\..\..\..\binaries_plugs\$(Configuration)\$(ProjectName)\</OutDir>
@@ -337,7 +338,7 @@
       <AdditionalDependencies>mesh.lib;gdiplus.lib;geom.lib;gfx.lib;maxutil.lib;maxscrpt.lib;core.lib;paramblk2.lib;comctl32.lib;odbc32.lib;odbccp32.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)xray_export.dlu</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>..\..\..\3rd party\maxsdk\lib\x64\Release;..\..\..\..\libraries;..\..\..\sdk\libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\3rd party\maxsdk\lib\x64\Release;..\..\..\..\libraries;..\..\..\sdk\libraries;$(SolutionDir)libs\$(Configuration)\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>Export\Utility.def</ModuleDefinitionFile>
       <ProgramDatabaseFile>$(OutDir)xray_export.pdb</ProgramDatabaseFile>
       <SetChecksum>true</SetChecksum>

@@ -67,9 +67,9 @@ void Log				(const TCHAR *s)
 
 	u32			length = xr_strlen( s );
 #ifndef _EDITOR    
-	LPTSTR split  = (LPTSTR)_alloca( (length + 1) * sizeof(LPTSTR) );
+	LPTSTR split  = (LPTSTR)_malloca( (length + 1) * sizeof(LPTSTR) );
 #else
-	PSTR split  = (PSTR)alloca( (length + 1) * sizeof(char) );
+	//PSTR split  = (PSTR)alloca( (length + 1) * sizeof(char) );
 #endif
 	for (i=0,j=0; s[i]!=0; i++) {
 		if (s[i]=='\n') {
