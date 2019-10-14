@@ -50,6 +50,7 @@ public:
 	IC void			w_s8	(s8 d)					{	w(&d,sizeof(s8));	}
 	IC void			w_float	(float d)				{	w(&d,sizeof(float));}
 	IC void			w_string(LPCTSTR p)			{	w(p,(u32)xr_strlen(p));w_u8(13);w_u8(10);	}
+	IC void			w_string(LPCSTR p)			{	w(p,(u32)xr_strlen_c(p));w_u8(13);w_u8(10);	}
 	IC void			w_stringZ(LPCTSTR p)		{	w(p,(u32)xr_strlen(p)+1);					}
 	IC void			w_stringZ(const shared_str& p) 	{	w(*p?*p:TEXT(""),p.size());w_u8(0);		}
 	IC void			w_stringZ(shared_str& p)		{	w(*p?*p:TEXT(""),p.size());w_u8(0);		}

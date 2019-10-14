@@ -164,7 +164,7 @@ IC TCHAR* strext(TCHAR* S) { return (TCHAR*)wcsrchr(S, '.'); }
 
 IC u32 xr_strlen(const WCHAR* string) { return static_cast<u32>(wcslen(string)); }
 
-//IC u32 xr_strlen(const char* string) { return static_cast<u32>(strlen(string)); }
+IC u32 xr_strlen_c(const char* string) { return static_cast<u32>(strlen(string)); }
 
 IC TCHAR* xr_strlwr(TCHAR* S) 
 {

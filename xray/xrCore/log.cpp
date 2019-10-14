@@ -25,10 +25,18 @@ void FlushLog			()
 	if (!no_log){
 		logCS.Enter			();
 		IWriter *f			= FS.w_open(logFName);
+
         if (f) {
             for (u32 it=0; it<LogFile->size(); it++)	{
 				LPCTSTR		s	= ((*LogFile)[it]).c_str();
-				f->w_string	(s?s:TEXT(""));
+
+				char buf[4 * 1024];
+
+				size_t len = wcstombs(buf, s, wcslen(s));
+				if (len > 0u)
+					buf[len] = '\0';
+				puts(buf);
+				f->w_string	(buf ? buf :"");
 			}
             FS.w_close		(f);
         }
@@ -67,7 +75,7 @@ void Log				(const TCHAR *s)
 
 	u32	length = wcslen( s );
 	LPTSTR split  = (LPTSTR)xr_malloc( (length + 1) * sizeof(TCHAR) );
-	/*for (i=0,j=0; s[i]!=0; i++) {
+	for (i=0,j=0; s[i]!=0; i++) {
 		if (s[i]=='\n') {
 			split[j]=0;	// end of line
 			if (split[0]==0) { split[0]=' '; split[1]=0; }
@@ -77,7 +85,7 @@ void Log				(const TCHAR *s)
 			split[j++]=s[i];
 		}
 	}
-	split[j]=0;*/
+	split[j]=0;
 	AddOne(split);
 }
 
@@ -181,6 +189,7 @@ void InitLog()
 void CreateLog			(BOOL nl)
 {
 	no_log = false;//nl;
+	//no_log = true;//nl;
 	strconcat			(sizeof(log_file_name),log_file_name,Core.ApplicationName,TEXT("_"),Core.UserName,TEXT(".log"));
 	if (FS.path_exist(TEXT("$logs$")))
 		FS.update_path	(logFName,TEXT("$logs$"),log_file_name);

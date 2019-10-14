@@ -69,4 +69,4 @@ DEFINE_SET		(FS_File,FS_FileSet,FS_FileSetIt);
 
 extern bool	XRCORE_API PatternMatch(LPCTSTR s, LPCTSTR mask);
 
-#endif //LocatorAPI_defsH
+#endif //LocatorAPI_defsHa
