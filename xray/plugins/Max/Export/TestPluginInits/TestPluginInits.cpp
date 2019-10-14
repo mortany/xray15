@@ -21,10 +21,10 @@ int main()
 	Core._initialize(TEXT("S.T.A.L.K.E.R.Plugin"), 0, FALSE);
 	FS._initialize(CLocatorAPI::flScanAppRoot, NULL, TEXT("xray_path.ltx"));
 
-	do
+	/*do
 	{
 		cout << '\n' << "Press a key to continue...";
-	} while (cin.get() != '\n');
+	} while (cin.get() != '\n');*/
 
 	return 0;
 }

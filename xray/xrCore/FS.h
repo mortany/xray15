@@ -235,7 +235,7 @@ private:
 
 class XRCORE_API IReader : public IReaderBase<IReader> {
 protected:
-	TCHAR*			data	;
+	char*			data	;
 	int				Pos		;
 	int				Size	;
 	int				iterpos	;
@@ -250,7 +250,7 @@ public:
 
 	IC				IReader			(void *_data, int _size, int _iterpos=0)
 	{
-		data		= reinterpret_cast<TCHAR*>(_data)	;
+		data		= reinterpret_cast<char*>(_data)	;
 		Size		= _size			;
 		Pos			= 0				;
 		iterpos		= _iterpos		;

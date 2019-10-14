@@ -147,21 +147,7 @@ str_value*	str_container::dock		(LPCTSTR value)
 	if (0==result 
 		) {
 
-		result					= (str_value*)Memory.mem_alloc(HEADER+s_len_with_zero
-#ifdef DEBUG_MEMORY_NAME
-			, "storage: sstring"
-#endif // DEBUG_MEMORY_NAME
-			);
-
-#ifdef DEBUG
-		static int num_leaked_string = 0;
-		if ( is_leaked_string )
-		{
-			++num_leaked_string;
-			Msg("leaked_string: %d 0x%08x", num_leaked_string, result);
-		}
-#endif // DEBUG
-
+		result					= (str_value*)xr_malloc(HEADER+s_len_with_zero);
 		result->dwReference		= 0;
 		result->dwLength		= sv->dwLength;
 		result->dwCRC			= sv->dwCRC;

@@ -14,3 +14,7 @@
 /x64
 *.log
 *.txt
+
+
+/bin/
+bin/Release/x64/TestPluginInits.exe

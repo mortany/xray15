@@ -53,14 +53,6 @@ xrCriticalSection::~xrCriticalSection	()
 
 void	xrCriticalSection::Enter	()
 {
-#ifdef PROFILE_CRITICAL_SECTIONS
-#	if 0//def DEBUG
-		static bool					show_call_stack = false;
-		if (show_call_stack)
-			OutputDebugStackTrace	("----------------------------------------------------");
-#	endif // DEBUG
-	profiler						temp(m_id);
-#endif // PROFILE_CRITICAL_SECTIONS
 	EnterCriticalSection			( (CRITICAL_SECTION*)pmutex );
 }
 

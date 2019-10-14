@@ -259,12 +259,8 @@ void	xrMemory::mem_statistic	(LPCTSTR fn)
 TCHAR*			xr_strdup		(LPCTSTR string)
 {	
 	VERIFY	(string);
-	u32		len			= u32(xr_strlen(string))+1	;
-	TCHAR *	memory		= (TCHAR*)	Memory.mem_alloc( len
-#ifdef DEBUG_MEMORY_NAME
-		, "strdup"
-#endif // DEBUG_MEMORY_NAME
-	);
+	u32		len			= u32(xr_strlen(string))+1;
+	TCHAR*	memory		= (TCHAR*)xr_malloc(len *sizeof(WCHAR));
 	CopyMemoryW(memory,string,len);
 	return	memory;
 }

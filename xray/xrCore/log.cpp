@@ -17,7 +17,7 @@ static BOOL 				no_log			= TRUE;
 #else // PROFILE_CRITICAL_SECTIONS
 	static xrCriticalSection	logCS;
 #endif // PROFILE_CRITICAL_SECTIONS
-xr_vector<shared_str>*		LogFile			= NULL;
+xr_vector<xr_string>*		LogFile			= NULL;
 static LogCallback			LogCB			= 0;
 
 void FlushLog			()
@@ -27,7 +27,7 @@ void FlushLog			()
 		IWriter *f			= FS.w_open(logFName);
         if (f) {
             for (u32 it=0; it<LogFile->size(); it++)	{
-				LPCTSTR		s	= *((*LogFile)[it]);
+				LPCTSTR		s	= ((*LogFile)[it]).c_str();
 				f->w_string	(s?s:TEXT(""));
 			}
             FS.w_close		(f);
@@ -41,7 +41,7 @@ void AddOne				(const TCHAR *split)
 	if(!LogFile)		
 						return;
 
-	logCS.Enter			();
+	//logCS.Enter			();
 
 #ifdef DEBUG
 	OutputDebugString	(split);
@@ -50,28 +50,24 @@ void AddOne				(const TCHAR *split)
 
 //	DUMP_PHASE;
 	{
-		shared_str			temp = shared_str(split);
+		xr_string			temp = split;
 //		DUMP_PHASE;
 		LogFile->push_back	(temp);
 	}
 
 	//exec CallBack
-	if (LogExecCB&&LogCB)LogCB(split);
+	//if (LogExecCB&&LogCB)LogCB(split);
 
-	logCS.Leave				();
+	//logCS.Leave				();
 }
 
 void Log				(const TCHAR *s)
 {
 	int		i,j;
 
-	u32			length = xr_strlen( s );
-#ifndef _EDITOR    
-	LPTSTR split  = (LPTSTR)_malloca( (length + 1) * sizeof(LPTSTR) );
-#else
-	//PSTR split  = (PSTR)alloca( (length + 1) * sizeof(char) );
-#endif
-	for (i=0,j=0; s[i]!=0; i++) {
+	u32	length = wcslen( s );
+	LPTSTR split  = (LPTSTR)xr_malloc( (length + 1) * sizeof(TCHAR) );
+	/*for (i=0,j=0; s[i]!=0; i++) {
 		if (s[i]=='\n') {
 			split[j]=0;	// end of line
 			if (split[0]==0) { split[0]=' '; split[1]=0; }
@@ -81,18 +77,18 @@ void Log				(const TCHAR *s)
 			split[j++]=s[i];
 		}
 	}
-	split[j]=0;
+	split[j]=0;*/
 	AddOne(split);
 }
 
 void __cdecl Msg		( const TCHAR *format, ...)
 {
-	va_list		mark;
-	string4096  buf;
-	va_start	(mark, format );
-	int sz		= _vsnwprintf(buf, sizeof(buf)-1, format, mark ); buf[sizeof(buf)-1]=0;
-    va_end		(mark);
-	if (sz)		Log(buf);
+	//va_list		mark;
+	//string4096  buf;
+	//va_start	(mark, format );
+	//int sz		= _vsnwprintf(buf, sizeof(buf)-1, format, mark ); buf[sizeof(buf)-1]=0;
+    //va_end		(mark);
+	Log(format);
 }
 
 void Log				(const TCHAR *msg, const TCHAR *dop) {
@@ -102,14 +98,14 @@ void Log				(const TCHAR *msg, const TCHAR *dop) {
 	}
 
 	u32			buffer_size = (xr_strlen(msg) + 1 + xr_strlen(dop) + 1) * sizeof(TCHAR);
-	LPTSTR buf	= (LPTSTR)_alloca( buffer_size );
+	LPTSTR buf	= (LPTSTR)xr_alloc<u32>(buffer_size );
 	strconcat	(buffer_size, buf, msg, TEXT(" "), dop);
 	Log			(buf);
 }
 
 void Log				(const TCHAR*msg, u32 dop) {
 	u32			buffer_size = (xr_strlen(msg) + 1 + 10 + 1) * sizeof(TCHAR);
-	LPTSTR buf	= (LPTSTR)_alloca( buffer_size );
+	LPTSTR buf	= (LPTSTR)xr_alloc<u32>( buffer_size );
 
 	wprintf_s	(buf, buffer_size, "%s %d", msg, dop);
 	Log			(buf);
@@ -117,7 +113,7 @@ void Log				(const TCHAR*msg, u32 dop) {
 
 void Log				(const TCHAR*msg, int dop) {
 	u32			buffer_size = (xr_strlen(msg) + 1 + 11 + 1) * sizeof(TCHAR);
-	LPTSTR buf	= (LPTSTR)_alloca( buffer_size );
+	LPTSTR buf	= (LPTSTR)xr_alloc<u32>( buffer_size );
 
 	wprintf_s	(buf, buffer_size, "%s %i", msg, dop);
 	Log			(buf);
@@ -127,7 +123,7 @@ void Log				(const TCHAR*msg, float dop) {
 	// actually, float string representation should be no more, than 40 characters,
 	// but we will count with slight overhead
 	u32			buffer_size = (xr_strlen(msg) + 1 + 64 + 1) * sizeof(TCHAR);
-	LPTSTR buf	= (LPTSTR)_alloca( buffer_size );
+	LPTSTR buf	= (LPTSTR)xr_alloc<u32>( buffer_size );
 
 	wprintf_s	(buf, buffer_size, "%s %f", msg, dop);
 	Log			(buf);
@@ -135,7 +131,7 @@ void Log				(const TCHAR*msg, float dop) {
 
 void Log				(const TCHAR*msg, const Fvector &dop) {
 	u32			buffer_size = (xr_strlen(msg) + 2 + 3*(64 + 1) + 1) * sizeof(TCHAR);
-	LPTSTR buf	= (LPTSTR)_alloca( buffer_size );
+	LPTSTR buf	= (LPTSTR)xr_alloc<u32>( buffer_size );
 
 	wprintf_s	(buf, buffer_size,"%s (%f,%f,%f)",msg, VPUSH(dop) );
 	Log			(buf);
@@ -143,7 +139,7 @@ void Log				(const TCHAR*msg, const Fvector &dop) {
 
 void Log				(const TCHAR*msg, const Fmatrix &dop)	{
 	u32			buffer_size = (xr_strlen(msg) + 2 + 4*( 4*(64 + 1) + 1 ) + 1) * sizeof(TCHAR);
-	LPTSTR buf	= (LPTSTR)_alloca( buffer_size );
+	LPTSTR buf	= (LPTSTR)xr_alloc<u32>( buffer_size );
 
 	wprintf_s	(buf, buffer_size,"%s:\n%f,%f,%f,%f\n%f,%f,%f,%f\n%f,%f,%f,%f\n%f,%f,%f,%f\n",
 		msg,
@@ -179,7 +175,7 @@ LPCTSTR logFullName()
 void InitLog()
 {
 	R_ASSERT			(LogFile==NULL);
-	LogFile				= xr_new< xr_vector<shared_str> >();
+	LogFile				= xr_new< xr_vector<xr_string> >();
 }
 
 void CreateLog			(BOOL nl)

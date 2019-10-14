@@ -169,7 +169,7 @@ IC u32 xr_strlen(const WCHAR* string) { return static_cast<u32>(wcslen(string));
 IC TCHAR* xr_strlwr(TCHAR* S) 
 {
 	#ifdef UNICODE
-    return wcslwr(S);
+    return _wcslwr(S);
 	#else
 	return strlwr(S); 
 	#endif

@@ -21,7 +21,7 @@ public:
 	{
 		R_ASSERT	(name && name[0]);
 		fName		= name;
-		VerifyPath	(*fName);
+		VerifyPath	(fName.c_str());
         if (exclusive){
     		int handle	= _wsopen(*fName,_O_WRONLY|_O_TRUNC|_O_CREAT|_O_BINARY,SH_DENYWR);
 #ifdef _EDITOR
